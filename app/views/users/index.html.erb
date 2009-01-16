@@ -1,0 +1,17 @@
+<% title tp(:user, :scope => [ :authenticate ]) %>
+
+<% if @group %>
+  <%= render_heading(t(:users_in_object, :scope => [ :authenticate ], :object => h(@group.name))) %>
+<% else %>
+  <%= render_heading(tp(:user, :scope => [ :authenticate ])) %>
+<% end %>
+
+<% if is_moderator_of?(@group) %>
+  <%= render_actions([
+    { :allow => icon_link_to(:add_large, t(:invite_to_group, :scope => [ :authenticate, :invites, :new ], :group => @group.name), new_group_invite_path(@group)) }
+    ]) %>
+<% end %>
+
+<%= render_indexer(@indexer) %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

@@ -1,0 +1,13 @@
+<% title t(:theme, :scope => [ :themes ]) %>
+
+<%= render_heading("#{t(:theme, :scope => [ :themes ])}: #{@theme.name}") %>
+
+<%= render_heading(t(:preview, :scope => [ :themes ])) %>
+
+<% if is_editor_of?(@themeable) %>
+  <%= show_field(nil, t(:click_to_apply, :scope => [ :themes ], :link => icon_link_to(:edit, t(:apply, :scope => [ :themes ]), apply_theme_path(:id => @theme.id, :themeable_type => @themeable.class.to_s, :themeable_id => @themeable.id)))) %>
+<% end %>
+
+<iframe src="<%= preview_themes_path(:theme_id => @theme.id) %>" width="860" height="600" style="margin-left: auto; margin-right: auto"></iframe>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

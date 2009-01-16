@@ -1,0 +1,5 @@
+<div>
+  <%= enumeration_select(f, :email_type, { :layout => false }) %> :
+  <%= f.text_field :email_address, :layout => false %>
+  <%= f.field_error :email_address %>
+</div>

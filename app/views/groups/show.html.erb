@@ -1,0 +1,8 @@
+<% title t(:group, :scope => [ :authenticate ]) %>
+
+<%= render :partial => 'show', :locals => { :group => @group } %>
+
+<%= render_page_actions([
+  { :allow => link_to_back },
+  { :if => is_moderator_of?(@group), :allow => link_to(t(:invite_to_group, :scope => [ :authenticate, :invites, :new ], :group => @group.name), new_group_invite_path(@group)) }
+  ]) %>

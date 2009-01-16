@@ -1,0 +1,8 @@
+<li>
+  <%= role.name %>
+  <% if user.has_role?(role.name) %>
+    <%= icon_link_to :delete, t(:remove), user_role_url(:id => role.id, :user_id => user.id), :method => :delete %>
+  <% else %>
+    <%= icon_link_to :add, t(:add), user_role_url(:id => role.id, :user_id => user.id), :method => :put %>
+  <% end %>
+</li>

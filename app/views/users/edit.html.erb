@@ -1,0 +1,16 @@
+<% title t(:edit_object, :object => t(:account, :scope => [ :authenticate ])) %>
+
+<%= render_heading t(:edit_object, :object => t(:account, :scope => [ :authenticate ])) %>
+
+<%= render_page_actions([ { :allow => [
+  link_to(t(:show_object, :object => t(:profile, :scope => [ :authenticate ])), user_path(@user)),
+  link_to(t(:change_password, :scope => [ :authenticate ]), change_password_path)
+  ] } ]) %>
+
+<% form_for :user, :url => user_url(@user), :html => { :method => :put, :multipart => true } do |f| -%>
+  <%= render :partial => 'edit', :locals => { :f => f, :user => @user } %>
+
+  <%= f.submit t(:save) %>
+<% end -%>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

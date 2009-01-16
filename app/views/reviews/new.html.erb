@@ -1,0 +1,13 @@
+<% title t(:create_object, :object => t(:review, :scope => [ :content ])) %>
+
+<% form_for :review, :url => { :action => :index } do |f| %>
+  <%= render :partial => 'edit', :locals => { :f => f, :review => @review } %>
+  
+  <%= f.hidden_field(:reviewable_type) %>
+  <%= f.hidden_field(:reviewable_id) %>
+  <%= f.hidden_field(:user_id) %>
+
+  <%= f.submit t(:create) %>
+<% end %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

@@ -1,0 +1,40 @@
+<table class="form-table">
+  <tr>
+    <td>
+      <%= f.text_field :name, :label => { :name => t(:display_name, :scope => [ :authenticate ]) },
+        :hint => t(:user_name_hint, :scope => [ :site_content ]) %>
+    </td>
+    <td>
+      <%= f.text_field :email, :label => { :name => t(:primary_email, :scope => [ :authenticate ]) },
+        :hint => t(:contact_hint, :scope => [ :site_content ]) %>
+    </td>
+    <% if Configuration.users_locale %>
+      <td>
+        <%= f.locale_select(:locale_id, :localized => true) %>
+      </td>
+    <% end %>
+  </tr>
+  <tr>
+    <td>
+      <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
+    </td>
+    <% if user.image? %>
+      <td>
+        <div class="form-element"><%= image_tag(user.image.url(:thumb)) %></div>
+      </td>
+    <% end %>
+    <td>
+      <%= f.file_field :image %>
+    </td>
+  </tr>
+</table>
+
+<%= render_heading(t(:settings)) %>
+
+<%= f.form_for :user_config %>
+
+<% unless user.contact.nil? %>
+  <%= render_heading(t(:contact, :scope => [ :contacts ])) %>
+  
+  <%= f.form_for :contact, :render => { :partial => 'contacts/edit', :locals => { :hide_extras => true } } %>
+<% end %>

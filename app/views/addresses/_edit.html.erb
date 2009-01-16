@@ -1,0 +1,28 @@
+<table class="form-table">
+  <tr>
+    <td>
+      <%= f.text_field :street_1, :label => { :name => t(:street, :scope => [ :contacts, :addresses ]) }, :required => true %>
+    </td>
+    <td>
+      <%= f.text_field :street_2, :label => { :name => t(:street_2, :scope => [ :contacts, :addresses ]) } %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= f.text_field :city, :required => true %>
+    </td>
+    <td>
+      <%= f.text_field :postal_code, :required => true %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= f.collection_select(:country_id, Country.by_name, :id, :name, { :prompt => t(:select_a_country, :scope => [ :contacts ]), :required => true },
+        { :onchange => "#{ remote_function(:url  => { :controller => 'addresses', :action => "update_regions" }, :with => "'select_id=region-select&text_id=region-text-input&country_id=' + value") }" }) %>
+    </td>
+    <td>
+      <% regions = address.country ? address.country.regions : [] %>
+      <%= f.collection_select(:region_id, regions, :id, :name, { :prompt => t(:select_a_country_first, :scope => [ :contacts ]), :required => true }, { :id => 'region-select' }) %>
+    </td>
+  </tr>
+</table>

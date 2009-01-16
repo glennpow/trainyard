@@ -1,0 +1,26 @@
+<% if defined?(Geographer) %>
+  <% head geographer_header %>
+<% end %>
+
+<table class="show-table" align="center">
+  <tr>
+    <td>
+      <%= show_field(t(:street, :scope => [ :contacts, :addresses ]), h(address.streets.join(", "))) %>
+
+      <%= show_field(t(:city, :scope => [ :contacts, :addresses ]), h(address.city)) %>
+
+      <%= show_field(t(:postal_code, :scope => [ :contacts, :addresses ]), h(address.postal_code)) %>
+
+      <%= show_field(t(:region, :scope => [ :contacts, :addresses ]), h(address.region.name)) %>
+
+      <%= show_field(t(:country, :scope => [ :contacts, :addresses ]), h(address.country.name))%>
+    </td>
+    <% if defined?(Geographer) %>
+      <td>
+        <div class="map">
+          <%= map_tag(:mappable => address) %>
+        </div>
+      </td>
+    <% end %>
+  </tr>
+</table>

@@ -1,0 +1,5 @@
+<% title t(:page, :scope => [ :content ]) %>
+
+<%= render :partial => 'show', :locals => { :page => @page } %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

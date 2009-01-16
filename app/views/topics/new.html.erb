@@ -1,0 +1,20 @@
+<% title t(:create_object, :object => t(:topic, :scope => [ :forums ])) %>
+
+<%= render_heading(t(:create_object, :object => t(:topic, :scope => [ :forums ]))) %>
+
+<% form_for :topic, :url => objects_path do |f| %>
+  <%= f.text_field :name %>
+  
+  <% if @topic.guru_points > 0 %>
+    <%= show_field(tp(:guru_point, :scope => [ :forums ]), @topic.guru_points) %>
+  <% end %>
+  
+  <% fields_for :post do |post_f| %>
+    <%= render :partial => 'posts/edit', :locals => { :f => post_f, :post => @post } %>
+  <% end %>
+
+  <%= f.submit t(:create) %>
+<% end %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>
+

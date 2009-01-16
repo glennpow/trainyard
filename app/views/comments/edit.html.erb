@@ -1,0 +1,11 @@
+<% title t(:edit_object, :object => t(:comment, :scope => [ :content ])) %>
+
+<%= render_heading(t(:comment_for_object, :scope => [ :content ], :count => 1, :object => @comment.commentable.name)) %>
+
+<% form_for :comment, :url => object_path, :html => { :method => :put } do |f| %>
+  <%= render :partial => 'edit', :locals => { :f => f, :comment => @comment } %>
+
+  <%= f.submit t(:save) %>
+<% end %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

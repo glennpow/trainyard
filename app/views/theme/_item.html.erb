@@ -1,0 +1,13 @@
+<% _id = "item_#{random_id}" %>
+<div id="<%= _id %>">
+  <table align="center" class="item-table">
+    <tr>
+      <td>
+        <%= yield %>
+      </td>
+      <td>
+        <%= icon_link_to_function(:delete, t(:remove), "if (confirm('#{t(:are_you_sure)}')) Element.remove('#{_id}');") %>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,23 @@
+<div class="comment listed">
+  <table class="comment-table">
+    <tr>
+      <td class="column-top comment-descriptor">
+        <% if comment.user %>
+          <%= image_link_to_user(comment.user, :image_style => :thumb) %>
+        <% else %>
+          <%= image_tag('/images/default/users/images/missing_thumb.png', :class => 'user-image') %>
+        <% end %>
+        <p class="comment-info"><%= comment_author(comment) %></p>
+        <p class="comment-info"><%= comment.created_at.to_s(:short) %></p>
+      </td>
+  
+      <td class="column-top">
+        <%= render_formatted(comment.body) %>
+
+        <% if is_editor_of?(comment) %>
+          <%= icon_link_to(:edit, t(:edit), edit_comment_path(comment)) %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+</div>

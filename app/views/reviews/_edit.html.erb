@@ -1,0 +1,5 @@
+<%= render_heading(t(:review_of_object, :scope => [ :content ], :count => 1, :object => review.reviewable.name)) %>
+
+<%= f.rating_select :rating %>
+
+<%= f.text_area :body %>

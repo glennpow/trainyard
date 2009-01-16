@@ -1,0 +1,12 @@
+<% title tp(:message, :scope => [ :content ]) %>
+
+<%= render_heading(tp(:message, :scope => [ :content ])) %>
+
+<%= content_tag(:div, render_page_actions([
+  { :allow => link_to_if(@mailbox != :inbox, t(:inbox, :scope => [ :content ]), messages_path(:mailbox => :inbox)) },
+  { :allow => link_to_if(@mailbox != :sent, t(:sent, :scope => [ :content ]), messages_path(:mailbox => :sent)) }
+  ]), :class => 'messages-mailboxes') %>
+
+<%= render_indexer(@indexer) %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

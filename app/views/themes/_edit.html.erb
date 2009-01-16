@@ -1,0 +1,78 @@
+<% jscolor_init %>
+
+<script type="text/javascript">
+  function previewUrl() {
+    return "<%= preview_themes_path(:theme_id => @theme.id || current_theme.id) %>" +
+      "&theme[body_color]=" + escape(document.getElementById("theme_body_color").value) +
+      "&theme[body_url]=" + escape(document.getElementById("theme_body_url").value) +
+      "&theme[base_color]=" + escape(document.getElementById("theme_base_color").value) +
+      "&theme[base_url]=" + escape(document.getElementById("theme_base_url").value) +
+      "&theme[base_font_color]=" + escape(document.getElementById("theme_base_font_color").value) +
+      "&theme[base_link_color]=" + escape(document.getElementById("theme_base_link_color").value) +
+      "&theme[base_link_hover_color]=" + escape(document.getElementById("theme_base_link_hover_color").value) +
+      "&theme[primary_color]=" + escape(document.getElementById("theme_primary_color").value) +
+      "&theme[primary_url]=" + escape(document.getElementById("theme_primary_url").value) +
+      "&theme[primary_font_color]=" + escape(document.getElementById("theme_primary_font_color").value) +
+      "&theme[primary_link_color]=" + escape(document.getElementById("theme_primary_link_color").value) +
+      "&theme[primary_link_hover_color]=" + escape(document.getElementById("theme_primary_link_hover_color").value) +
+      "&theme[secondary_color]=" + escape(document.getElementById("theme_secondary_color").value) +
+      "&theme[secondary_url]=" + escape(document.getElementById("theme_secondary_url").value) +
+      "&theme[secondary_font_color]=" + escape(document.getElementById("theme_secondary_font_color").value) +
+      "&theme[secondary_link_color]=" + escape(document.getElementById("theme_secondary_link_color").value) +
+      "&theme[secondary_link_hover_color]=" + escape(document.getElementById("theme_secondary_link_hover_color").value);
+  }
+
+  function updatePreview() {
+    document.getElementById('theme-preview').src = previewUrl();
+  }
+</script>
+
+<%= f.text_field :name, :label => { :name => t(:theme_name, :scope => [ :themes ]) }, :required => true %>
+
+<hr />
+
+<%= f.color_field :body_color, :onchange => "updatePreview()" %>
+
+<%= f.text_field :body_url %>
+
+<hr />
+  
+<%= f.color_field :base_color, :onchange => "updatePreview()" %>
+
+<%= f.text_field :base_url %>
+
+<%= f.color_field :base_font_color, :onchange => "updatePreview()" %>
+
+<%= f.color_field :base_link_color, :onchange => "updatePreview()" %>
+
+<%= f.color_field :base_link_hover_color, :onchange => "updatePreview()" %>
+
+<hr />
+
+<%= f.color_field :primary_color, :onchange => "updatePreview()" %>
+
+<%= f.text_field :primary_url %>
+
+<%= f.color_field :primary_font_color, :onchange => "updatePreview()" %>
+
+<%= f.color_field :primary_link_color, :onchange => "updatePreview()" %>
+
+<%= f.color_field :primary_link_hover_color, :onchange => "updatePreview()" %>
+
+<hr />
+
+<%= f.color_field :secondary_color, :onchange => "updatePreview()" %>
+
+<%= f.text_field :secondary_url %>
+
+<%= f.color_field :secondary_font_color, :onchange => "updatePreview()" %>
+
+<%= f.color_field :secondary_link_color, :onchange => "updatePreview()" %>
+
+<%= f.color_field :secondary_link_hover_color, :onchange => "updatePreview()" %>
+
+<hr />
+
+<%= render_heading(t(:preview)) %>
+
+<iframe id="theme-preview" src="<%= preview_themes_path(:theme_id => @theme.id || current_theme.id) %>" width="860" height="350" scrolling="no" style="margin-left: auto; margin-right: auto"></iframe>

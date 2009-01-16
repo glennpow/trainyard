@@ -1,0 +1,18 @@
+<%= render_row(
+  indexer,
+  group,
+  [
+    h(group.name),
+    h(group.parent_group_name),
+    group.child_groups.any? ? group.child_groups.length : '',
+    link_to_user(group.moderator),
+    group.users.any? ? group.users.length : '',
+  ],
+  :actions => [
+    { :allow => [
+      icon_link_to(:show, t(:show), group)
+    ] },
+    { :if => is_moderator_of?(group), :allow => [
+      icon_link_to(:edit, t(:edit), edit_group_path(group)),
+      icon_link_to(:delete, t(:delete), group, :confirm => t(:are_you_sure), :method => :delete)
+    ] } ]) %>

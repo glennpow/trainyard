@@ -1,0 +1,28 @@
+Trainyard
+=========
+
+Framework to build powerful community-driven rails applications.
+
+This plugin requires these other plugins to be installed:
+  * engines
+  * authlogic
+  * acts_as_list
+  * make_resourceful
+  * fckeditor
+  * http_accept_language
+  * paperclip
+  * active_enumeration
+  * geographer
+  * indexer
+
+The standard initialization of an engine plugin is also required.
+In your application's routes.rb add this line:
+
+  map.from_plugin :trainyard
+
+Run this from the command line (necessary only once after all engine plugins are installed):
+
+  script/generate plugin_migration && rake db:migrate
+
+
+Copyright (c) 2009 Glenn Powell, released under the MIT license

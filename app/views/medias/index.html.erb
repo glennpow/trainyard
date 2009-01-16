@@ -1,0 +1,11 @@
+<% title t(:media, :scope => [ :content ]) %>
+
+<%= render_heading(t(:object_for_parent, :object => t(:media, :scope => [ :content ]), :parent => @groupable.name)) %>
+
+<% if is_editor_of?(@groupable) %>
+  <% @indexer.footers = link_to(t(:add_object, :object => t(:media, :scope => [ :content ])), new_object_path) %>
+<% end %>
+
+<%= render_indexer(@indexer) %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

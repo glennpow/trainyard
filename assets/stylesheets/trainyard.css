@@ -1,0 +1,370 @@
+body {
+}
+
+body, p, ol, ul, td {
+  font-family: arial, helvetica, sans-serif;
+  font-size:   13px;
+  line-height: 18px;
+  margin: 0;
+}
+
+p {
+  padding: 0px;
+  margin: 4px 0px;
+}
+
+pre {
+  padding: 10px;
+  font-size: 11px;
+}
+
+img {
+  border: none;
+}
+
+table {
+  border-spacing: 0px;
+}
+
+table.columns {
+  table-layout: fixed;
+}
+
+td {
+  padding: 0px;
+}
+
+ul {
+  padding: 0px;
+}
+
+.strong {
+  font-weight: bold;
+}
+
+#errorExplanation {
+  width: 400px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+.flash {
+  padding: 5px 15px;
+  margin-bottom: 16px;
+}
+
+.flash.notice {
+  background-color: #ef9;
+  border: 1px solid #0f0;
+}
+
+.flash.error {
+  background-color: #fa9;
+  border: 1px solid #f00;
+}
+
+.small {
+  font-size: smaller;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.full-width {
+  width: 100%;
+}
+
+ul.bar-list {
+  padding: 5px 0px
+}
+
+ul.bar-list li {
+  border-left: 1px solid;
+  list-style: none;
+  display: inline;
+  padding: 0px 10px;
+}
+
+ul.bar-list li.first {
+  border-left: none;
+}
+
+ul.clean-list li {
+  list-style: none;
+}
+
+.messages {
+}
+
+.heading {
+  padding: 6px;
+  text-align: center;
+}
+
+.heading .label {
+  font-size: x-large;
+}
+
+table.form-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+table.form-table td {
+  padding: 5px 3px 5px 3px;
+}
+
+.form-field {
+  padding: 5px;
+}
+
+.form-field .label {
+}
+
+.form-field .input {
+}
+
+.form-field textarea {
+  width: 100%;
+}
+
+.form-field .hint {
+  color: #888;
+  font-size: smaller;
+}
+
+.fieldWithErrors {
+  display: inline;
+  padding: 5px;
+}
+
+.error-message {
+  color: #f00;
+}
+
+.form-image {
+  margin: 10px 0px 10px 250px;
+}
+
+.form-submit {
+}
+
+table.item-table td {
+  padding-left: 5px;
+}
+
+.show-field, .form-element {
+  text-align: center;
+}
+
+ul.show-field-list li {
+  margin-left: 320px;
+}
+
+.panel {
+  padding: 15px;
+  margin: 15px 0px;
+}
+
+.panel .label {
+  padding: 6px;
+  font-size: larger;
+  font-weight: bold;
+}
+
+.panel ul.actions {
+  list-style: disc inside;
+  padding: 15px;
+}
+
+.formatted {
+  text-align: left;
+}
+
+.image-label-link {
+  text-decoration: none;
+}
+
+.image-label img {
+  vertical-align: middle;
+}
+
+.image-label-text {
+  text-decoration: underline;
+}
+
+.actions {
+  padding: 10px 0px;
+}
+
+.user-card {
+  padding: 5px;
+  text-align: left;
+}
+
+.user-card p {
+  font-size: smaller;
+}
+
+.user-card p.user-name {
+  font-size: small;
+  font-weight: bold;
+}
+
+table.show-table td {
+  padding: 10px;
+}
+
+table.rating {
+  display: inline;
+}
+
+.article {
+  padding: 5px 20px 5px 20px;
+}
+
+.blurb {
+  color: #666;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+.breadcrumbs {
+  padding: 5px 20px 5px 20px;
+  margin: 5px 20px;
+}
+
+.forum-descriptor {
+  text-align: left;
+}
+
+.forum-descriptor .forum-name {
+  font-size: larger;
+  font-weight: bold;
+}
+
+.topic-descriptor {
+  text-align: left;
+}
+
+.topic-descriptor .topic-name {
+  font-size: larger;
+}
+
+.topic-descriptor .topic-name.sticky {
+  font-weight: bold;
+}
+
+.post-header {
+  padding-left: 10px;
+}
+
+.post-body {
+  text-align: left;
+}
+
+.post-body .topic-name {
+  font-weight: bold;
+}
+
+.review-descriptor {
+  text-align: left;
+}
+
+.review-body {
+  text-align: left;
+}
+
+.timestamp {
+  font-size: smaller;
+}
+
+.medias {
+  text-align: center;
+  padding: 5px;
+}
+
+table.profile-table td {
+  padding: 10px;
+}
+
+.listed {
+  padding: 5px;
+  margin: 5px 0px;
+  min-height: 84px;
+}
+
+.listed-image {
+  margin-right: 5px;
+  float: left;
+}
+
+table.comment-table {
+  width: 100%;
+}
+
+.comment-descriptor {
+  width: 90px;
+}
+
+.comment-info {
+  font-size: smaller;
+}
+
+table.blog-table {
+  width: 100%;
+}
+
+td.blog-table-article, td.blog-table-contents {
+  width: 570px;
+  vertical-align: top;
+  padding: 10px 10px 10px 10px;
+}
+
+.blog-contents {
+  height: 500px;
+  overflow: auto;
+}
+
+.blog-post-title {
+  font-weight: bold;
+}
+
+.paragraph {
+	margin: 0px 60px 10px 60px;
+	padding: 10px 10px;
+}
+
+.map {
+ width: 400px;
+ height: 300px;
+}

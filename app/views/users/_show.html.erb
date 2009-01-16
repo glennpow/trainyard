@@ -1,0 +1,40 @@
+<%= show_field(nil, image_tag(user.image.url)) %>
+
+<%= render_heading(h(user.name)) %>
+
+<%= show_field(nil, "(#{user_role(user)})") %>
+
+<% if has_administrator_role? %>
+  <%= show_field(t(:login, :scope => [ :authenticate ]), h(user.login)) %>
+<% end %>
+
+<%= show_field(t(:joined_on, :scope => [ :authenticate ]), user.created_at.to_date) %>
+
+<%= show_field(t(:locale, :scope => [ :content ]), h(user.locale.name)) %>
+  
+<%= show_field(tp(:post, :scope => [ :forums ]), user.posts_count) %>
+  
+<%= show_field(tp(:guru_point, :scope => [ :forums ]), user.guru_points) %>
+
+<% if has_administrator_role? %>
+  <%= show_field(t(:primary_email, :scope => [ :authenticate ]), h(user.email)) %>
+  
+  <%= render_heading(t(:administer_object, :scope => [ :authenticate ], :object => h(user.name))) %>
+
+  <%= show_field(t(:status), user.active? ? t(:enabled) : t(:disabled),
+    :actions => [ { :if => (user != current_user), :allow => (user.active? ?
+      link_to(t(:disable), user, :confirm => t(:are_you_sure), :method => :delete) :
+      link_to(t(:enable), enable_user_path(user), :method => :put) ) } ]) %>
+
+  <%= show_field(tp(:group, :scope => [ :authenticate ]), user.groups.map(&:name),
+    :actions => [ { :if => user.groups.any?, :allow => link_to(t(:view), user_groups_path(user)) } ]) %>
+
+  <%= show_field(tp(:role, :scope => [ :authenticate ]), user.roles.map(&:name),
+    :actions => [ { :allow => icon_link_to(:edit, t(:edit), user_roles_path(user)) } ]) %>
+<% end %>
+
+<% unless user.contact.blank? || !user.user_config.visible_contact %>
+  <%= render_heading(t(:contact, :scope => [ :contacts ])) %>
+  
+  <%= render :partial => 'contacts/show', :locals => { :contact => user.contact } %>
+<% end %>

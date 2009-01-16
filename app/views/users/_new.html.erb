@@ -1,0 +1,44 @@
+<table class="form-table">
+  <tr>
+    <td>
+      <%= f.text_field :login, :required => true %>
+    </td>
+    <td>
+      <%= f.text_field :name, :label => { :name => t(:display_name, :scope => [ :authenticate ]) }, :required => true %>
+    </td>
+    <td>
+      <%= f.text_field :email, :required => true %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= f.password_field :password, :required => true %>
+    </td>
+    <td>
+      <%= f.password_field :password_confirmation, :required => true %>
+    </td>
+    <% if Configuration.users_locale %>
+      <td>
+        <%= f.locale_select(:locale_id, :localized => true, :required => true) %>
+      </td>
+    <% end %>
+  </tr>
+  <tr>
+    <td>
+      <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :required => true %>
+    </td>
+    <td>
+      <%= f.file_field :image %>
+    </td>
+  </tr>
+</table>
+
+<%= render_heading(t(:settings)) %>
+
+<%= f.form_for :user_config %>
+
+<% unless user.contact.nil? %>
+  <%= render_heading(t(:contact, :scope => [ :contacts ])) %>
+  
+  <%= f.form_for :contact, :render => { :partial => 'contacts/edit', :locals => { :hide_extras => true } } %>
+<% end %>

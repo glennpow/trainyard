@@ -1,0 +1,20 @@
+<% title t(:join, :scope => [ :authenticate ]) %>
+
+<%= render_heading(t(:create_object, :object => t(:user, :scope => [ :authenticate ]))) %>
+
+<% form_for :user, :url => users_path, :html => { :multipart => true } do |f| -%>
+  <% if @article %>
+    <%= render :partial => 'articles/show', :locals => { :article => @article } %>
+  <% end %>
+
+  <% if Configuration.assignable_role_names.length > 1 %>
+    <%= f.labeled_field(:user_type) {
+      select_tag(:user_type, option_tags(Configuration.assignable_role_names.map { |name| [ I18n.t(Role.find_by_name(name).key), name ] })) } %>
+  <% end %>
+
+  <%= render :partial => 'new', :locals => { :f => f, :user => @user } %>
+
+  <%= f.submit t(:join, :scope => [ :authenticate ]) %>
+<% end -%>
+
+<%= render_page_actions([ { :allow => link_to_back(t(:cancel)) } ]) %>

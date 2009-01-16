@@ -1,0 +1,35 @@
+<% if has_administrator_role? %>
+  <%= render_row(
+    indexer,
+    user,
+    [
+      h(user.login),
+      h(user.name),
+      h(user.email),
+      user.groups.any? ? user.groups.length : '',
+      user.active? ? t(:enabled) : t(:disabled),
+    ],
+    :actions => [
+      { :allow => [
+        icon_link_to(:show, t(:show), user),
+        icon_link_to(:edit, tp(:edit_object, :object => t(:role, :scope => [ :authenticate ])), user_roles_path(user))
+      ] },
+      { :if => user != current_user && user.active?, :allow => [
+        icon_link_to(:delete, t(:disable), user, :confirm => t(:are_you_sure), :method => :delete)
+      ] },
+      { :if => user != current_user && !user.active?, :allow => [
+        icon_link_to(:add, t(:enable), enable_user_path(user), :method => :put)
+      ] } ]) %>
+<% else %>
+  <%= render_row(
+    indexer,
+    user,
+    [
+      h(user.name),
+      h(user.email)
+    ],
+    :actions => [
+      { :allow => [
+        icon_link_to(:show, t(:show), user)
+      ] } ]) %>
+<% end %>

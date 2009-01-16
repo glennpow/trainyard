@@ -1,0 +1,11 @@
+<% title tp(:topic, :scope => [ :forums ]) %>
+
+<% if @forum %>
+  <%= render :partial => 'forums/show', :locals => { :forum => @forum } %>
+<% else %>
+  <%= render_heading(tp(:topic, :scope => [ :forums ])) %>
+<% end %>
+
+<%= render_indexer(@indexer) %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

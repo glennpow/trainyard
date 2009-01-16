@@ -1,0 +1,9 @@
+<% title t(:create_object, :object => t(:blog, :scope => [ :blogs ])) %>
+
+<% form_for(:blog, :url => objects_path) do |f| %>
+  <%= render :partial => 'edit', :locals => { :f => f, :blog => @blog } %>
+  
+  <%= f.submit t(:create) %>
+<% end %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

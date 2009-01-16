@@ -1,0 +1,14 @@
+<%= render_heading(h(page.name)) %>
+
+<%= show_field(t(:permalink, :scope => [ :content ]), link_to(page.permalink, '#')) %>
+
+<%= show_field(t(:group, :scope => [ :authenticate ]), link_to(h(page.group.name), group_path(page.group))) %>
+
+<% if is_editor_of?(page) %>
+  <%= show_field(tp(:article, :scope => [ :content ]), page.articles.length,
+    :actions => [ { :allow => link_to(t(:view), page_articles_path(page)) } ]) %>
+<% end %>
+
+<% for_locale(page.articles.site_contents) do |article| %>
+  <%= render :partial => 'articles/show', :locals => { :article => article } %>
+<% end %>

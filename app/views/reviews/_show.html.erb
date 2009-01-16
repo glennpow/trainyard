@@ -1,0 +1,16 @@
+<%= render_heading(t(:review_of_object, :scope => [ :content ], :count => 1, :object => link_to(h(review.reviewable.name), review.reviewable))) %>
+
+<table class="profile-table" align="center">
+  <tr>
+    <td>
+      <%= render_user_card(review.user, :image_style => :normal) %>
+    </td>
+    <td>
+      <%= show_field(t(:rating, :scope => [ :content ]), render_rating(review)) %>
+
+      <%= show_field(t(:date, :scope => [ :datetimes ]), review.created_at) %>
+    </td>
+  </tr>
+</table>
+
+<%= render_formatted(review.body, :class => 'paragraph') %>

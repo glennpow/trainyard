@@ -1,0 +1,3 @@
+<%= f.text_field :name %>
+
+<%= f.collection_select :parent_group_id, parent_groups, :id, :name, { :include_blank => true } %>

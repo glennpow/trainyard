@@ -1,0 +1,30 @@
+<p class="show-field">
+  <% if label %>
+    <span class="label">
+      <%= label %>
+    </span>
+  <% end %>
+  <% if actions && actions.any? %>
+    <span class="actions">
+      (<%= actions.join(" | ") %>)
+    </span>
+  <% end %>
+  <% if label %>
+    :
+  <% end %>
+  <% if value %>
+    <span class="value">
+      <%= value %>
+    </span>
+  <% end %>
+</p>
+
+<% if values %>
+  <ul class="show-field-list">
+    <% values.each do |value| %>
+      <li>
+        <%= value %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

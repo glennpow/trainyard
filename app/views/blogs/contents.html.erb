@@ -1,0 +1,10 @@
+<% title h(@blog.name) %>
+
+<%= render_heading(h(@blog.name)) %>
+
+<%= render_indexer @articles_indexer %>
+
+<%= render_page_actions([
+  { :allow => link_to_back },
+  { :if => is_editor_of?(@blog), :allow => icon_link_to(:edit, t(:edit_object, :object => h(@blog.name)), edit_object_path) }
+  ]) %>

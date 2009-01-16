@@ -1,0 +1,11 @@
+<% title t(:blog, :scope => [ :content ]) %>
+
+<%= render_heading(t(:object_for_parent, :object => tp(:blog, :scope => [ :content ]), :parent => @group.name)) %>
+
+<% if is_editor_of?(@group) %>
+  <% @indexer.footers = link_to(t(:add_object, :object => t(:blog, :scope => [ :blogs ])), new_object_path) %>
+<% end %>
+
+<%= render_indexer(@indexer) %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

@@ -1,0 +1,15 @@
+<%= render_row(
+  indexer,
+  invite,
+  [
+    h(invite.group.name),
+    h(invite.email),
+    h(invite.created_at),
+  ],
+  :actions => [
+    { :allow => [
+      icon_link_to :show, t(:show), group_invite_path(invite.group, invite)
+    ] },
+    { :if => is_moderator_of?(invite), :allow => [
+      icon_link_to(:delete, t(:delete), group_invite_path(invite.group, invite), :confirm => t(:are_you_sure), :method => :delete)
+    ] } ]) %>

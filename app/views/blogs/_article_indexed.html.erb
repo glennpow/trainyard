@@ -1,0 +1,13 @@
+<div class ="blog-post listed">
+  <% unless article.medias.empty? %>
+    <%= link_to(image_tag(article.medias.first.thumbnail.url, :class => 'listed-image'), blog_article_path(blog, article)) %>
+  <% end %>
+  
+  <p class='blog-post-title'><%= link_to(h(article.title), blog_article_path(blog, article)) %></p>
+
+  <span class='timestamp'><%= article.created_at %></span>
+
+  <%= render_rating(article) %>
+
+  <%= render_formatted(truncate(article.body, :length => 100)) %>
+</div>

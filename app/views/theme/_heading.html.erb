@@ -1,0 +1,10 @@
+<p class="heading">
+  <span class="label">
+    <%= label %>
+  </span>
+  <% if actions && actions.any? %>
+    <span class="actions">
+      (<%= actions.join(" | ") %>)
+    </span>
+  <% end %>
+</p>

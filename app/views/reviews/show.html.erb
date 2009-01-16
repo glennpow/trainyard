@@ -1,0 +1,5 @@
+<% title t(:review, :scope => [ :content ])%>
+
+<%= render :partial => 'show', :locals => { :review => @review } %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

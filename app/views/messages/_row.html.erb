@@ -1,0 +1,17 @@
+<%= render_row(
+  indexer,
+  message,
+  [
+    message_user(message, mailbox),
+    link_to(message_subject(message, mailbox), message_path(message)),
+    message.created_at.to_s(:short),
+    link_to(truncate(h(message.body)), message_path(message))
+  ],
+  :actions => [
+    { :allow => [
+      icon_link_to(:show, t(:show), message)
+    ] },
+    { :if => message.to_user == current_user, :allow => [
+      icon_link_to(:delete, t(:delete), message, :confirm => t(:are_you_sure), :method => :delete)
+    ] }
+  ]) %>

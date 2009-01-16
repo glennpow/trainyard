@@ -1,0 +1,7 @@
+<% title tp(:page, :scope => [ :content ]) %>
+
+<%= render_heading(tp(:page, :scope => [ :content ])) %>
+
+<%= render_indexer(@indexer) %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

@@ -1,0 +1,9 @@
+<% title t(:invite, :scope => [ :authenticate ]) %>
+
+<%= show_field(t(:group, :scope => [ :authenticate ]), invite.group.name) %>
+
+<%= show_field(t(:email, :scope => [ :contacts ]), invite.email) %>
+
+<%= show_field(t(:sent, :scope => [ :content ]), invite.created_at) %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

@@ -1,0 +1,15 @@
+<% title t(:edit_object, :object => t(:topic, :scope => [ :forums ])) %>
+
+<%= render_heading(t(:edit_object, :object => t(:topic, :scope => [ :forums ]))) %>
+
+<% form_for :topic, :url => object_path, :html => { :method => :put } do |f| %>
+  <%= f.text_field :name %>
+    
+  <% if @topic.guru_points > 0 %>
+    <%= show_field(tp(:guru_point, :scope => [ :forums ]), @topic.guru_points) %>
+  <% end %>
+
+  <%= f.submit t(:save) %>
+<% end %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

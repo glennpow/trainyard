@@ -1,0 +1,15 @@
+<% title tp(:role, :scope => [ :authenticate ]) %>
+
+<%= render_heading(t(:roles_for_user, :scope => [ :authenticate, :roles, :index ], :user => @user.login.upcase)) %>
+
+<%= show_field(t(:roles_assigned, :scope => [ :authenticate, :roles, :index ]), nil) %>
+<ul class="show-field-list">
+  <%= render :partial => 'item', :collection => @user.roles, :as => :role, :locals => { :user => @user } %> 
+</ul>
+
+<%= show_field(t(:roles_available, :scope => [ :authenticate, :roles, :index ]), nil) %>
+<ul class="show-field-list">
+  <%= render :partial => 'item', :collection => (@all_roles - @user.roles), :as => :role, :locals => { :user => @user } %> 
+</ul>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

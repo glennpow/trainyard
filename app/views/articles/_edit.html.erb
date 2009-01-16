@@ -1,0 +1,9 @@
+<%= javascript :fckeditor %>
+
+<%= f.text_field :title %>
+
+<%= enumeration_select(f, :article_type) %>
+
+<%= f.locale_select(:locale_id) %>
+
+<%= fckeditor_textarea(:article, :body, :toolbarSet => 'Simple', :width => '100%', :height => '200px') %>

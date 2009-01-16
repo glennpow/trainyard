@@ -1,0 +1,11 @@
+<% title tp(:group, :scope => [ :authenticate ]) %>
+
+<%= render_heading(tp(:group, :scope => [ :authenticate ])) %>
+
+<% if has_administrator_role? %>
+  <% @indexer.footers = link_to(t(:create_object, :object => t(:group, :scope => [ :authenticate ])), new_group_path) %>
+<% end %>
+
+<%= render_indexer(@indexer) %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

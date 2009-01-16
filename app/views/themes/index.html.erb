@@ -1,0 +1,11 @@
+<% title tp(:theme, :scope => [ :themes ]) %>
+
+<%= render_heading(tp(:theme, :scope => [ :themes ])) %>
+
+<% if has_administrator_role? %>
+  <% @indexer.footers = link_to(t(:create_object, :object => t(:theme, :scope => [ :themes ])), new_theme_path) %>
+<% end %>
+
+<%= render_indexer(@indexer) %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

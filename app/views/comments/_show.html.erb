@@ -1,0 +1,5 @@
+<%= render_heading(t(:comment_for_object, :scope => [ :content ], :count => 1, :object => link_to(comment.commentable.name, comment.commentable))) %>
+
+<%= show_field(t(:author, :scope => [ :content ]), comment_author(comment)) %>
+
+<%= render_formatted(comment.body, :class => 'paragraph') %>

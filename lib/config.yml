@@ -1,0 +1,39 @@
+common: &common
+  default_locale: en-US
+  application_name: "Ruby on Rails"
+  application_mail: mail
+  admin_role_name: administrator
+  editor_role_name: editor
+  user_role_name: user
+  assignable_role_names: [ 'user' ]
+  default_image_options:
+    :styles:
+      :thumb: 80x80#
+      :normal: 200x200>
+    :url: "/system/:class/:attachment/:id/:style_:basename.:extension"
+    :default_url: "/images/default/:class/:attachment/missing_:style.png"
+    :path: ":rails_root/public/system/:class/:attachment/:id/:style_:basename.:extension"
+    :default_style: normal
+  default_image_size_options:
+    :less_than: 307200
+  users_contact: true
+  users_locale: true
+  default_user_config:
+    mailer_alerts: true
+    visible_contact: false
+  local_article_pages: false
+
+development:
+  <<: *common
+  application_domain: localhost:3000
+  email_activation: false
+
+test:
+  <<: *common
+  application_domain: localhost:3000
+  email_activation: false
+
+production:
+  <<: *common
+  application_domain: application-domain.com
+  email_activation: true

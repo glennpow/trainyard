@@ -1,0 +1,37 @@
+<% if headers %>
+<tr class='indexer-trh <%= row_class %>'>
+  <% headers.each do |header| %>
+    <% if header.is_a?(Hash) %>
+      <td class='indexer-tdh <%= header[:class] || '' %>' <%= header.except(:content, :class).collect { |attr| "#{attr.first}='#{attr.last}'" }.join(' ') %>>
+        <%= header[:content] %>
+      </td>
+    <% else %>
+      <td class='indexer-tdh'><%= header %></td>
+    <% end %>
+  <% end %>
+</tr>
+<% end %>
+
+<tr class='indexer-tr <%= row_class %>'>
+  <% if indexer && indexer.selectable %>
+    <td class='indexer-td'>
+      <%= check_box(indexer.klass.to_s.underscore, object.id) %>
+    </td>
+  <% end %>
+  
+  <% columns.each do |column| %>
+    <% if column.is_a?(Hash) %>
+      <td class='indexer-td <%= column[:class] || '' %>' <%= column.except(:content, :class).collect { |attr| "#{attr.first}='#{attr.last}'" }.join(' ') %>>
+        <%= column[:content] %>
+      </td>
+    <% else %>
+      <td class='indexer-td'><%= column %></td>
+    <% end %>
+  <% end %>
+  
+  <% if actions.any? %>
+    <td class='indexer-td'>
+      <%= render_list(actions, :class => 'clean-list') %>
+    </td>
+  <% end %>
+</tr>

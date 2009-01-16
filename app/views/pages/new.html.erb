@@ -1,0 +1,11 @@
+<% title t(:create_object, :object => t(:page, :scope => [ :content ])) %>
+
+<%= render_heading(t(:create_object, :object => t(:page, :scope => [ :content ]))) %>
+
+<% form_for :page, :url => objects_path do |f| %>
+  <%= render :partial => 'pages/edit', :locals => { :f => f, :page => @page } %>
+
+  <%= f.submit t(:create) %>
+<% end %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

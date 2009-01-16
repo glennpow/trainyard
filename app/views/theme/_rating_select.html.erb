@@ -1,0 +1,40 @@
+<% sanitized_name = name.gsub(/\]\[|[^-a-zA-Z0-9:.]/, "_").gsub(/_$/, "") %>
+
+<input id="<%= name %>" name="<%= name %>" type="hidden" value="<%= rating %>" />
+
+<script type="text/javascript">
+  var <%= sanitized_name %>_hoverScore = 0;
+  var <%= sanitized_name %>_score = <%= rating %>;
+    
+  function <%= sanitized_name %>_refreshRate() {
+    for (j = 1; j <= <%= max_rating %>; ++j)
+      document.getElementById("<%= sanitized_name %>_rating_" + j).className = (j <= <%= sanitized_name %>_hoverScore ? "rating-on" : "rating-off");
+  }
+  
+  function <%= sanitized_name %>_hoverRate(event, el, i, over) {
+    if (over) {
+      <%= sanitized_name %>_hoverScore = i;
+    } else
+      <%= sanitized_name %>_hoverScore = <%= sanitized_name %>_score;
+    <%= sanitized_name %>_refreshRate();
+  }
+  
+  function <%= sanitized_name %>_clickRate(event, el, i) {
+    <%= sanitized_name %>_score = <%= sanitized_name %>_hoverScore = i;
+    document.getElementById("<%= name %>").value = <%= sanitized_name %>_score;
+    <%= sanitized_name %>_refreshRate();
+  }
+</script>
+
+<table class="rating" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <% (1..max_rating).each do |i| %>
+      <td style="padding: 0">
+        <div id="<%= sanitized_name %>_rating_<%= i %>" class="rating-<%= i <= rating ? 'on' : 'off' %>" style="float: left"
+          onmouseover="<%= sanitized_name %>_hoverRate(event, this, <%= i %>, true)"
+          onmouseout="<%= sanitized_name %>_hoverRate(event, this, <%= i %>, false)"
+          onclick="<%= sanitized_name %>_clickRate(event, this, <%= i %>)"></div>
+      </td>
+    <% end %>
+  </tr>  
+</table>

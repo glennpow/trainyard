@@ -1,0 +1,35 @@
+<% title h(@article.title) %>
+
+<%= render_heading(link_to_unless_current(h(@article.title), article_path(@article)) +
+  " <span class='timestamp'>#{@article.created_at}</span>" +
+  " " + render_rating(@article)) %>
+
+<% unless @article.medias.empty? %>
+  <div class="medias">
+    <%= render :partial => 'medias/show', :collection => @article.medias, :as => :media %>
+  </div>
+<% end %>
+
+<%= render :partial => 'show', :locals => { :article => @article } %>
+
+<% if @comments_indexer %>
+  <%= render_heading(link_to(tp(:comment, :scope => [ :content ]), article_comments_path(@article)), :actions => [
+    { :allow => link_to(t(:post_comment, :scope => [ :content ]), new_article_comment_path(@article)) }
+    ]) %>
+
+  <%= render_indexer(@comments_indexer) %>
+<% end %>
+
+<% if @reviews_indexer %>
+  <%= render_heading(link_to(tp(:review, :scope => [ :content ]), article_reviews_path(@article)), :actions => [
+    { :if => may_review?(@article), :allow => link_to(t(:post_review, :scope => [ :content ]), new_article_review_path(@article)) }
+    ]) %>
+
+  <%= render_indexer(@reviews_indexer) %>
+<% end %>
+
+<%= render_page_actions([
+  { :allow => link_to_back },
+  { :allow => link_to_show(@article.groupable.name, @article.groupable) },
+  { :if => is_editor_of?(@article), :allow => icon_link_to(:edit, t(:edit_object, :object => t(:article, :scope => [ :content ])), edit_object_path) }
+  ]) %>

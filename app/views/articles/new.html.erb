@@ -1,0 +1,11 @@
+<% title t(:create_object, :object => t(:article, :scope => [ :content ])) %>
+
+<%= render_heading(t(:create_object, :object => t(:article, :scope => [ :content ]))) %>
+
+<% form_for(:article, :url => objects_path) do |f| %>
+  <%= render :partial => 'edit', :locals => { :f => f, :article => @article } %>
+
+  <%= f.submit t(:create) %>
+<% end %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

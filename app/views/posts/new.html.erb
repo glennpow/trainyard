@@ -1,0 +1,12 @@
+<% title t(:create_object, :object => t(:post, :scope => [ :forums ])) %>
+
+<%= render_heading(h(t(:regarding_topic, :scope => [ :forums ], :topic => @topic.name))) %>
+
+<% form_for :post, :url => objects_path do |f| %>
+  <%= render :partial => 'edit', :locals => { :f => f, :post => @post } %>
+
+  <%= f.submit t(:create) %>
+<% end %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>
+

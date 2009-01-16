@@ -1,0 +1,9 @@
+<% title t(:create_object, :object => t(:media, :scope => [ :content ])) %>
+
+<% form_for(:media, :url => objects_path) do |f| %>
+  <%= render :partial => 'edit', :locals => { :f => f, :media => @media } %>
+  
+  <%= f.submit t(:create) %>
+<% end %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

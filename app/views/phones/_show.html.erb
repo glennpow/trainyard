@@ -1,0 +1,2 @@
+<%= show_field(e(phone.phone_type, t(:phone, :scope => [ :contacts ])),
+  h(phone.number) + (phone.extension.blank? ? '' : 'x' + h(phone.extension))) %>

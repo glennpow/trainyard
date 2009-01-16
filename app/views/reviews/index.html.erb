@@ -1,0 +1,12 @@
+<% title tp(:review, :scope => [ :content ]) %>
+
+<%= render_heading(@reviewable.nil? ? tp(:review, :scope => [ :content ]) :
+  t(:review_of_object, :scope => [ :content ], :count => @indexer.collection.total_entries, :object => link_to_show(@reviewable.name, parent_path))) %>
+
+<% if may_review?(@reviewable) %>
+  <% @indexer.footers = link_to(t(:create_object, :object => t(:review, :scope => [ :content ])), new_object_path) %>
+<% end %>
+
+<%= render_indexer(@indexer) %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

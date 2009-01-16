@@ -1,0 +1,16 @@
+<%= render_row(
+  indexer,
+  page,
+  [
+    h(page.name),
+    h(page.permalink),
+    h(page.group.name),
+  ],
+  :actions => [
+    { :allow => [
+      icon_link_to(:show, t(:show), page)
+    ] },
+    { :if => is_editor_of?(page), :allow => [
+      icon_link_to(:edit, t(:edit), edit_object_path(page)),
+      icon_link_to(:delete, t(:delete), page, :confirm => t(:are_you_sure), :method => :delete)
+    ] } ]) %>

@@ -1,0 +1,3 @@
+<% form_tag(update_locale_url) do %>
+  <%= content_tag(:p, select_tag(:locale, options_for_select(locales, default_locale.nil? ? nil : default_locale.id), { :onchange => "this.form.submit()" })) %>
+<% end %>

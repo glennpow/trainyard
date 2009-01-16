@@ -1,0 +1,11 @@
+<% title t(:edit_object, :object => t(:post, :scope => [ :forums ])) %>
+
+<%= render_heading(h(@post.topic_name)) %>
+
+<% form_for :post, :url => object_path, :html => { :method => :put } do |f| %>
+  <%= render :partial => 'edit', :locals => { :f => f, :post => @post } %>
+  
+  <%= f.submit t(:save) %>
+<% end %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

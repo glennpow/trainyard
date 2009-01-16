@@ -1,0 +1,17 @@
+<div class="form-field">
+  <div class="label <%= label_class %>">
+    <%= label %>
+    <% if required %>
+      <%= icon(:required, :title => t(:required)) %>
+    <% end %>
+  </div>
+  <div class="input <%= input_class %>">
+    <%= input %>
+    <%= render :partial => 'theme/field_error', :locals => { :error => error } %>
+  </div>
+  <% unless hint.blank? %>
+    <div class="hint <%= hint_class %>">
+      <%= hint %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,342 @@
+en:
+  about: About
+  accept: Accept
+  add: Add
+  add_object: Add {{object}}
+  all: All
+  anonymous: Anonymous
+  are_you_sure: Are you sure?
+  back: Back
+  back_link: "&laquo; Back"
+  cancel: Cancel
+  create: Create
+  create_object: Create {{object}}
+  decline: Decline
+  delete: Delete
+  description: Description
+  disable: Disable
+  disabled: Disabled
+  edit: Edit
+  edit_object: Edit {{object}}
+  enable: Enable
+  enabled: Enabled
+  faq: FAQ
+  failure: There was an error processing your request.
+  finish: Finish
+  from: From
+  help: Help
+  home: Home
+  image: Image
+  in_object: in {{object}}
+  in_all_object: in all {{object}}
+  link: Link
+  more: More
+  more_object: More {{object}}
+  name: Name
+  new_object: New {{object}}
+  "no": "No"
+  object_deleted: "{{object}} deleted."
+  object_not_created: There was a problem creating {{object}}.
+  object_not_updated: There was a problem updating {{object}}.
+  object_created: "{{object}} created."
+  object_updated: "{{object}} updated."
+  preview: Preview
+  remove: Remove
+  remove_object: Remove {{object}}
+  reply: Reply
+  required: Required
+  save: Save
+  search: Search
+  search_results_for_query: Search results for '{{query}}'
+  select_all: Select All
+  settings: Settings
+  show: Show
+  show_object: Show {{object}}
+  status: Status
+  terms_and_conditions: Terms and conditions
+  time_zone: Time Zone
+  type: Type
+  unknown: Unknown
+  view: View
+  view_object: View {{object}}
+  "yes": "Yes"
+  datetimes:
+    date: Date
+    time: Time
+  authenticate: 
+    access_denied: Please log in to access this feature.  Sign up for free!
+    account: Account
+    administer_object: Administer {{object}}
+    change_password: Change Password
+    child_group: Child Group
+    confirm_password: Confirm Password
+    display_name: Display Name
+    forgot_password: Forgot Password
+    group: Group
+    invite: Invite
+    join: Sign Up!
+    joined_on: Joined On
+    logged_in: Logged in successfully
+    logged_in_as_user: Logged in as {{user}}
+    logged_out: Logged out successfully
+    login: Login
+    logout: Logout
+    member: Member
+    moderator: Moderator
+    new_password: New Password
+    old_password: Old Password
+    parent_group: Parent Group
+    password: Password
+    permission_denied: You don't have permission to complete that action.
+    primary_email: Primary Email
+    profile: Profile
+    registered: Registered
+    remember_me: Remember me
+    reset_password: Reset Password
+    session: Session
+    user: User
+    user_not_found: User not found
+    users_in_object: Users in {{object}}
+    role: Role
+    parent_group: Parent Group
+    child_group: Child Group
+    invites:
+      invitation:
+        create_user: Please create an account using the email which received this invitation.  Then login to accept the invite.
+        email_body_member_invite: |
+          You have been invited to join {{group}}.
+          Visit this url to respond:
+            
+            {{url}}
+        email_body_moderator_invite: |
+          You have been invited to moderate {{group}}.
+          Visit this url to respond:
+            
+            {{url}}
+        failure_invalid_code: Sorry, that is an invalid invite code. Please check your code and try again. (Perhaps your email client inserted a carriage return)
+        failure_invalid_user: Sorry, this invitation was intended for a user with a different email than yours. (Perhaps you used a different email to sign up than the one which received the invite)
+        member_invite: You have been invited to join {{group}}.
+        moderator_invite: You have been invited to moderate {{group}}.
+      new:
+        as_moderator: As Moderator
+        invite_to_group: Invite to {{group}}
+      update_invitation:
+        invite_accepted: Invite Accepted
+        invite_denied: Invite Denied
+        member_invite_accepted: You have accepted the invite, and are now a member of {{group}}.
+        member_invite_denied: You have denied the invite to join {{group}}.
+        member_invite_accepted_by: "{{user}} has accepted the invite to join {{group}}"
+        member_invite_denied_by: "{{user}} has denied the invite to join {{group}}."
+        moderator_invite_accepted: You have accepted the invite, and are now the moderator of {{group}}.
+        moderator_invite_denied: You have denied the invite to moderate {{group}}.
+        moderator_invite_accepted_by: "{{user}} has accepted the invite to moderate {{group}}.  You are no longer the moderator."
+        moderator_invite_denied_by: "{{user}} has denied the invite to moderate {{group}}."
+        failure_invalid_code: Sorry, that is an invalid invite code. (Perhaps this invite has been revoked)
+    passwords:
+      edit:
+        constraints: Passwords must be between 4 and 40 characters
+        failure_do_not_match: New password does not match the password confirmation.
+        failure_incorrect: Your old password is incorrect.
+      reset:
+        failure: There was a problem resetting your password.
+        failure_blank: Password field cannot be blank.
+        failure_invalid_code: Sorry, that is an invalid password reset code. Please check your code and try again. (Perhaps your email client inserted a carriage return)
+        success: Password reset.
+      forgot:
+        confirm_email: What is the email address used to create your account?
+        email_body: |
+          {{login}}, A request to reset your password has been made.
+          If you did not make this request, simply ignore this email.
+          If you did make this request just click the link below:
+            
+            {{url}}
+            
+          If the above URL does not work try copying and pasting it into your browser.
+          If you continue to have problem please feel free to contact us.
+        email_subject: You have requested to change your password
+        failure_no_user: Could not find a user with that email address.
+        success: A password reset link has been sent to your email address.
+    roles:
+      admin: Administrator
+      editor: Editor
+      user: User
+      index:
+        roles_assigned: Roles assigned
+        roles_available: Roles available
+        roles_for_user: Roles for {{user}}
+    sessions:
+      new:
+        failure_disabled: Your account has been disabled.
+        failure_inactive: Your account is not active, please check your email for the activation code.
+        failure_login: Your username or password is incorrect.
+    users:
+      confirm:
+        email_body: |
+          {{login}}, your account has been confirmed.
+          To visit the site, follow the link below:
+            
+            {{url}}
+        email_subject: Your account has been confirmed!
+        failure_already_activated: Your account has already been activated. You can log in below.
+        failure_no_activation_code: Activation code not found. Please try creating a new account.
+        success: Your account has been activated! You can now login.
+      disable:
+        failure: There was a problem disabling this account
+        success: Account disabled
+      enable:
+        failure: There was a problem enabling this account
+        success: Account enabled
+      new: 
+        email_subject: Please activate your new account
+        email_body: |
+          Your account has been created.
+          
+          Username: {{login}}
+          Password: {{password}}
+          
+          Visit this url to confirm your account:
+            
+            {{url}}
+        failure: There was a problem creating your account
+        success: Thanks for signing up!  Check your email to activate your account.
+  contacts: 
+    address: Address
+    birthdate: Birthdate
+    contact: Contact
+    email: Email
+    first_name: First Name
+    gender: Gender
+    last_name: Last Name
+    middle_name: Middle Name
+    phone: Phone Number
+    prefix: Prefix
+    select_a_country: Select a country
+    select_a_country_first: Select a country first
+    suffix: Suffix
+    url: Web Site
+    visible_contact: Visible Contact Information
+    visible_contact_hint: Whether or not your full name and address are publicly viewable
+    addresses: 
+      city: City
+      country: Country
+      postal_code: Postal Code
+      region: State / Province
+      street: Street
+      street_2: "Apt / Room #"
+    address_types: 
+      po_box: P.O. Box
+      billing: Billing
+      shipping: Shipping
+    email_types: 
+      business: Business
+      personal: Personal
+    genders: 
+      female: Female
+      male: Male
+    phone_types: 
+      business: Business
+      fax: Fax
+      mobile: Mobile
+      personal: Personal
+    prefixes: 
+      dr: Dr.
+      mr: Mr.
+      mrs: Mrs.
+      ms: Ms.
+    suffixes: 
+      ii: II
+      iii: III
+      iv: IV
+      jr: Jr.
+      phd: PhD.
+      sr: Sr.
+    url_types: 
+      business: Business
+      personal: Personal
+  content:
+    article: Article
+    articles_for_object: Articles for {{object}}
+    author: Author
+    blog: Blog
+    comment: Comment
+    comment_for_object:
+      one: Comment for {{object}}
+      other: Comments for {{object}}
+    from: From
+    inbox: Inbox
+    locale: Locale
+    mailer_alerts: Email Alerts
+    mailer_alerts_hint: Receive emails regarding site activity related to you
+    message: Message
+    message_from_object: Message from {{object}}
+    messages_info:
+      one: "{{count}} Message ({{unread}} new)"
+      other: "{{count}} Messages ({{unread}} new)"
+    page: Page
+    permalink: Permalink
+    post_comment: Post Comment
+    post_review: Post Review
+    rating: Rating
+    received: Received
+    review: Review
+    reviews:
+      zero: No Reviews Yet
+      one: 1 Review
+      other: "{{count}} Reviews"
+    review_of_object:
+      one: Review of {{object}}
+      other: Reviews of {{object}}
+    send_message: Send Message
+    sent: Sent
+    subject: Subject
+    title: Title
+    to: To
+    topic: Topic
+    video: Video
+    view_comments:
+      zero: No Comments
+      one: View Comment
+      other: View {{count}} Comments
+    view_reviews:
+      zero: No Reviews
+      one: View Review
+      other: View {{count}} Reviews
+    content_types:
+      flash: Adobe Flash Movie
+      quicktime: Quicktime Movie
+      windows: Windows Media Video
+    article_types:
+      news: News
+      site: Site Content
+      summary: Summary
+  forums:
+    author: Author
+    by_author: By {{author}}
+    community: Community
+    forum: Forum
+    guru_point: Guru Point
+    guru_points:
+      zero: No Guru Points
+      one: 1 Guru Point
+      other: "{{count}} Guru Points"
+    guru_points_available: Guru Points Available
+    last_post: Last Post
+    move_down: Move Down
+    move_up: Move Up
+    new_post_for_topic: "New post for forum topic: {{topic}}"
+    post: Post
+    post_reply: Post Reply
+    quoted_from_post: Quoted from {{post}}
+    regarding_topic: "Re: {{topic}}"
+    topic: Topic
+  themes:
+    active: Active
+    apply: Apply
+    click_to_apply: Click {{link}} to set this as your company's theme.
+    preview: Below is a preview of this theme.
+    theme: Theme
+    theme_name: Theme Name
+  website:
+    content: Site Content
+    exception: Site Exception
+    page: Site Page

@@ -1,0 +1,7 @@
+<%= render_row(
+  indexer,
+  review,
+  [
+    { :content => review_descriptor(review), :class => 'column-top' },
+    review_body(review),
+  ]) %>

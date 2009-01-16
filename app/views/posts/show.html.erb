@@ -1,0 +1,15 @@
+<% title t(:post, :scope => [ :forums ]) %>
+
+<%= render_heading(link_to(h(@post.topic_name), topic_path(@post.topic))) %>
+
+<%= post_breadcrumbs(@post) %>
+
+<%= show_field(t(:author, :scope => [ :forums ]), link_to_user(@post.user)) %>
+
+<% if @post.guru_points > 0 %>
+  <%= show_field(tp(:guru_point, :scope => [ :forums ]), @post.guru_points) %>
+<% end %>
+
+<%= render_formatted(@post.body, :class => 'paragraph') %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

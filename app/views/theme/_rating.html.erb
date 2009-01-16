@@ -1,0 +1,55 @@
+<% whole = rating.to_i %>
+<% fraction = (rating - whole) * 100 %>
+<table class="rating" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <% (1..whole).each do |i| %>
+      <td style="padding: 0">
+        <% if path %>
+          <a href="<%= path %>" title="<%= label %>">
+        <% end %>
+            <div class="rating-on"></div>
+        <% if path %>
+          </a>
+        <% end %>
+      </td>
+    <% end %>
+    <% if fraction > 0 %>
+      <td style="padding: 0">
+        <% if path %>
+          <a href="<%= path %>" title="<%= label %>">
+        <% end %>
+            <div class="rating-off" style="padding: 0;">
+              <div class="rating-on" style="margin: 0; width: <%= fraction %>%;"></div>
+            </div>
+        <% if path %>
+          </a>
+        <% end %>
+      </td>
+      <% whole += 1 %>
+    <% end %>
+    <% (whole..(max_rating - 1)).each do |i| %>
+      <td style="padding: 0">
+        <% if path %>
+          <a href="<%= path %>" title="<%= label %>">
+        <% end %>
+            <div class="rating-off"></div>
+        <% if path %>
+          </a>
+        <% end %>
+      </td>
+    <% end %>
+  </tr>
+  <% unless hide_info %>
+    <tr>
+      <td colspan="<%= max_rating %>">
+        <% if path %>
+          <a href="<%= path %>" title="<%= label %>">
+        <% end %>
+            <p class="rating-info"><%= info %><p>
+        <% if path %>
+          </a>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>

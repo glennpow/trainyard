@@ -1,0 +1,11 @@
+<%= render_row(
+  indexer,
+  post,
+  [
+    { :content => render_user_card(post.user), :class => 'column-top' },
+    { :content => render(:partial => 'posts/body', :locals => { :post => post }), :class => 'column-top' },
+  ],
+  :headers => [
+    post.created_at.to_s(:short),
+    render(:partial => 'posts/body_header', :locals => { :post => post })
+  ]) %>

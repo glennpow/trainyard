@@ -1,0 +1,11 @@
+<% title tp(:forum, :scope => [ :forums ]) %>
+
+<%= render_heading(tp(:forum, :scope => [ :forums ])) %>
+
+<% if has_administrator_role? %>
+  <% @indexer.footers = link_to(t(:create_object, :object => t(:forum, :scope => [ :forums ])), new_forum_path) %>
+<% end %>
+
+<%= render_indexer(@indexer) %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

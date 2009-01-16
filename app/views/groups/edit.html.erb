@@ -1,0 +1,9 @@
+<% title t(:edit_object, :object => t(:group, :scope => [ :authenticate ])) %>
+
+<% form_for :group, :url => object_path, :html => { :method => :put } do |f| %>
+  <%= render :partial => 'edit', :locals => { :f => f, :group => @group, :parent_groups => @parent_groups } %>
+
+  <%= f.submit t(:save) %>
+<% end %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

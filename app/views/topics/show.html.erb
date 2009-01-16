@@ -1,0 +1,7 @@
+<% title t(:topic, :scope => [ :forums ]) %>
+
+<%= render :partial => 'topics/show', :locals => { :topic => @topic } %>
+
+<%= render_indexer(@posts_indexer) %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

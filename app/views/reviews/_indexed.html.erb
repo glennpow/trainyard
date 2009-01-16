@@ -1,0 +1,21 @@
+<div class="review listed">
+  <table class="comment-table">
+    <tr>
+      <td class="column-top comment-descriptor">
+        <%= image_link_to_user(review.user, :image_style => :thumb) %>
+        <p class="comment-info"><%= link_to_user(review.user) %></p>
+        <p class="comment-info"><%= review.created_at.to_s(:short) %></p>
+      </td>
+  
+      <td class="column-top align-left">
+        <%= render_rating(review) %>
+
+        <%= link_to(truncate(auto_format(review.body), :length => 100), review_path(review)) %>
+
+        <% if is_editor_of?(review) %>
+          <%= icon_link_to(:edit, t(:edit), edit_review_path(review)) %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+</div>

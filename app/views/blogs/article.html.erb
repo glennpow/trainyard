@@ -1,0 +1,49 @@
+<% title h(@blog.name) %>
+
+<table class="blog-table">
+  <tr>
+    <td class="blog-table-article">
+      <% if @article %>
+        <%= render_heading(link_to_unless_current(h(@article.title), article_path(@article)) +
+          " <span class='timestamp'>#{@article.created_at}</span>" +
+          " " + render_rating(@article)) %>
+
+        <% unless @article.medias.empty? %>
+          <div class="medias">
+            <%= render :partial => 'medias/show', :collection => @article.medias, :as => :media %>
+          </div>
+        <% end %>
+
+        <%= render :partial => 'articles/show', :locals => { :article => @article } %>
+
+        <% if @comments_indexer %>
+          <%= render_heading(link_to(tp(:comment, :scope => [ :content ]), article_comments_path(@article)), :actions => [
+            { :allow => link_to(t(:post_comment, :scope => [ :content ]), new_article_comment_path(@article)) }
+            ]) %>
+
+          <%= render_indexer(@comments_indexer) %>
+        <% end %>
+
+        <% if @reviews_indexer %>
+          <%= render_heading(link_to(tp(:review, :scope => [ :content ]), article_reviews_path(@article)), :actions => [
+            { :if => !logged_in? || may_review?(@article), :allow => link_to(t(:post_review, :scope => [ :content ]), new_article_review_path(@article)) }
+            ]) %>
+
+          <%= render_indexer(@reviews_indexer) %>
+        <% end %>
+      <% end %>
+    </td>
+  
+    <td class="blog-table-contents">
+      <%= render_heading(tp(:video, :scope => [ :content ])) %>
+      
+      <div class="blog-contents">
+        <% @blog.articles.each do |article| %>
+          <%= render :partial => 'blogs/article_indexed', :locals => { :article => article, :blog => @blog } %>
+        <% end %>
+      </div>
+    </td>
+  </tr>
+</table>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

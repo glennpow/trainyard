@@ -1,0 +1,11 @@
+<%= forum_breadcrumbs(forum) %>
+
+<%= render_heading("#{t(:forum, :scope => [ :forums ])}: #{h(forum.name)}") %>
+
+<% unless forum.description.blank? %>
+  <%= render_formatted(forum.description, :class => 'paragraph') %>
+<% end %>
+
+<%= render_actions([
+  { :allow => icon_link_to(:add_large, t(:new_object, :object => t(:topic, :scope => [ :forums ])), new_forum_topic_path(forum)) }
+  ] ) %>

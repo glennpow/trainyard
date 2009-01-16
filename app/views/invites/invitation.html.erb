@@ -1,0 +1,10 @@
+<% title t(:invite, :scope => [ :authenticate ]) %>
+
+<%= render_heading(t(@invite.moderator ? :moderator_invite : :member_invite, :scope => [ :authenticate, :invites, :invitation ], :group => @group.name)) %>
+
+<% form_tag update_invitation_url(@group, params[:id]) do %>
+  <p>
+    <%= submit_tag t(:accept) %>
+    <%= submit_tag t(:decline) %>
+  </p>
+<% end %>

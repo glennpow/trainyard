@@ -1,0 +1,18 @@
+<table class="full-width">
+  <tr>
+    <td>
+      <a href="<%= post_path(post) %>"><%= h(post.topic_name) %></a>
+    </td>
+    <td style="text-align: right">
+      <% unless post.first? %>
+        <span class="<%= post.guru_points.zero? ? 'no-guru-points' : 'guru-points' %>">
+          <%= t(:guru_points, :scope => [ :forums ], :count => post.guru_points) %>
+        </span>
+        
+        <% if may_edit_guru_points?(post) %>
+          <%= icon_link_to(:add, nil, edit_guru_points_post_path(post), { :title => t(:add) }) %>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+</table>

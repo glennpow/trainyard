@@ -1,0 +1,13 @@
+<% title t(:invite_to_group, :scope => [ :authenticate, :invites, :new ], :group => @group.name) %>
+
+<%= render_heading(t(:invite_to_group, :scope => [ :authenticate, :invites, :new ], :group => @group.name)) %>
+
+<% form_for(:invite, :url => objects_path) do |f| %>
+  <%= f.text_field :email %>
+
+  <%= f.check_box :moderator, :label => { :name => t(:as_moderator, :scope => [ :authenticate, :invites, :new ]) } %>
+
+  <%= f.submit t(:invite, :scope => [ :authenticate ]) %>
+<% end %>
+
+<%= render_page_actions([ { :allow => link_to_back } ]) %>

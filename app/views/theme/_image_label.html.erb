@@ -1,0 +1,7 @@
+<% content_tag(:span, options) do %>
+  <%= (label_align == :left && !label.blank? ? content_tag(:span, label, :class => 'image-label-text') : '') %>
+  <% if image %>
+    <%= image_tag(image, :class => 'image-label-image') %>
+  <% end %>
+  <%= (label_align == :right && !label.blank? ? content_tag(:span, label, :class => 'image-label-text') : '') %>
+<% end %>
