@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
   def create
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
-      flash[:notice] = t(:logged_in, :scope => [ :authenticate ])
+      flash[:notice] = t(:logged_in, :scope => [ :authentication ])
       redirect_back_or_default home_path
     else
       render :action => :new
@@ -20,7 +20,7 @@ class UserSessionsController < ApplicationController
 
   def destroy
     current_user_session.destroy
-    flash[:notice] = t(:logged_out, :scope => [ :authenticate ])
+    flash[:notice] = t(:logged_out, :scope => [ :authentication ])
     redirect_back_or_default login_path
   end
 end

@@ -1,0 +1,7 @@
+address_admin:
+  street_1: 1600 Pennsylvania Ave. NW
+  city: Washington D.C.
+  postal_code: 20500
+  region: region_MD
+  country: country_US
+  resource: contact_admin (Contact)

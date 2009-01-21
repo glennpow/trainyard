@@ -27,11 +27,12 @@ module Trainyard
       end
     end
 
-    def labeled_field(field, options = {})
+    def labeled_field(field, options = {}, &block)
+      is_erb = @template.send(:block_called_from_erb?, block)
       label_options = options[:label] || {}
       locals = {
         :input_class => options[:input_class] || '',
-        :input => yield,
+        :input => is_erb ? @template.capture(&block) : yield,
         :label_class => label_options.delete(:class) || '',
         :label => label(field, label_options.delete(:name), label_options),
         :hint_class => options[:hint_class],
@@ -39,9 +40,8 @@ module Trainyard
         :required => options[:required] || false,
         :error => error_message(field, options[:error])
       }
-      @template.capture do
-        @template.render :partial => 'theme/field', :locals => locals
-      end
+      content = @template.render :partial => 'theme/field', :locals => locals
+      is_erb ? @template.concat(content) : content
     end
   
     def text_area(field, options = {})

@@ -1,16 +1,14 @@
-<% title t(:edit_object, :object => t(:account, :scope => [ :authenticate ])) %>
+<% title t(:edit_object, :object => t(:account, :scope => [ :authentication ])) %>
 
-<%= render_heading t(:edit_object, :object => t(:account, :scope => [ :authenticate ])) %>
+<%= render_heading t(:edit_object, :object => t(:account, :scope => [ :authentication ])) %>
 
-<%= render_page_actions([ { :allow => [
-  link_to(t(:show_object, :object => t(:profile, :scope => [ :authenticate ])), user_path(@user)),
-  link_to(t(:change_password, :scope => [ :authenticate ]), change_password_path)
-  ] } ]) %>
+<%= render_actions([
+  link_to(t(:show_object, :object => t(:profile, :scope => [ :authentication ])), user_path(@user)),
+  link_to(t(:change_password, :scope => [ :authentication ]), change_password_path)
+], :class => 'page-actions') %>
 
 <% form_for :user, :url => user_url(@user), :html => { :method => :put, :multipart => true } do |f| -%>
   <%= render :partial => 'edit', :locals => { :f => f, :user => @user } %>
 
   <%= f.submit t(:save) %>
 <% end -%>
-
-<%= render_page_actions([ { :allow => link_to_back } ]) %>

@@ -1,6 +1,11 @@
 class ArticlesController < ApplicationController
   make_resourceful do
-    belongs_to :groupable
+    belongs_to :resource
+    
+    before :show do
+      load_comments(@article)
+      load_reviews(@article)
+    end
   end
   
   def resourceful_name
@@ -9,25 +14,27 @@ class ArticlesController < ApplicationController
 
   before_filter :login_required, :only => [ :index, :new, :create, :edit, :update, :destroy ]
   before_filter :check_editor_or_administrator, :only => [ :index ]
+  before_filter :check_resource, :only => [ :new, :create ]
   before_filter :check_editor_of, :only => [ :new, :create, :edit, :update, :destroy ]
+  before_filter :check_viewer_of, :only => [ :show ]
   
   def index
     respond_with_indexer do |options|
-      options[:default_sort] = :title
+      options[:default_sort] = :name
       options[:headers] = [
-        { :name => t(:title, :scope => [ :content ]), :sort => :title },
+        { :name => t(:title, :scope => [ :content ]), :sort => :name },
         t(:topic, :scope => [ :content ]),
-        { :name => t(:type), :sort => :article_type, :include => :article_type, :order => 'article_types.name' },
         t(:locale, :scope => [ :content ])
       ]
       options[:search] = true
     
       options[:conditions] = {}
-      if @groupable
-        options[:conditions][:groupable_type] = @groupable.class.to_s
-        options[:conditions][:groupable_id] = @groupable.id
+      if @resource
+        options[:conditions][:resource_type] = @resource.class.to_s
+        options[:conditions][:resource_id] = @resource.id
+      elsif params[:resource_type]
+        options[:conditions][:resource_type] = params[:resource_type]
       end
-      options[:conditions][:article_type_id] = ArticleType[params[:article_type].to_sym].id if params[:article_type]
     end
   end
   
@@ -35,14 +42,18 @@ class ArticlesController < ApplicationController
   private
   
   def check_editor_or_administrator
-    if @groupable
-      check_editor_of
-    else
-      check_administrator_role
-    end
+    @resource ? check_editor_of : check_administrator_role
+  end
+  
+  def check_resource
+    check_condition(@resource)
+  end
+  
+  def check_viewer_of
+    check_viewer(@article)
   end
   
   def check_editor_of
-    check_editor(@groupable || @article)
+    check_editor(@resource || @article)
   end
 end

@@ -1,8 +1,8 @@
 <% if comment.user %>
   <%= f.hidden_field(:user_id) %>
-  <%= show_field t(:author, :scope => [ :content ]), comment.user.name %>
+  <%= render_field t(:author, :scope => [ :content ]), comment.user.name %>
 <% else %>
-  <%= f.text_field :user_name, :label => { :name => t(:author, :scope => [ :content ]) } %>
+  <%= f.text_field :user_name, :label => { :name => t(:author, :scope => [ :content ]) }, :required => true %>
 <% end %>
 
-<%= f.text_area :body %>
+<%= f.text_area :body, :required => true, :hint => link_to_textile_hint %>

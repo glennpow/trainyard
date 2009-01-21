@@ -1,9 +1,9 @@
 <% title t(:edit_object, :object => t(:review, :scope => [ :content ])) %>
 
+<%= render_heading(t(:review_of_object, :scope => [ :content ], :count => 1, :object => @review.resource.name)) %>
+
 <% form_for :review, :url => object_path, :html => { :method => :put } do |f| %>
   <%= render :partial => 'edit', :locals => { :f => f, :review => @review } %>
 
   <%= f.submit t(:save) %>
 <% end %>
-
-<%= render_page_actions([ { :allow => link_to_back } ]) %>

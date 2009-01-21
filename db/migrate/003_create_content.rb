@@ -1,25 +1,45 @@
 class CreateContent < ActiveRecord::Migration
   def self.up
     create_table :articles do |t|
-      t.references :groupable, :polymorphic => true, :null => false
-      t.references :article_type
-      t.string :title, :null => false
+      t.references :resource, :polymorphic => true, :null => false
+      t.string :name, :null => false
       t.text :body, :null => false
       t.references :locale
+      t.boolean :commentable, :default => true
+      t.boolean :reviewable, :default => true
+      t.timestamps
+    end
+  
+    create_table :blogs do |t|
+      t.references :group, :null => false
+      t.string :name, :null => false
       t.timestamps
     end
     
-    create_table :article_types do |t|
-      t.string :key, :null => false
-      t.string :name, :null => false
+    create_table :comments do |t|
+      t.references :resource, :polymorphic => true
+      t.references :user
+      t.string :user_name
+      t.text :body
+      t.timestamps
+    end
+    
+    create_table :forums do |t|
+      t.string :name
+      t.text :description
+      t.integer :topics_count, :default => 0
+      t.integer :posts_count, :default => 0
+      t.integer :position
+      t.timestamps
     end
 
-    create_table :content_types do |t|
-      t.string :key, :null => false
-      t.string :name, :null => false
-      t.string :mime, :null => false
-      t.string :extension, :null => false
+    create_table :forums_users do |t|
+      t.references :forum
+      t.references :user
     end
+
+    add_index :forums_users, [ :forum_id ]
+    add_index :forums_users, [ :user_id ]
 
     create_table :languages do |t|
       t.string :code, :null => false
@@ -31,7 +51,7 @@ class CreateContent < ActiveRecord::Migration
     end
         
     create_table :medias do |t|
-      t.references :groupable, :polymorphic => true, :null => false
+      t.references :resource, :polymorphic => true, :null => false
       t.string :name, :null => false
       t.string :url
       t.string :media_file_name
@@ -48,10 +68,37 @@ class CreateContent < ActiveRecord::Migration
       t.timestamps
     end
     
+    create_table :messages do |t|
+      t.references :from_user, :null => false
+      t.references :to_user, :null => false
+      t.string :subject, :null => false
+      t.text :body
+      t.boolean :read, :default => false
+      t.timestamps
+    end
+
     create_table :pages do |t|
-      t.string :name, :null => false
-      t.string :permalink
-      t.references :group, :null => false
+      t.string :name
+      t.string :permalink, :null => false
+      t.timestamps
+    end
+
+    create_table :posts do |t|
+      t.references :user
+      t.references :topic
+      t.text :body
+      t.integer :guru_points, :default => 0
+      t.timestamps
+    end
+
+    add_index :posts, [ :topic_id ]
+    add_index :posts, [ :user_id ]
+
+    create_table :reviews do |t|
+      t.references :resource, :polymorphic => true
+      t.references :user, :null => false
+      t.text :body
+      t.integer :rating
       t.timestamps
     end
     
@@ -83,17 +130,38 @@ class CreateContent < ActiveRecord::Migration
     end
     
     add_index :themeables_themes, [ :themeable_id, :themeable_type ], :unique => true
+
+    create_table :topics do |t|
+      t.references :forum
+      t.references :user
+      t.string :name
+      t.integer :hits, :default => 0
+      t.boolean :sticky, :default => false
+      t.integer :guru_points, :default => 0
+      t.integer :posts_count, :default => 0
+      t.datetime :replied_at
+      t.timestamps
+    end
+
+    add_index :topics, [ :forum_id ]
+    add_index :topics, [ :user_id ]
   end
 
   def self.down
     drop_table :articles
-    drop_table :article_types
-    drop_table :content_types
+    drop_table :blogs
+    drop_table :comments
+    drop_table :forums
+    drop_table :forums_users
     drop_table :languages
     drop_table :locales
     drop_table :medias
+    drop_table :messages
     drop_table :pages
+    drop_table :posts
+    drop_table :reviews
     drop_table :themes
     drop_table :themeables_themes
+    drop_table :topics
   end
 end

@@ -3,10 +3,10 @@
 <%= render_heading(t(:create_object, :object => t(:topic, :scope => [ :forums ]))) %>
 
 <% form_for :topic, :url => objects_path do |f| %>
-  <%= f.text_field :name %>
+  <%= f.text_field :name, :required => true %>
   
   <% if @topic.guru_points > 0 %>
-    <%= show_field(tp(:guru_point, :scope => [ :forums ]), @topic.guru_points) %>
+    <%= render_field(tp(:guru_point, :scope => [ :forums ]), @topic.guru_points) %>
   <% end %>
   
   <% fields_for :post do |post_f| %>
@@ -15,6 +15,4 @@
 
   <%= f.submit t(:create) %>
 <% end %>
-
-<%= render_page_actions([ { :allow => link_to_back } ]) %>
 

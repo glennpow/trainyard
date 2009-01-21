@@ -3,5 +3,5 @@
   <p><%= link_to_user(user) %></p>
   <p>(<%= user_role(user) %>)</p>
   <p><%= tp(:guru_point, :scope => [ :forums ]) %>: <%= user.guru_points %></p>
-  <p><%= t(:registered, :scope => [ :authenticate ]) %>: <%= user.created_at.to_date.to_s %></p>
+  <p><%= t(:registered, :scope => [ :authentication ]) %>: <%= user.created_at.to_date.to_s %></p>
 </div>

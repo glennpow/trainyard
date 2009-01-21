@@ -1,5 +1,5 @@
 class Phone < ActiveRecord::Base
-  belongs_to :phoneable, :polymorphic => true
+  belongs_to :resource, :polymorphic => true
   has_enumeration :phone_type
   
   validates_presence_of :number

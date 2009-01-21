@@ -10,7 +10,7 @@ class Mailer < ActionMailer::Base
     emails << options[:email] if options[:email]
     
     users.each do |user|
-      if options[:force_alert] || user.user_config.mailer_alerts
+      if options[:force_alert] || user.mailer_alerts
         emails << user.email
       end
     end

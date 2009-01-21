@@ -6,7 +6,7 @@ class InvitesController < ApplicationController
   end
   
   def resourceful_name
-    t(:invite, :scope => [ :authenticate ])
+    t(:invite, :scope => [ :authentication ])
   end
 
   before_filter :login_required, :only => [ :index, :new, :create, :delete, :invitation, :update_invitation ]
@@ -24,7 +24,7 @@ class InvitesController < ApplicationController
     respond_with_indexer do |options|
       optinos[:default_sort] = :created_at
       options[:headers] = [
-        t(:group, :scope => [ :authenticate ]),
+        t(:group, :scope => [ :authentication ]),
         { :name => t(:email, :scope => [ :contacts ]), :sort => :email },
         { :name => t(:sent), :scope => [ :content ], :sort => :created_at }
       ]
@@ -34,7 +34,7 @@ class InvitesController < ApplicationController
   def invitation
     unless @invite
       logger.error "Invalid Invite Code given."
-      flash[:error] = t(:failure_invalid_code, :scope => [ :authenticate, :invites, :invitation ])
+      flash[:error] = t(:failure_invalid_code, :scope => [ :authentication, :invites, :invitation ])
       redirect_to intro_path
       return
     end
@@ -42,12 +42,12 @@ class InvitesController < ApplicationController
     if logged_in?
       if @user != current_user
         logger.error "Invalid User replying to Invite."
-        flash[:error] = t(:failure_invalid_user, :scope => [ :authenticate, :invites, :invitation ])
+        flash[:error] = t(:failure_invalid_user, :scope => [ :authentication, :invites, :invitation ])
         redirect_to intro_path
         return
       end
     else
-      flash[:notice] = t(:create_user, :scope => [ :authenticate, :invites, :invitation ])
+      flash[:notice] = t(:create_user, :scope => [ :authentication, :invites, :invitation ])
       redirect_to new_user_path
     end
   end
@@ -55,55 +55,48 @@ class InvitesController < ApplicationController
   def update_invitation
     unless @invite
       logger.error "Invalid Invite given"
-      flash[:error] = t(:failure_invalid_code, :scope => [ :authenticate, :invites, :update_invitation ])
-      redirect_to intro_path
+      flash[:error] = t(:failure_invalid_code, :scope => [ :authentication, :invites, :update_invitation ])
+      redirect_to user_path(current_user)
       return
     end
     @user = User.find_by_email(@invite.email)
     if @user != current_user
       logger.error "Invalid User replying to Invite."
-      flash[:error] = t(:failure_invalid_user, :scope => [ :authenticate, :invites, :invitation ])
-      redirect_to intro_path
+      flash[:error] = t(:failure_invalid_user, :scope => [ :authentication, :invites, :invitation ])
+      redirect_to user_path(current_user)
       return
     end
     case params[:commit]
     when t(:accept)
-      moderator = @group.moderator
       message = Message.new
-      message.from_user = User.admin
-      message.to_user = moderator
-      message.subject = t(:invite_accepted, :scope => [ :authenticate, :invites, :update_invitation ])
-      message.body = t(@invite.moderator ? :moderator_invite_accepted_by : :member_invite_accepted_by, :scope => [ :authenticate, :invites, :update_invitation ], :user => current_user.name, :group => @group.name)
+      message.from_user = User.administrator
+      message.to_user = @invite.inviter
+      message.subject = t(:invite_accepted, :scope => [ :authentication, :invites, :update_invitation ])
+      message.body = t(:member_invite_accepted_by, :scope => [ :authentication, :invites, :update_invitation ], :user => current_user.name, :group => @group.name)
       message.save
       
-      if @invite.moderator
-        @group.moderator = current_user
-      else
-        @group.users.push(current_user) unless @group.users.include?(current_user)
-      end
-      if @group.save
-        flash[:notice] = t(@invite.moderator ? :moderator_invite_accepted : :member_invite_accepted, :scope => [ :authenticate, :invites, :update_invitation ], :group => @group.name)
+      if Membership.create(:user_id => current_user, :role_id => Role.user.id, :group_id => @invite.group_id)
+        flash[:notice] = t(:member_invite_accepted, :scope => [ :authentication, :invites, :update_invitation ], :group => @group.name)
         @invite.destroy
-        redirect_to intro_path
+        redirect_to user_groups_path(current_user)
       else
         flash[:error] = t(:failure)
-        redirect_to intro_path
+        redirect_to user_messages_path(current_user)
       end
     when t(:deny)
-      moderator = @group.moderator
       message = Message.new
-      message.from_user = User.admin
-      message.to_user = moderator
-      message.subject = t(:invite_denied, :scope => [ :authenticate, :invites, :update_invitation ])
-      message.body = t(@invite.moderator ? :moderator_invite_denied_by : :member_invite_denied_by, :scope => [ :authenticate, :invites, :update_invitation ], :user => current_user.name, :group => @group.name)
+      message.from_user = User.administrator
+      message.to_user = @invite.inviter
+      message.subject = t(:invite_denied, :scope => [ :authentication, :invites, :update_invitation ])
+      message.body = t(:member_invite_denied_by, :scope => [ :authentication, :invites, :update_invitation ], :user => current_user.name, :group => @group.name)
       message.save
       
-      flash[:notice] = t(@invite.moderator ? :moderator_invite_denied : :member_invite_denied, :scope => [ :authenticate, :invites, :update_invitation ], :group => @group.name)
+      flash[:notice] = t(:member_invite_denied, :scope => [ :authentication, :invites, :update_invitation ], :group => @group.name)
       @invite.destroy
-      redirect_to intro_path
+      redirect_to user_groups_path(current_user)
     else
       flash[:error] = t(:failure)
-      redirect_to intro_path
+      redirect_to user_messages_path(current_user)
     end
   end
   

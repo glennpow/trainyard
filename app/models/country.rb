@@ -15,6 +15,6 @@ class Country < ActiveRecord::Base
   end
   
   def self.by_name
-    self.all.sort(&:name)
+    self.all.sort { |a, b| a.name <=> b.name }
   end
 end

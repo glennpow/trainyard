@@ -1,0 +1,2 @@
+contact_admin:
+  resource: user_admin (User)

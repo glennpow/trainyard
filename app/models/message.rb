@@ -4,7 +4,7 @@ class Message < ActiveRecord::Base
   belongs_to :to_user, :class_name => 'User'
   belongs_to :from_user, :class_name => 'User'
   
-  validates_presence_of :to_user, :message => I18n.t(:user_not_found, :scope => [ :authenticate ])
+  validates_presence_of :to_user, :message => I18n.t(:user_not_found, :scope => [ :authentication ])
   validates_presence_of :from_user, :subject
 
   before_save { |message| message.body.strip! }

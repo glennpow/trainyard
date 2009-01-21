@@ -12,7 +12,7 @@ class BlogsController < ApplicationController
         options[:no_table] = true
         options[:locals] = { :blog => @blog }
 
-        options[:conditions] = { :groupable_type => 'Blog', :groupable_id => @blog.id }
+        options[:conditions] = { :resource_type => 'Blog', :resource_id => @blog.id }
       end
     end
   end
@@ -26,11 +26,10 @@ class BlogsController < ApplicationController
   
   def index
     respond_with_indexer do |options|
-      options[:default_sort] = :title
+      options[:default_sort] = :name
       options[:headers] = [
-        { :name => t(:title, :scope => [ :content ]), :sort => :title },
-        t(:group, :scope => [ :authenticate ]),
-        { :name => t(:date, :scope => [ :datetimes ]), :sort => :article_type, :include => :created_at }
+        { :name => t(:title, :scope => [ :content ]), :sort => :name },
+        t(:group, :scope => [ :authentication ]),
       ]
       options[:search] = true
 
@@ -42,22 +41,26 @@ class BlogsController < ApplicationController
     @article = params[:article_id] ? Article.find(params[:article_id]) : @blog.articles.first
     
     if @article
-      @comments_indexer = create_indexer(Comment) do |options|
-        options[:order] = 'created_at ASC'
-        options[:no_table] = true
-        options[:per_page] = 10
+      if is_commentable?(@article)
+        @comments_indexer = create_indexer(Comment) do |options|
+          options[:order] = 'created_at ASC'
+          options[:no_table] = true
+          options[:per_page] = 10
 
-        options[:conditions] = [ "commentable_type = ? AND commentable_id = ?", 'Article', @article.id ]
-        options[:paginate] = { :params => { :controller => 'comments', :action => 'list', :article_id => @article.id } }
+          options[:conditions] = [ "resource_type = ? AND resource_id = ?", 'Article', @article.id ]
+          options[:paginate] = { :params => { :controller => 'comments', :action => 'list', :article_id => @article.id } }
+        end
       end
 
-      @reviews_indexer = create_indexer(Review) do |options|
-        options[:order] = 'created_at ASC'
-        options[:no_table] = true
-        options[:per_page] = 5
+      if is_reviewable?(@article)
+        @reviews_indexer = create_indexer(Review) do |options|
+          options[:order] = 'created_at ASC'
+          options[:no_table] = true
+          options[:per_page] = 5
 
-        options[:conditions] = [ "reviewable_type = ? AND reviewable_id = ?", 'Article', @article.id ]
-        options[:paginate] = { :params => { :controller => 'reviews', :action => 'list', :article_id => @article.id } }
+          options[:conditions] = [ "resource_type = ? AND resource_id = ?", 'Article', @article.id ]
+          options[:paginate] = { :params => { :controller => 'reviews', :action => 'list', :article_id => @article.id } }
+        end
       end
     end
   end
@@ -70,7 +73,7 @@ class BlogsController < ApplicationController
       options[:no_table] = true
       options[:locals] = { :blog => @blog }
 
-      options[:conditions] = { :groupable_type => 'Blog', :groupable_id => @blog.id }
+      options[:conditions] = { :resource_type => 'Blog', :resource_id => @blog.id }
     end
   end
   

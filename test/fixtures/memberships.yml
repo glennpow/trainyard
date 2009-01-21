@@ -1,0 +1,8 @@
+membership_admin:
+  role_id: <%= Role.administrator.id %>
+  user: user_admin
+
+membership_demo:
+  group: group_preferred
+  role_id: <%= Role.user.id %>
+  user: user_demo

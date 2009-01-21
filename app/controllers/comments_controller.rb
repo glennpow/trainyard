@@ -1,18 +1,17 @@
 class CommentsController < ApplicationController
   make_resourceful do
-    belongs_to :commentable
+    belongs_to :resource
       
     before :new do
-      @comment.commentable = @commentable
       @comment.user = current_user if logged_in?
     end
 
     response_for :create do |format|
-      format.html { redirect_to polymorphic_path([ @comment.commentable, Comment.new ]) }
+      format.html { redirect_to polymorphic_path([ @comment.resource, Comment.new ]) }
     end
 
     response_for :update do |format|
-      format.html { redirect_to polymorphic_path([ @comment.commentable, Comment.new ]) }
+      format.html { redirect_to polymorphic_path([ @comment.resource, Comment.new ]) }
     end
   end
  
@@ -20,7 +19,7 @@ class CommentsController < ApplicationController
     t(:comment, :scope => [ :content ])
   end
 
-  before_filter :check_commentable, :only => [ :index ]
+  before_filter :check_resource, :only => [ :index, :new, :create ]
   before_filter :check_editor_of, :only => [ :edit, :update, :destroy ]
     
   def index
@@ -28,8 +27,8 @@ class CommentsController < ApplicationController
       options[:order] = 'created_at ASC'
       options[:no_table] = true
 
-      if @commentable
-        options[:conditions] = [ "commentable_type = ? AND commentable_id = ?", @commentable.class.to_s, @commentable.id ]
+      if @resource
+        options[:conditions] = [ "resource_type = ? AND resource_id = ?", @resource.class.to_s, @resource.id ]
       end
     end
   end
@@ -40,8 +39,8 @@ class CommentsController < ApplicationController
       options[:no_table] = true
       options[:per_page] = 10
 
-      if @commentable
-        options[:conditions] = [ "commentable_type = ? AND commentable_id = ?", @commentable.class.to_s, @commentable.id ]
+      if @resource
+        options[:conditions] = [ "resource_type = ? AND resource_id = ?", @resource.class.to_s, @resource.id ]
       end
     end
   end
@@ -49,8 +48,8 @@ class CommentsController < ApplicationController
   
   private
   
-  def check_commentable
-    check_condition(@commentable)
+  def check_resource
+    check_condition(@resource && is_commentable?(@resource))
   end
  
   def check_editor_of

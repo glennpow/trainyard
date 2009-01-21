@@ -1,9 +1,9 @@
 <%= render_heading(h(message.subject)) %>
 
-<%= show_field(t(:to, :scope => [ :content ]), link_to_user(message.to_user)) %>
+<%= render_field(t(:to, :scope => [ :content ]), link_to_user(message.to_user)) %>
 
-<%= show_field(t(:from, :scope => [ :content ]), link_to_user(message.from_user)) %>
+<%= render_field(t(:from, :scope => [ :content ]), link_to_user(message.from_user)) %>
 
-<%= show_field(t(message.is_to?(current_user) ? :received : :sent, :scope => [ :content ]), message.created_at.to_s(:short)) %>
+<%= render_field(t(message.is_to?(current_user) ? :received : :sent, :scope => [ :content ]), message.created_at.to_s(:short)) %>
 
 <%= render_formatted(message.body, :class => 'paragraph') %>

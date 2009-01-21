@@ -3,9 +3,7 @@
 <%= render_heading(h(topic.name)) %>
 
 <% if topic.guru_points > 0 %>
-  <%= show_field(t(:guru_points_available, :scope => [ :forums ]), topic.guru_points_available) %>
+  <%= render_field(t(:guru_points_available, :scope => [ :forums ]), topic.guru_points_available) %>
 <% end %>
 
-<%= render_actions([
-  { :allow => icon_link_to(:add_large, t(:post_reply, :scope => [ :forums ]), new_topic_post_path(topic)) }
-  ] ) %>
+<%= render_actions([ icon_link_to(:add_large, t(:post_reply, :scope => [ :forums ]), new_topic_post_path(topic)) ]) %>

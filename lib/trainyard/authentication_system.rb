@@ -36,23 +36,21 @@ module Trainyard
         end
       end
     end
+
+    def has_role?(role, group = nil)
+      logged_in? && current_user.has_role?(role, group)
+    end
     
-    def check_role(role)
-      check_condition(logged_in? && current_user.has_role?(role))
+    def check_role(role, group = nil)
+      check_condition(has_role?(role, group))
     end
 
-    def has_role?(role)
-      if logged_in?
-        current_user.has_role?(role)
-      end
+    def has_administrator_role?(group = nil)
+      logged_in? && current_user.has_administrator_role?(group)
     end
 
-    def check_administrator_role
-      check_role(Configuration.admin_role_name)
-    end
-
-    def has_administrator_role?
-      has_role?(Configuration.admin_role_name)
+    def check_administrator_role(group = nil)
+      check_condition(has_administrator_role?(group))
     end
 
     def is_moderator_of?(resource)
@@ -60,7 +58,23 @@ module Trainyard
     end
     
     def check_moderator(resource)
-      check_condition(logged_in? && current_user.is_moderator_of?(resource))
+      check_condition(is_moderator_of?(resource))
+    end
+
+    def is_member_of?(resource)
+      logged_in? && current_user.is_member_of?(resource)
+    end
+    
+    def check_member(resource)
+      check_condition(is_member_of?(resource))
+    end
+    
+    def has_permission?(action, resource)
+      logged_in? && current_user.permitted?(action, resource)
+    end
+    
+    def check_permission(action, resource)
+      check_condition(has_permission?(action, resource))
     end
   
     def is_editor_of?(resource)
@@ -68,7 +82,15 @@ module Trainyard
     end
     
     def check_editor(resource)
-      check_condition(logged_in? && current_user.is_editor_of?(resource))
+      check_condition(is_editor_of?(resource))
+    end
+  
+    def is_viewer_of?(resource)
+      logged_in? && current_user.is_viewer_of?(resource)
+    end
+    
+    def check_viewer(resource)
+      check_condition(is_viewer_of?(resource))
     end
 
     def store_location
@@ -97,7 +119,7 @@ module Trainyard
       respond_to do |format|
         format.html do
           store_location
-          flash[:error] = t(:access_denied, :scope => [ :authenticate ])
+          flash[:error] = t(:access_denied, :scope => [ :authentication ])
           redirect_to new_user_session_url
         end
         format.any(:json, :xml) do
@@ -116,7 +138,7 @@ module Trainyard
             store_referer
             http_referer = (session[:refer_to] || domain_name)
           end
-          flash[:error] = t(:permission_denied, :scope => [ :authenticate ])
+          flash[:error] = t(:permission_denied, :scope => [ :authentication ])
           if http_referer[0..(domain_name.length - 1)] != domain_name  
             session[:refer_to] = nil
             redirect_to root_path
@@ -127,15 +149,15 @@ module Trainyard
         format.xml do
           headers["Status"] = "Unauthorized"
           headers["WWW-Authenticate"] = %(Basic realm="Web Password")
-          render :text => t(:permission_denied, :scope => [ :authenticate ]), :status => '401 Unauthorized'
+          render :text => t(:permission_denied, :scope => [ :authentication ]), :status => '401 Unauthorized'
         end
       end
       return false
     end
   
     def user_role(user)
-      if user.has_role?(Configuration.admin_role_name)
-        t(:admin, :scope => [ :authenticate, :roles ])
+      if user.has_role?(Role.administrator)
+        t(:admin, :scope => [ :authentication, :roles ])
       else
         user.roles.map { |role| t(role.key) }.to_sentence
       end

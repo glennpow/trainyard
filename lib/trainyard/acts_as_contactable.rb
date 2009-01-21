@@ -9,7 +9,7 @@ module Trainyard
         name = args.first || :contact
         
         class_eval do
-          has_one name, :as => :contactable, :dependent => :destroy
+          has_one name, :as => :resource, :class_name => 'Contact', :dependent => :destroy
 
           has_accessible name
 

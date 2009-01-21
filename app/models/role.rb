@@ -1,8 +1,5 @@
-class Role < ActiveRecord::Base
-  has_and_belongs_to_many :users
-  
-  validates_presence_of :name
-  validates_uniqueness_of :name, :case_sensitive => false
-  
-  searches_on :name
+class Role < ActiveEnumeration::Base
+  has_enumerated :administrator, :name => I18n.t('authentication.roles.administrator')
+  has_enumerated :editor, :name => I18n.t('authentication.roles.editor')
+  has_enumerated :user, :name => I18n.t('authentication.roles.user')
 end

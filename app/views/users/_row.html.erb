@@ -12,7 +12,7 @@
     :actions => [
       { :allow => [
         icon_link_to(:show, t(:show), user),
-        icon_link_to(:edit, tp(:edit_object, :object => t(:role, :scope => [ :authenticate ])), user_roles_path(user))
+        icon_link_to(:edit, tp(:edit_object, :object => t(:role, :scope => [ :authentication ])), user_roles_path(user))
       ] },
       { :if => user != current_user && user.active?, :allow => [
         icon_link_to(:delete, t(:disable), user, :confirm => t(:are_you_sure), :method => :delete)

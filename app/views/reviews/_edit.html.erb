@@ -1,5 +1,6 @@
-<%= render_heading(t(:review_of_object, :scope => [ :content ], :count => 1, :object => review.reviewable.name)) %>
+<%= f.hidden_field(:user_id) %>
+<%= render_field t(:author, :scope => [ :content ]), review.user.name %>
 
 <%= f.rating_select :rating %>
 
-<%= f.text_area :body %>
+<%= f.text_area :body, :hint => link_to_textile_hint %>

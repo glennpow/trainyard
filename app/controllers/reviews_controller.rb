@@ -1,18 +1,17 @@
 class ReviewsController < ApplicationController
   make_resourceful do
-    belongs_to :reviewable
+    belongs_to :resource
       
     before :new do
-      @review.reviewable = @reviewable
       @review.user = current_user
     end
 
     response_for :create do |format|
-      format.html { redirect_to polymorphic_path([ @review.reviewable, Review.new ]) }
+      format.html { redirect_to polymorphic_path([ @review.resource, Review.new ]) }
     end
 
     response_for :update do |format|
-      format.html { redirect_to polymorphic_path([ @review.reviewable, Review.new ]) }
+      format.html { redirect_to polymorphic_path([ @review.resource, Review.new ]) }
     end
   end
  
@@ -21,7 +20,7 @@ class ReviewsController < ApplicationController
   end
 
   before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
-  before_filter :check_reviewable, :only => [ :index ]
+  before_filter :check_resource, :only => [ :index, :new, :create ]
   before_filter :check_may_review, :only => [ :new, :create ]
   before_filter :check_editor_of, :only => [ :edit, :update, :destroy ]
     
@@ -33,8 +32,8 @@ class ReviewsController < ApplicationController
         { :name => t(:review, :scope => [ :content ]), :sort => :rating },
       ]
 
-      if @reviewable
-        options[:conditions] = [ "reviewable_type = ? AND reviewable_id = ?", @reviewable.class.to_s, @reviewable.id ]
+      if @resource
+        options[:conditions] = [ "resource_type = ? AND resource_id = ?", @resource.class.to_s, @resource.id ]
       end
     end
   end
@@ -45,8 +44,8 @@ class ReviewsController < ApplicationController
       options[:no_table] = true
       options[:per_page] = 5
 
-      if @reviewable
-        options[:conditions] = [ "reviewable_type = ? AND reviewable_id = ?", @reviewable.class.to_s, @reviewable.id ]
+      if @resource
+        options[:conditions] = [ "resource_type = ? AND resource_id = ?", @resource.class.to_s, @resource.id ]
       end
     end
   end
@@ -54,12 +53,13 @@ class ReviewsController < ApplicationController
   
   private
   
-  def check_reviewable
-    check_condition(@reviewable)
+  def check_resource
+    logger.info("*** #{@resource} && #{is_reviewable?(@resource)}")
+    check_condition(@resource && is_reviewable?(@resource))
   end
  
   def check_may_review
-    check_condition(Review.may_review?(@reviewable, current_user))
+    check_condition(Review.may_review?(@resource, current_user))
   end
  
   def check_editor_of

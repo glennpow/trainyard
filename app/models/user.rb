@@ -3,24 +3,23 @@ class User < ActiveRecord::Base
   acts_as_author
   acts_as_contactable
 
-  has_and_belongs_to_many :groups
-  has_many :moderated_groups, :class_name => 'Group', :foreign_key => :moderator_id
-  has_and_belongs_to_many :roles
+  has_many :memberships, :dependent => :destroy
+  has_many :groups, :through => :memberships, :order => 'name ASC'
+  has_many :moderated_groups, :class_name => 'Group', :foreign_key => :moderator_id, :dependent => :destroy
+  has_many :permissions, :through => :groups
   has_attached_file :image, Configuration.default_image_options
-  has_one :user_config, :dependent => :destroy
 
   validates_attachment_size :image, Configuration.default_image_size_options
-  
-  has_accessible :user_config
 
   searches_on :login, :name
  
+  before_create :reset_config
   after_create :notify_create
   before_save :check_name
   
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :name, :email, :password, :password_confirmation, :time_zone, :image, :user_config
+  attr_accessible :login, :name, :email, :password, :password_confirmation, :time_zone, :image
 
   def confirm!
     self.update_attribute(:confirmed, true)
@@ -48,28 +47,32 @@ class User < ActiveRecord::Base
     super.blank? ? self.login : super
   end
 
-  def self.admin
-    self.first(:include => :roles, :conditions => [ "#{Role.table_name}.name = ?", Configuration.admin_role_name ])
+  def self.administrator
+    self.admins.first
   end
 
-  def self.admins
-    self.all(:include => :roles, :conditions => [ "#{Role.table_name}.name = ?", Configuration.admin_role_name ])
+  def self.administrators
+    @administrators ||= Membership.all(:include => :user, :conditions => { :group_id => nil, :role_id => Role.administrator.id }).map(&:user)
   end
   
-  def has_role?(role)
-    self.roles.find_by_name(role) ? true : false
+  def roles(group = nil)
+    Membership.all(:conditions => { :user_id => self.id, :group_id => group }).map(&:role)
   end
   
-  def has_administrator_role?
-    has_role?(Configuration.admin_role_name)
+  def has_role?(role, group = nil)
+    Membership.count(:conditions => { :user_id => self.id, :role_id => role.id, :group_id => group }) > 0
   end
   
-  def has_editor_role?
-    has_role?(Configuration.editor_role_name)
+  def has_administrator_role?(group = nil)
+    has_role?(Role.administrator, group)
   end
   
-  def give_editor_role!
-    self.roles << Role.find_by_name(Configuration.editor_role_name) unless self.has_editor_role?
+  def has_editor_role?(group = nil)
+    has_role?(Role.editor, group)
+  end
+  
+  def assign_role!(role, group = nil)
+    Membership.create(:user_id => self.id, :role_id => role.id, :group_id => group) unless self.has_role?(role, group)
   end
   
   def groups_with_moderated
@@ -79,50 +82,43 @@ class User < ActiveRecord::Base
   def is_moderator_of?(resource)
     return false if resource.nil?
     return true if has_administrator_role?
-    if resource.respond_to?(:moderator)
-      resource.moderator == self
-    elsif resource.respond_to?(:moderators)
-      resource.moderators.include?(self)
-    elsif resource.respond_to?(:group)
-      self.is_moderator_of?(resource.group)
-    end
+    return resource.moderators.include?(self) if resource.respond_to?(:moderators)
+    return resource.respond_to?(:group) && resource.group.has_moderator?(self)
   end
   
   def is_member_of?(resource)
     return false if resource.nil?
     return true if has_administrator_role?
-    return true if is_moderator_of?(resource)
-    if resource.is_a?(Group)
-      resource.has_member?(self)
-    elsif resource.respond_to?(:group)
-      resource.group.has_member?(self)
-    end
+    return resource.respond_to?(:group) && resource.group.has_member?(self)
+  end
+    
+  def permitted?(action, resource)
+    Permission.permitted?(self, action, resource)
   end
   
   def is_editor_of?(resource)
     return false if resource.nil?
     return true if has_administrator_role?
-    if resource.respond_to?(:user)
-      resource.user == self
-    else
-      is_member_of?(resource) && has_editor_role?
-    end
+    return resource.user == self if resource.respond_to?(:user)
+    return resource.respond_to?(:group) && has_editor_role?(resource.group)
   end
   
-  def memberships(klass)
-    if klass.respond_to?(:find_by_group_id)
-      self.groups.map { |group| klass.find_by_group_id(group.id) }.compact
-    else
-      []
-    end
+  def is_viewer_of?(resource)
+    return false if resource.nil?
+    return true if has_administrator_role?
+    return resource.respond_to?(:group) && has_editor_role?(resource.group)
   end
-  
-  def self.default_user_config
-    UserConfig.new(Configuration.default_user_config)
+
+  def groups_of(klass)
+    klass.respond_to?(:find_by_group_id) ? self.groups.map { |group| klass.find_by_group_id(group.id) }.compact : []
   end
  
   
   protected
+  
+  def reset_config
+    self.attributes=(Configuration.default_user_config)
+  end
   
   def notify_create
     UserMailer.deliver_signup_notification(self)

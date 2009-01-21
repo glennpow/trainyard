@@ -3,7 +3,7 @@
     <%= link_to(image_tag(article.medias.first.thumbnail.url, :class => 'listed-image'), blog_article_path(blog, article)) %>
   <% end %>
   
-  <p class='blog-post-title'><%= link_to(h(article.title), blog_article_path(blog, article)) %></p>
+  <p class='blog-post-title'><%= link_to(h(article.name), blog_article_path(blog, article)) %></p>
 
   <span class='timestamp'><%= article.created_at %></span>
 

@@ -1,15 +1,15 @@
 <%= render_heading(h(group.name),
   :actions => [ { :if => has_administrator_role?, :allow => icon_link_to(:edit, t(:edit), edit_group_path(group)) } ]) %>
 
-<%= show_field(t(:moderator, :scope => [ :authenticate ]), link_to_user(group.moderator)) %>
+<%= render_field(t(:moderator, :scope => [ :authentication ]), link_to_user(group.moderator)) %>
 
 <% if group.parent_group %>
-  <%= show_field(t(:parent_group, :scope => [ :authenticate ]), h(group.parent_group_name)) %>
+  <%= render_field(t(:parent_group, :scope => [ :authentication ]), h(group.parent_group_name)) %>
 <% end %>
 
 <% if group.child_groups.any? %>
-  <%= show_field(tp(:child_group, :scope => [ :authenticate ]), group.child_groups.map(&:name)) %>
+  <%= render_field(tp(:child_group, :scope => [ :authentication ]), group.child_groups.map(&:name)) %>
 <% end %>
 
-<%= show_field(tp(:member, :scope => [ :authenticate ]), group.users.length,
+<%= render_field(tp(:member, :scope => [ :authentication ]), group.users.length,
   :actions => [ { :if => group.users.any?, :allow => link_to(t(:view), group_users_path(group)) } ]) %>

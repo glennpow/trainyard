@@ -1,7 +1,7 @@
 <% if logged_in? %>
-  <p><%=t :logged_in_as_user, :scope => [ :authenticate ], :user => h(current_user.name) %></p>
+  <p><%=t :logged_in_as_user, :scope => [ :authentication ], :user => h(current_user.name) %></p>
   <p><%= button_link_to(t(:home), home_path) %></p>
-  <p><%= button_link_to(t(:logout, :scope => [ :authenticate ]), logout_path) %></p>
+  <p><%= button_link_to(t(:logout, :scope => [ :authentication ]), logout_path) %></p>
 <% else %>
   <div class="login-form">
     <% form_for :user_session, :url => user_session_path do |f| %>
@@ -11,12 +11,12 @@
  
       <%= f.check_box :remember_me %>
 
-      <%= f.submit t(:login, :scope => [ :authenticate ]) %>
+      <%= f.submit t(:login, :scope => [ :authentication ]) %>
       
-      <%= render_page_actions([ { :allow => [
-          link_to(t(:join, :scope => [ :authenticate ]), new_user_path),
-          link_to(t(:forgot_password, :scope => [ :authenticate ]), forgot_password_path)
-        ] } ]) %>
+      <%= render_actions([
+          link_to(t(:join, :scope => [ :authentication ]), new_user_path),
+          link_to(t(:forgot_password, :scope => [ :authentication ]), forgot_password_path)
+      ]) %>
     <% end %>
   </div>
 <% end %>

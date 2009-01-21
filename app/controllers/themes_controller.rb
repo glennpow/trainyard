@@ -70,6 +70,6 @@ class ThemesController < ApplicationController
   
   def check_editor_of_themeable
     @themeable = params[:themeable_type].to_class.find(params[:themeable_id]) if params[:themeable_id] && params[:themeable_type]
-    check_condition(@theme && @themeable && @themeable.respond_to?(:theme) && current_user.is_editor_of?(@themeable))
+    check_condition(@theme && @themeable && @themeable.respond_to?(:theme) && is_editor_of?(@themeable))
   end
 end

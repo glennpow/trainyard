@@ -2,11 +2,11 @@
 
 <%= render_heading(tp(:message, :scope => [ :content ])) %>
 
-<%= content_tag(:div, render_page_actions([
-  { :allow => link_to_if(@mailbox != :inbox, t(:inbox, :scope => [ :content ]), messages_path(:mailbox => :inbox)) },
-  { :allow => link_to_if(@mailbox != :sent, t(:sent, :scope => [ :content ]), messages_path(:mailbox => :sent)) }
-  ]), :class => 'messages-mailboxes') %>
+<% content_tag(:div, :class => 'messages-mailboxes') do %>
+  <%= render_actions([
+    link_to_if(@mailbox != :inbox, t(:inbox, :scope => [ :content ]), messages_path(:mailbox => :inbox)),
+    link_to_if(@mailbox != :sent, t(:sent, :scope => [ :content ]), messages_path(:mailbox => :sent)),
+  ], :class => 'page-actions') %>
+<% end %>
 
 <%= render_indexer(@indexer) %>
-
-<%= render_page_actions([ { :allow => link_to_back } ]) %>

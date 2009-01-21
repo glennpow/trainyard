@@ -1,5 +1,5 @@
 class Email < ActiveRecord::Base
-  belongs_to :emailable, :polymorphic => true
+  belongs_to :resource, :polymorphic => true
   has_enumeration :email_type
   
   validates_presence_of :email_address

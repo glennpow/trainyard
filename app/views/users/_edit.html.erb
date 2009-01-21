@@ -1,12 +1,12 @@
 <table class="form-table">
   <tr>
     <td>
-      <%= f.text_field :name, :label => { :name => t(:display_name, :scope => [ :authenticate ]) },
+      <%= f.text_field :name, :label => { :name => t(:display_name, :scope => [ :authentication ]) },
         :hint => t(:user_name_hint, :scope => [ :site_content ]) %>
     </td>
     <td>
-      <%= f.text_field :email, :label => { :name => t(:primary_email, :scope => [ :authenticate ]) },
-        :hint => t(:contact_hint, :scope => [ :site_content ]) %>
+      <%= f.text_field :email, :label => { :name => t(:primary_email, :scope => [ :authentication ]) },
+        :required => true, :hint => t(:contact_hint, :scope => [ :site_content ]) %>
     </td>
     <% if Configuration.users_locale %>
       <td>
@@ -31,7 +31,20 @@
 
 <%= render_heading(t(:settings)) %>
 
-<%= f.form_for :user_config %>
+<table class="form-table">
+  <tr>
+    <td>
+      <%= f.yes_no_select :mailer_alerts, :label => { :name => t(:mailer_alerts, :scope => [ :content ]) },
+        :hint => t(:mailer_alerts_hint, :scope => [ :content ]) %>
+    </td>
+    <% if Configuration.users_contact %>
+      <td>
+        <%= f.yes_no_select :visible_contact, :label => { :name => t(:visible_contact, :scope => [ :contacts ]) },
+          :hint => t(:visible_contact_hint, :scope => [ :contacts ]) %>
+      </td>
+    <% end %>
+  </tr>
+</table>
 
 <% unless user.contact.nil? %>
   <%= render_heading(t(:contact, :scope => [ :contacts ])) %>

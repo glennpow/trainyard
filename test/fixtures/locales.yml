@@ -1,0 +1,7 @@
+locale_en_US:
+  language: language_en
+  country: country_US
+
+locale_en_CA:
+  language: language_en
+  country: country_CA

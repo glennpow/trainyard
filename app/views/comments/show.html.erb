@@ -1,5 +1,3 @@
 <% title t(:comment, :scope => [ :content ])%>
 
 <%= render :partial => 'show', :locals => { :comment => @comment } %>
-
-<%= render_page_actions([ { :allow => link_to_back } ]) %>

@@ -2,14 +2,11 @@
 
 <%= render_heading(h(@media.name)) %>
 
-<%= show_field(t(:group, :scope => [ :authenticate ]), link_to_show(@media.groupable.name, @media.groupable)) %>
+<%= render_field(t(:group, :scope => [ :authentication ]), link_to_show(@media.resource.name, @media.resource)) %>
 
-<%= show_field(t(:date, :scope => [ :datetimes ]), h(@media.created_at)) %>
+<%= render_field(t(:date, :scope => [ :datetimes ]), h(@media.created_at)) %>
 
 <%= render :partial => 'show', :locals => { :media => @media } %>
 
-<%= render_page_actions([
-  { :allow => link_to_back },
-  { :if => is_editor_of?(@media), :allow => icon_link_to(:edit, t(:edit), edit_object_path) },
-  { :allow => link_to_show(@media.groupable.name, @media.groupable) }
-  ]) %>
+<% page_actions << icon_link_to(:edit, t(:edit), edit_object_path) if is_editor_of?(@media) %>
+<% page_actions << link_to_show(@media.resource.name, @media.resource) %>

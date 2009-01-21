@@ -23,29 +23,29 @@ module Trainyard
       Locale.find_by_code(session[:locale])
     end
   
-    def detect_by_locale(records, options = {})
+    def all_by_locale(records, options = {})
       locale = current_locale
       default_locale = Locale.find_by_code(Configuration.default_locale)
       country_records = records.select do |record|
         if record.respond_to?(:locale) && (record.locale.nil? || locale.nil? || record.locale.country == locale.country)
-          if options.any?
-            options.detect do |key, value|
-              !record.respond_to?(key) || record.send(key) != value
-            end.nil?
-          else
-            true
-          end
+          false if options.any? && options.detect { |key, value| !record.respond_to?(key) || record.send(key) != value }
+          (locale.nil? && default_locale.nil?) || record.locale && record.locale.language == (locale || default_locale).language
         else
           false
         end
       end
-      return (locale.nil? ? nil : country_records.detect { |record| record.locale && record.locale.language == locale.language }) ||
-        country_records.detect { |record| record.locale && record.locale.language == default_locale.language } ||
-        country_records.first
+    end
+    
+    def first_by_locale(records, options = {})
+      all_by_locale(records, options).first
     end
   
-    def for_locale(records, options = {}, &block)
-      record = detect_by_locale(records, options)
+    def for_all_by_locale(records, options = {}, &block)
+      all_by_locale(records, options).each { |record| block.call(record) }
+    end
+  
+    def for_first_by_locale(records, options = {}, &block)
+      record = first_by_locale(records, options)
       block.call(record) if record
     end
 
@@ -54,7 +54,8 @@ module Trainyard
     end
   
     def self.included(base)
-      base.send :helper_method, :tp, :tt, :current_locale, :detect_by_locale, :for_locale if base.respond_to? :helper_method
+      base.send :helper_method, :tp, :tt, :current_locale, :all_by_locale, :first_by_locale,
+        :for_all_by_locale, :for_first_by_locale if base.respond_to? :helper_method
       if base.respond_to? :before_filter
         base.send :before_filter, :set_locale
         base.send :before_filter, :set_time_zone

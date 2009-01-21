@@ -5,15 +5,15 @@
 <table class="show-table" align="center">
   <tr>
     <td>
-      <%= show_field(t(:street, :scope => [ :contacts, :addresses ]), h(address.streets.join(", "))) %>
+      <%= render_field(t(:street, :scope => [ :contacts, :addresses ]), h(address.streets.join(", "))) %>
 
-      <%= show_field(t(:city, :scope => [ :contacts, :addresses ]), h(address.city)) %>
+      <%= render_field(t(:city, :scope => [ :contacts, :addresses ]), h(address.city)) %>
 
-      <%= show_field(t(:postal_code, :scope => [ :contacts, :addresses ]), h(address.postal_code)) %>
+      <%= render_field(t(:postal_code, :scope => [ :contacts, :addresses ]), h(address.postal_code)) %>
 
-      <%= show_field(t(:region, :scope => [ :contacts, :addresses ]), h(address.region.name)) %>
+      <%= render_field(t(:region, :scope => [ :contacts, :addresses ]), h(address.region.name)) %>
 
-      <%= show_field(t(:country, :scope => [ :contacts, :addresses ]), h(address.country.name))%>
+      <%= render_field(t(:country, :scope => [ :contacts, :addresses ]), h(address.country.name))%>
     </td>
     <% if defined?(Geographer) %>
       <td>

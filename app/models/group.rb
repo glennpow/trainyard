@@ -1,8 +1,10 @@
 class Group < ActiveRecord::Base
-  belongs_to :moderator, :class_name => 'User'
+  has_many :memberships, :dependent => :destroy
+  has_many :users, :through => :memberships, :order => 'name ASC'
+  has_many :moderators, :through => :memberships, :order => 'name ASC', :source => :user, :conditions => { "#{Membership.table_name}.role_id" => Role.administrator.id }
   belongs_to :parent_group, :foreign_key => :parent_group_id, :class_name => 'Group'
   has_many :child_groups, :foreign_key => :parent_group_id, :class_name => 'Group', :dependent => :destroy, :order => 'name ASC'
-  has_and_belongs_to_many :users, :order => 'name ASC'
+  has_many :permissions, :dependent => :destroy
   has_many :invites, :dependent => :destroy
   
   validates_presence_of :name, :moderator
@@ -12,6 +14,10 @@ class Group < ActiveRecord::Base
   
   def group
     self
+  end
+  
+  def moderator
+    self.moderators.first
   end
   
   def parent_group_name
@@ -35,7 +41,7 @@ class Group < ActiveRecord::Base
   end
   
   def has_moderator?(user)
-    self.moderator == user
+    self.moderators.include?(user)
   end
   
   def has_member?(user)
@@ -44,9 +50,5 @@ class Group < ActiveRecord::Base
       return true if child_group.has_member?(user)
     end
     return false
-  end
-  
-  def has_moderator_or_member?(user)
-    return has_moderator?(user) || has_member?(user)
   end
 end

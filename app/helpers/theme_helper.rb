@@ -5,7 +5,7 @@ module ThemeHelper
   
   def link_to_back(name = nil)
     name ||= t(:back_link)
-    link_to name, request.env["HTTP_REFERER"], :class => 'back'
+    link_to name, :back, :class => 'back'
   end
 
   def render_flash
@@ -102,7 +102,10 @@ module ThemeHelper
     end
   end
   
-  def show_field(label, value, options = {})
+  def render_field(*args)
+    options = args.extract_options!
+    label = args.length > 1 ? args.first : nil
+    value = args.last
     locals = {
       :value => value.is_a?(Array) ? (options[:count] ? value.length : nil) : value,
       :values => value.is_a?(Array) ? value : nil,
@@ -146,13 +149,11 @@ module ThemeHelper
   end
   
   def render_actions(actions, options = {})
-    actions = actions_for(actions)
     render_bar_list(actions, :class => merge_classes(options[:class], 'actions'))
   end
   
-  def render_page_actions(actions, options = {})
-    actions = actions_for(actions)
-    render_bar_list(actions, :class => merge_classes(options[:class], 'page-actions'))
+  def render_page_actions(options = {})
+    render_bar_list(page_actions, :class => merge_classes(options[:class], 'page-actions'))
   end
   
   def render_submit(value, options = {})
@@ -175,6 +176,7 @@ module ThemeHelper
   private
   
   def actions_for(actions)
-    (actions || []).select { |action| !action.has_key?(:if) || action[:if] }.map { |action| action[:allow] }.flatten
+    # TODO - get rid of Hash variation
+    (actions || []).map { |action| action.is_a?(Hash) ? ((!action.has_key?(:if) || action[:if]) ? action[:allow] : nil) : action }.flatten.compact
   end
 end

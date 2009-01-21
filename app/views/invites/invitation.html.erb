@@ -1,6 +1,6 @@
-<% title t(:invite, :scope => [ :authenticate ]) %>
+<% title t(:invite, :scope => [ :authentication ]) %>
 
-<%= render_heading(t(@invite.moderator ? :moderator_invite : :member_invite, :scope => [ :authenticate, :invites, :invitation ], :group => @group.name)) %>
+<%= render_heading(t(:member_invite, :scope => [ :authentication, :invites, :invitation ], :group => @group.name)) %>
 
 <% form_tag update_invitation_url(@group, params[:id]) do %>
   <p>

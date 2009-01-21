@@ -1,30 +1,30 @@
 <% unless defined? hide_personal %>
   <% unless contact.first_name.blank? %>
-    <%= show_field(t(:first_name, :scope => [ :contacts ]), h(contact.first_name)) %>
+    <%= render_field(t(:first_name, :scope => [ :contacts ]), h(contact.first_name)) %>
   <% end %>
   
   <% unless contact.middle_name.blank? %>
-    <%= show_field(t(:middle_name, :scope => [ :contacts ]), h(contact.middle_name)) %>
+    <%= render_field(t(:middle_name, :scope => [ :contacts ]), h(contact.middle_name)) %>
   <% end %>
   
   <% unless contact.last_name.blank? %>
-    <%= show_field(t(:last_name, :scope => [ :contacts ]), h(contact.last_name)) %>
+    <%= render_field(t(:last_name, :scope => [ :contacts ]), h(contact.last_name)) %>
   <% end %>
   
   <% if contact.prefix %>
-    <%= show_field(t(:prefix, :scope => [ :contacts ]), e(contact.prefix)) %>
+    <%= render_field(t(:prefix, :scope => [ :contacts ]), e(contact.prefix)) %>
   <% end %>
   
   <% if contact.suffix %>
-    <%= show_field(t(:suffix, :scope => [ :contacts ]), e(contact.suffix)) %>
+    <%= render_field(t(:suffix, :scope => [ :contacts ]), e(contact.suffix)) %>
   <% end %>
   
   <% if contact.gender %>
-    <%= show_field(t(:gender, :scope => [ :contacts ]), e(contact.gender)) %>
+    <%= render_field(t(:gender, :scope => [ :contacts ]), e(contact.gender)) %>
   <% end %>
   
   <% if contact.birthdate %>
-    <%= show_field(t(:birthdate, :scope => [ :contacts ]), h(contact.birthdate)) %>
+    <%= render_field(t(:birthdate, :scope => [ :contacts ]), h(contact.birthdate)) %>
   <% end %>
 <% end %>
 

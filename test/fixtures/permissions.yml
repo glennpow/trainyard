@@ -1,0 +1,5 @@
+permission_1:
+  resource: article_root (Article)
+  group: group_preferred
+  role_id: <%= Role.user.id %>
+  action_id: <%= Action.view.id %>

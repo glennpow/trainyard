@@ -12,7 +12,7 @@ class GroupsController < ApplicationController
   end
   
   def resourceful_name
-    t(:group, :scope => [ :authenticate ])
+    t(:group, :scope => [ :authentication ])
   end
 
   before_filter :check_administrator_role, :only => [ :index, :new, :create, :edit, :update, :destroy ]
@@ -22,10 +22,10 @@ class GroupsController < ApplicationController
       options[:default_sort] = :name
       options[:headers] = [
         { :name => t(:name), :sort => :name, :order => 'groups.name' },
-        t(:parent_group, :scope => [ :authenticate ]),
-        tp(:child_group, :scope => [ :authenticate ]),
-        t(:moderator, :scope => [ :authenticate ]),
-        tp(:user, :scope => [ :authenticate ])
+        t(:parent_group, :scope => [ :authentication ]),
+        tp(:child_group, :scope => [ :authentication ]),
+        t(:moderator, :scope => [ :authentication ]),
+        tp(:user, :scope => [ :authentication ])
       ]
       options[:search] = true
 

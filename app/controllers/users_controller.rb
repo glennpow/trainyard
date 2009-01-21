@@ -10,17 +10,17 @@ class UsersController < ApplicationController
       if has_administrator_role?
         options[:default_sort] = :login
         options[:headers] = [
-          { :name => t(:login, :scope => [ :authenticate ]), :sort => :login },
+          { :name => t(:login, :scope => [ :authentication ]), :sort => :login },
           { :name => t(:name), :sort => :name, :order => 'users.name' },
-          t(:primary_email, :scope => [ :authenticate ]),
-          tp(:group, :scope => [ :authenticate ]),
+          t(:primary_email, :scope => [ :authentication ]),
+          tp(:group, :scope => [ :authentication ]),
           t(:status)
         ]
       else
         options[:default_sort] = :name
         options[:headers] = [
           { :name => t(:name), :sort => :name, :order => 'users.name' },
-          t(:primary_email, :scope => [ :authenticate ])
+          t(:primary_email, :scope => [ :authentication ])
         ]
       end
       options[:search] = true
@@ -44,19 +44,19 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     (@user.contact = Contact.new).address = Address.new if Configuration.users_contact
-    @user.user_config = User.default_user_config
   end
 
   def create
     @user = User.new(params[:user])
-    @user.roles << Role.find_by_name(params[:user_type] || Configuration.available_role_names.first || Configuration.user_role_name)
     
     if @user.save
-      flash[:notice] = t(:success, :scope => [ :authenticate, :users, :new ])
+      Membership.create(:user_id => @user, :role_id => Role.user.id, :group_id => Group.find(params[:user_group])) if params[:user_group]
+      
+      flash[:notice] = t(:success, :scope => [ :authentication, :users, :new ])
       @user.confirm! unless Configuration.email_activation
       redirect_to login_path
     else
-      flash[:error] = t(:failure, :scope => [ :authenticate, :users, :new ])
+      flash[:error] = t(:failure, :scope => [ :authentication, :users, :new ])
       render :action => 'new'
     end
   end
@@ -64,13 +64,13 @@ class UsersController < ApplicationController
   def confirm
     if (!params[:id].blank?) && @user && !@user.confirmed?
       @user.confirm!
-      flash[:notice] = t(:success, :scope => [ :authenticate, :users, :confirm ])
+      flash[:notice] = t(:success, :scope => [ :authentication, :users, :confirm ])
       redirect_to login_path
     elsif params[:id].blank?
-      flash[:error] = t(:failure_no_activation_code, :scope => [ :authenticate, :users, :confirm ])
+      flash[:error] = t(:failure_no_activation_code, :scope => [ :authentication, :users, :confirm ])
       redirect_to new_user_path 
     else 
-      flash[:error] = t(:failure_already_activated, :scope => [ :authenticate, :users, :confirm ])
+      flash[:error] = t(:failure_already_activated, :scope => [ :authentication, :users, :confirm ])
       redirect_to login_path
     end
   end
@@ -86,28 +86,28 @@ class UsersController < ApplicationController
     @user = current_user
     
     if @user.update_attributes(params[:user])
-      flash[:notice] = t(:object_updated, :object => t(:account, :scope => [ :authenticate ]))
+      flash[:notice] = t(:object_updated, :object => t(:account, :scope => [ :authentication ]))
       redirect_to :action => 'show', :id => current_user
     else
-      flash[:error] = t(:object_not_updated, :object => t(:account, :scope => [ :authenticate ]))
+      flash[:error] = t(:object_not_updated, :object => t(:account, :scope => [ :authentication ]))
       render :action => 'edit'
     end
   end
 
   def destroy
     if @user.update_attribute(:active, false)
-      flash[:notice] = t(:success, :scope => [ :authenticate, :users, :disable ])
+      flash[:notice] = t(:success, :scope => [ :authentication, :users, :disable ])
     else
-      flash[:error] = t(:failure, :scope => [ :authenticate, :users, :disable ])
+      flash[:error] = t(:failure, :scope => [ :authentication, :users, :disable ])
     end
     redirect_to :action => 'index'
   end
   
   def enable
     if @user.update_attribute(:active, true)
-      flash[:notice] = t(:success, :scope => [ :authenticate, :users, :enable ])
+      flash[:notice] = t(:success, :scope => [ :authentication, :users, :enable ])
     else
-      flash[:error] = t(:failure, :scope => [ :authenticate, :users, :enable ])
+      flash[:error] = t(:failure, :scope => [ :authentication, :users, :enable ])
     end
     redirect_to :action => 'index'
   end
@@ -124,18 +124,18 @@ class UsersController < ApplicationController
         @user.password_confirmation = params[:password_confirmation]
         @user.password = params[:password]        
         if @user.save
-          flash[:notice] = t(:object_updated, :object => t(:password, :scope => [ :authenticate ]))
+          flash[:notice] = t(:object_updated, :object => t(:password, :scope => [ :authentication ]))
           redirect_to user_path(@user)
           return
         else
-          flash[:error] = t(:object_not_updated, :object => t(:password, :scope => [ :authenticate ]))
+          flash[:error] = t(:object_not_updated, :object => t(:password, :scope => [ :authentication ]))
         end
       else
-        flash[:error] = t(:failure_do_not_match, :scope => [ :authenticate, :passwords, :edit ])
+        flash[:error] = t(:failure_do_not_match, :scope => [ :authentication, :passwords, :edit ])
         @old_password = params[:old_password]
       end
     else
-      flash[:error] = t(:failure_incorrect, :scope => [ :authenticate, :passwords, :edit ])
+      flash[:error] = t(:failure_incorrect, :scope => [ :authentication, :passwords, :edit ])
     end 
     render :action => 'edit_password'
   end
@@ -147,10 +147,10 @@ class UsersController < ApplicationController
     return unless request.post?
     if @user = User.find_by_email(params[:email])
       @user.forgot_password!
-      flash[:notice] = t(:success, :scope => [ :authenticate, :passwords, :forgot ])
+      flash[:notice] = t(:success, :scope => [ :authentication, :passwords, :forgot ])
       redirect_to login_path
     else
-      flash[:error] = t(:failure_no_user, :scope => [ :authenticate, :passwords, :forgot ])
+      flash[:error] = t(:failure_no_user, :scope => [ :authentication, :passwords, :forgot ])
       render :action => 'forgot_password'
     end  
   end
@@ -160,7 +160,7 @@ class UsersController < ApplicationController
     
   def update_reset_password
     if params[:password].blank?
-      flash[:error] = t(:failure_blank, :scope => [ :authenticate, :passwords, :reset ])
+      flash[:error] = t(:failure_blank, :scope => [ :authentication, :passwords, :reset ])
       render :action => 'reset_password', :id => params[:id]
       return
     end
@@ -168,18 +168,18 @@ class UsersController < ApplicationController
       @user.password_confirmation = params[:password_confirmation]
       @user.password = params[:password]
       if @user.save
-        flash[:notice] = t(:success, :scope => [ :authenticate, :passwords, :reset ])
+        flash[:notice] = t(:success, :scope => [ :authentication, :passwords, :reset ])
       else
-        flash[:error] = t(:failure, :scope => [ :authenticate, :passwords, :reset ])
+        flash[:error] = t(:failure, :scope => [ :authentication, :passwords, :reset ])
       end
     else
-      flash[:error] = t(:failure_do_not_match, :scope => [ :authenticate, :passwords, :edit ])
+      flash[:error] = t(:failure_do_not_match, :scope => [ :authentication, :passwords, :edit ])
       render :action => 'reset_password', :id => params[:id]
       return
     end  
     redirect_to login_path
   rescue
-    flash[:error] = t(:failure_invalid_code, :scope => [ :authenticate, :passwords, :reset ])
+    flash[:error] = t(:failure_invalid_code, :scope => [ :authentication, :passwords, :reset ])
     redirect_to new_user_path
   end
   
@@ -204,7 +204,7 @@ class UsersController < ApplicationController
   def load_user_using_perishable_token
     @user = User.find_using_perishable_token(params[:id])
     unless @user
-      flash[:error] = t(:failure_invalid_code, :scope => [ :authenticate, :passwords, :reset ])
+      flash[:error] = t(:failure_invalid_code, :scope => [ :authentication, :passwords, :reset ])
       redirect_to root_url
       return false
     end

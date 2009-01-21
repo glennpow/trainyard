@@ -1,14 +1,14 @@
 <% if logged_in? %>
-  <p><%=t :logged_in_as_user, :scope => [ :authenticate ], :user => h(current_user.name) %></p>
+  <p><%=t :logged_in_as_user, :scope => [ :authentication ], :user => h(current_user.name) %></p>
   <p><%= button_link_to(t(:home), home_path) %></p>
-  <p><%= button_link_to(t(:logout, :scope => [ :authenticate ]), logout_path) %></p>
+  <p><%= button_link_to(t(:logout, :scope => [ :authentication ]), logout_path) %></p>
 <% else %>
   <% form_tag user_session_path do %>
     <table class="form-field">
       <tr>
         <td>
           <div class="label">
-            <%=t :login, :scope => [ :authenticate ] %>:
+            <%=t :login, :scope => [ :authentication ] %>:
           </div>
         </td>
         <td>
@@ -20,7 +20,7 @@
       <tr>
         <td>
           <div class="label">
-            <%=t :password, :scope => [ :authenticate ] %>:
+            <%=t :password, :scope => [ :authentication ] %>:
           </div>
         </td>
         <td>
@@ -32,14 +32,14 @@
     </table>
  
     <p>
-      <small><%=t :remember_me, :scope => [ :authenticate ] %>:
+      <small><%=t :remember_me, :scope => [ :authentication ] %>:
       <%= check_box_tag 'user_session[remember_me]' %></small>
-      <small style="margin-left: 10px"><%= link_to t(:forgot_password, :scope => [ :authenticate ]), forgot_password_path %></small>
+      <small style="margin-left: 10px"><%= link_to t(:forgot_password, :scope => [ :authentication ]), forgot_password_path %></small>
     </p>
  
     <p>
-      <%= submit_tag t(:login, :scope => [ :authenticate ]) %>
-      <%= link_to t(:join, :scope => [ :authenticate ]), new_user_path %>
+      <%= submit_tag t(:login, :scope => [ :authentication ]) %>
+      <%= link_to t(:join, :scope => [ :authentication ]), new_user_path %>
     </p>
   <% end %>
 <% end %>

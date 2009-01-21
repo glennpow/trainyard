@@ -4,7 +4,7 @@ class Address < ActiveRecord::Base
       :auto_geocode => { :field => :full_address, :error_message => I18n.t(:invalid_address, :scope => [ :contacts ]) }
   end
   
-  belongs_to :addressable, :polymorphic => true
+  belongs_to :resource, :polymorphic => true
   belongs_to :region
   belongs_to :country
   

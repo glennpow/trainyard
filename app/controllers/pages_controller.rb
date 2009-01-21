@@ -17,7 +17,7 @@ class PagesController < ApplicationController
       options[:headers] = [
         { :name => t(:name), :sort => :name },
         { :name => t(:permalink, :scope => [ :content ]), :sort => :permalink },
-        { :name => t(:group, :scope => [ :authenticate ]), :sort => :group, :include => :group, :order => 'groups.name' },
+        { :name => t(:group, :scope => [ :authentication ]), :sort => :group, :include => :group, :order => 'groups.name' },
       ]
       options[:search] = true
     end

@@ -1,6 +1,6 @@
 <%= render_row([
   h(media.name),
-  link_to_show(media.groupable.name, media.groupable),
+  link_to_show(media.resource.name, media.resource),
   h(media.created_at),
   ],
   :actions => [

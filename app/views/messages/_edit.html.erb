@@ -1,5 +1,5 @@
-<%= show_field t(:to, :scope => [ :content ]), message.to_user.name %>
+<%= render_field t(:to, :scope => [ :content ]), message.to_user.name %>
 
-<%= f.text_field :subject %>
+<%= f.text_field :subject, :required => true %>
 
-<%= f.text_area :body %>
+<%= f.text_area :body, :required => true, :hint => link_to_textile_hint %>

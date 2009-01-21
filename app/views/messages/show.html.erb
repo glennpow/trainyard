@@ -2,7 +2,4 @@
 
 <%= render :partial => 'show', :locals => { :message => @message } %>
 
-<%= render_page_actions([
-  { :allow => link_to_back },
-  { :if => @message.is_to?(current_user), :allow => link_to(t(:reply), new_message_to_user_path(@message.from_user)) }
-  ]) %>
+<% page_actions << link_to(t(:reply), new_message_to_user_path(@message.from_user)) if @message.is_to?(current_user) %>

@@ -2,10 +2,6 @@ common: &common
   default_locale: en-US
   application_name: "Ruby on Rails"
   application_mail: mail
-  admin_role_name: administrator
-  editor_role_name: editor
-  user_role_name: user
-  assignable_role_names: [ 'user' ]
   default_image_options:
     :styles:
       :thumb: 80x80#

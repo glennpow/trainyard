@@ -1,8 +1,5 @@
-<% title t(:user, :scope => [ :authenticate ]) %>
+<% title t(:user, :scope => [ :authentication ]) %>
 
 <%= render :partial => 'show', :locals => { :user => @user } %>
 
-<%= render_page_actions([
-  { :allow => link_to_back },
-  { :if => @user != current_user, :allow => link_to(t(:send_message, :scope => [ :content ]), new_message_to_user_path(@user)) }
-  ]) %>
+<% page_actions << link_to(t(:send_message, :scope => [ :content ]), new_message_to_user_path(@user)) if @user != current_user %>

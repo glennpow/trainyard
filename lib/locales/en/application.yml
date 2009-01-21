@@ -63,8 +63,8 @@ en:
   datetimes:
     date: Date
     time: Time
-  authenticate: 
-    access_denied: Please log in to access this feature.  Sign up for free!
+  authentication: 
+    access_denied: Please log in to access this feature.
     account: Account
     administer_object: Administer {{object}}
     change_password: Change Password
@@ -74,6 +74,7 @@ en:
     forgot_password: Forgot Password
     group: Group
     invite: Invite
+    inviter: Inviter
     join: Sign Up!
     joined_on: Joined On
     logged_in: Logged in successfully
@@ -100,6 +101,9 @@ en:
     role: Role
     parent_group: Parent Group
     child_group: Child Group
+    actions:
+      edit: Edit
+      view: View
     invites:
       invitation:
         create_user: Please create an account using the email which received this invitation.  Then login to accept the invite.
@@ -108,15 +112,9 @@ en:
           Visit this url to respond:
             
             {{url}}
-        email_body_moderator_invite: |
-          You have been invited to moderate {{group}}.
-          Visit this url to respond:
-            
-            {{url}}
         failure_invalid_code: Sorry, that is an invalid invite code. Please check your code and try again. (Perhaps your email client inserted a carriage return)
         failure_invalid_user: Sorry, this invitation was intended for a user with a different email than yours. (Perhaps you used a different email to sign up than the one which received the invite)
         member_invite: You have been invited to join {{group}}.
-        moderator_invite: You have been invited to moderate {{group}}.
       new:
         as_moderator: As Moderator
         invite_to_group: Invite to {{group}}
@@ -255,7 +253,9 @@ en:
       personal: Personal
   content:
     article: Article
-    articles_for_object: Articles for {{object}}
+    article_for_object:
+      one: Article for {{object}}
+      other: Articles for {{object}}
     author: Author
     blog: Blog
     comment: Comment
@@ -305,10 +305,6 @@ en:
       flash: Adobe Flash Movie
       quicktime: Quicktime Movie
       windows: Windows Media Video
-    article_types:
-      news: News
-      site: Site Content
-      summary: Summary
   forums:
     author: Author
     by_author: By {{author}}

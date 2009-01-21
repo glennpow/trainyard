@@ -1,6 +1,6 @@
 class MediasController < ApplicationController
   make_resourceful do
-    belongs_to :groupable
+    belongs_to :resource
   end
   
   def resourceful_name
@@ -12,12 +12,11 @@ class MediasController < ApplicationController
   
   def index
     respond_with_indexer do |options|
-      options[:conditions] = { :groupable_id => @groupable, :groupable_type => @groupable.class.to_s }
+      options[:conditions] = { :resource_id => @resource, :resource_type => @resource.class.to_s }
       options[:default_sort] = :created_at
       options[:headers] = [
-        { :name => t(:title, :scope => [ :content ]), :sort => :title },
-        t(:group, :scope => [ :authenticate ]),
-        { :name => t(:date, :scope => [ :datetimes ]), :sort => :article_type, :include => :created_at }
+        { :name => t(:title, :scope => [ :content ]), :sort => :name },
+        t(:group, :scope => [ :authentication ]),
       ]
     end
   end
@@ -26,6 +25,6 @@ class MediasController < ApplicationController
   private
   
   def check_editor_of
-    check_editor(@groupable || @media)
+    check_editor(@resource || @media)
   end
 end
