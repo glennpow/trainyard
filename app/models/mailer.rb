@@ -1,7 +1,5 @@
 class Mailer < ActionMailer::Base
-  helper :application
-  # XXX...
-  helper :themes
+  helper :trainyard
   
   def generic_email(options)
     users = options[:users] || []

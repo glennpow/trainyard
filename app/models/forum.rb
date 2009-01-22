@@ -12,6 +12,7 @@ class Forum < ActiveRecord::Base
       @last_post ||= find(:last, :include => :user)
     end
   end
+  belongs_to :parent_forum, :class_name => 'Forum'
 
   validates_presence_of :name
 end

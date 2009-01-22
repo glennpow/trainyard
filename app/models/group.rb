@@ -44,10 +44,12 @@ class Group < ActiveRecord::Base
     self.moderators.include?(user)
   end
   
-  def has_member?(user)
+  def has_member?(user, with_child_groups = false)
     return true if self.users.include?(user)
-    self.child_groups.each do |child_group|
-      return true if child_group.has_member?(user)
+    if with_child_groups
+      self.child_groups.each do |child_group|
+        return true if child_group.has_member?(user, with_child_groups)
+      end
     end
     return false
   end

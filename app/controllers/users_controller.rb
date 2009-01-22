@@ -44,13 +44,20 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     (@user.contact = Contact.new).address = Address.new if Configuration.users_contact
+    @user_groups = if params[:user_group_ids]
+      params[:user_group_ids].map { |id| Group.find(id, :select => 'id, name') }
+    elsif Configuration.default_user_group_name
+      [ Group.find_by_name(Configuration.default_user_group_name, :select => 'id, name') ]
+    else
+      []
+    end
   end
 
   def create
     @user = User.new(params[:user])
     
     if @user.save
-      Membership.create(:user_id => @user, :role_id => Role.user.id, :group_id => Group.find(params[:user_group])) if params[:user_group]
+      Membership.create(:user_id => @user, :role_id => Role.user.id, :group_id => params[:user_group_id]) if params[:user_group_id]
       
       flash[:notice] = t(:success, :scope => [ :authentication, :users, :new ])
       @user.confirm! unless Configuration.email_activation
@@ -77,9 +84,11 @@ class UsersController < ApplicationController
 
   def edit
     @user = current_user
-    @user.contact ||= Contact.new
-    @user.contact.address ||= Address.new
-    @user.contact.address.errors.clear
+    if Configuration.users_contact
+      @user.contact ||= Contact.new
+      @user.contact.address ||= Address.new
+      @user.contact.address.errors.clear
+    end
   end
   
   def update

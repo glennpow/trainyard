@@ -154,14 +154,6 @@ module Trainyard
       end
       return false
     end
-  
-    def user_role(user)
-      if user.has_role?(Role.administrator)
-        t(:admin, :scope => [ :authentication, :roles ])
-      else
-        user.roles.map { |role| t(role.key) }.to_sentence
-      end
-    end
 
     def self.included(base)
       base.send :filter_parameter_logging, :password, :password_confirmation if base.respond_to? :filter_parameter_logging

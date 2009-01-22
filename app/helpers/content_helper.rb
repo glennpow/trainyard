@@ -45,10 +45,6 @@ module ContentHelper
       :link => link_to("Textile", "http://hobix.com/textile/quick.html", :target => "_blank"))
   end
 
-  def comment_author(comment)
-    comment.user.nil? ? h(comment.user_name) : link_to_user(comment.user)
-  end
-
   def render_media(media, options = {})
     locals = {
       :src => media.source,
@@ -82,6 +78,10 @@ module ContentHelper
     content_tag(message.read || mailbox != :inbox ? :span : :strong, h(message.subject))
   end
   
+  def comment_author(comment)
+    comment.user.nil? ? h(comment.user_name) : link_to_user(comment.user)
+  end
+
   def render_comments(resource)
     if is_commentable?(resource)
       resource_name = ActionController::RecordIdentifier.singular_class_name(resource)
@@ -132,26 +132,6 @@ module ContentHelper
     
     capture do
       render :partial => 'theme/rating', :locals => locals
-    end
-  end
-  
-  def review_descriptor(review)
-    content_tag(:div, :class => 'review-descriptor') do
-      returning('') do |content|
-        content << link_to_user(review.user)
-        content << content_tag(:p, review.created_at.to_s(:long))
-      end
-    end
-  end
-  
-  def review_body(review)
-    content_tag(:div, :class => 'review-body') do
-      returning('') do |content|
-        content << render_rating(review)
-        content << render_formatted(review.body)
-        content << icon_link_to(:edit, t(:edit), edit_review_path(review)) if is_editor_of?(review)
-        content << icon_link_to(:delete, t(:delete), review, :confirm => t(:are_you_sure), :method => :delete) if has_administrator_role?
-      end
     end
   end
   

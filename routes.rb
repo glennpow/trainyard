@@ -13,7 +13,7 @@ reset_password '/reset_password/:id', :controller => 'users', :action => 'reset_
 change_password '/change_password', :controller => 'users', :action => 'edit_password'
 update_locale '/update_locale/', :controller => 'users', :action => 'update_locale'
 resource :account, :controller => 'users'
-resources :users, :member => { :enable => :put }, :has_many => [ :groups, :roles, :posts, :products, :quote_requests ]
+resources :users, :member => { :enable => :put }, :has_many => [ :groups, :posts, :products, :quote_requests ]
 
 resources :addresses, :collection => { :update_regions => :get }
 

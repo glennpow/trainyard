@@ -1,7 +1,7 @@
 <div class="user-card">
   <%= image_link_to_user(user, :image_style => image_style) %>
   <p><%= link_to_user(user) %></p>
-  <p>(<%= user_role(user) %>)</p>
+  <p><%= truncate(user.identities.to_sentence) %></p>
   <p><%= tp(:guru_point, :scope => [ :forums ]) %>: <%= user.guru_points %></p>
   <p><%= t(:registered, :scope => [ :authentication ]) %>: <%= user.created_at.to_date.to_s %></p>
 </div>

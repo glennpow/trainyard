@@ -1,3 +1,14 @@
+<% if defined?(user_groups) %>
+  <% if user_groups.length == 1 %>
+    <%= render_field(t(:group, :scope => [ :authentication ]), user_groups.first.name) %>
+    <%= hidden_field_tag(:user_group_id, user_groups.first.id) %>
+  <% else %>
+    <% f.labeled_field(:group) do %>
+      <%= select_tag(:user_group_id, option_tags(user_groups.map { |group| [ group.name, group.id ] })) %>
+    <% end %>
+  <% end %>
+<% end %>
+
 <table class="form-table">
   <tr>
     <td>

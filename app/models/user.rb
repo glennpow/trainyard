@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   has_many :memberships, :dependent => :destroy
   has_many :groups, :through => :memberships, :order => 'name ASC'
-  has_many :moderated_groups, :class_name => 'Group', :foreign_key => :moderator_id, :dependent => :destroy
+  has_many :moderated_groups, :through => :memberships, :source => :group, :conditions => { "#{Membership.table_name}.role_id" => Role.administrator.id }
   has_many :permissions, :through => :groups
   has_attached_file :image, Configuration.default_image_options
 
@@ -86,10 +86,10 @@ class User < ActiveRecord::Base
     return resource.respond_to?(:group) && resource.group.has_moderator?(self)
   end
   
-  def is_member_of?(resource)
+  def is_member_of?(resource, with_child_groups = false)
     return false if resource.nil?
     return true if has_administrator_role?
-    return resource.respond_to?(:group) && resource.group.has_member?(self)
+    return resource.respond_to?(:group) && resource.group.has_member?(self, with_child_groups)
   end
     
   def permitted?(action, resource)
@@ -111,6 +111,14 @@ class User < ActiveRecord::Base
 
   def groups_of(klass)
     klass.respond_to?(:find_by_group_id) ? self.groups.map { |group| klass.find_by_group_id(group.id) }.compact : []
+  end
+
+  def moderated_groups_of(klass)
+    klass.respond_to?(:find_by_group_id) ? self.moderated_groups.map { |group| klass.find_by_group_id(group.id) }.compact : []
+  end
+  
+  def identities
+    self.has_role?(Role.administrator) ? [ I18n.t(:admin, :scope => [ :authentication, :roles ]) ] : []
   end
  
   

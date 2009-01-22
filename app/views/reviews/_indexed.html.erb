@@ -1,10 +1,10 @@
 <div class="review listed">
-  <table class="comment-table">
+  <table class="full-width">
     <tr>
-      <td class="column-top comment-descriptor">
+      <td class="column-top listed-descriptor">
         <%= image_link_to_user(review.user, :image_style => :thumb) %>
-        <p class="comment-info"><%= link_to_user(review.user) %></p>
-        <p class="comment-info"><%= review.created_at.to_s(:short) %></p>
+        <p class="listed-info"><%= link_to_user(review.user) %></p>
+        <p class="listed-info"><%= review.created_at.to_s(:short) %></p>
       </td>
   
       <td class="column-top align-left">

@@ -12,11 +12,6 @@
       <%= f.check_box :remember_me %>
 
       <%= f.submit t(:login, :scope => [ :authentication ]) %>
-      
-      <%= render_actions([
-          link_to(t(:join, :scope => [ :authentication ]), new_user_path),
-          link_to(t(:forgot_password, :scope => [ :authentication ]), forgot_password_path)
-      ]) %>
     <% end %>
   </div>
 <% end %>

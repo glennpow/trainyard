@@ -3,13 +3,7 @@
 <%= render_heading(t(:create_object, :object => t(:user, :scope => [ :authentication ]))) %>
 
 <% form_for :user, :url => users_path, :html => { :multipart => true } do |f| -%>
-  <% if Configuration.user_group_names %>
-    <% f.labeled_field(:user_group) do %>
-      <%= select_tag(:user_group, option_tags(Configuration.user_group_names.map { |name| [ name, Group.find_by_name(name, :select => 'id').id ] })) %>
-    <% end %>
-  <% end %>
-
-  <%= render :partial => 'new', :locals => { :f => f, :user => @user } %>
+  <%= render :partial => 'new', :locals => { :f => f, :user => @user, :user_groups => @user_groups } %>
 
   <%= f.submit t(:join, :scope => [ :authentication ]) %>
 <% end -%>

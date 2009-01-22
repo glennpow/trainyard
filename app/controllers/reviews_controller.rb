@@ -26,11 +26,8 @@ class ReviewsController < ApplicationController
     
   def index
     respond_with_indexer do |options|
-      options[:default_sort] = :created_at
-      options[:headers] = [
-        { :name => t(:from), :sort => :created_at },
-        { :name => t(:review, :scope => [ :content ]), :sort => :rating },
-      ]
+      options[:order] = 'created_at ASC'
+      options[:no_table] = true
 
       if @resource
         options[:conditions] = [ "resource_type = ? AND resource_id = ?", @resource.class.to_s, @resource.id ]
@@ -54,7 +51,6 @@ class ReviewsController < ApplicationController
   private
   
   def check_resource
-    logger.info("*** #{@resource} && #{is_reviewable?(@resource)}")
     check_condition(@resource && is_reviewable?(@resource))
   end
  

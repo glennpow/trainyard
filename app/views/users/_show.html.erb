@@ -2,8 +2,8 @@
 
 <%= render_heading(h(user.name)) %>
 
-<% unless (role_names = user_role(user)).blank? %>
-  <%= render_field("(#{role_names})") %>
+<% unless (identities = user.identities.to_sentence).blank? %>
+  <%= render_field(identities) %>
 <% end %>
 
 <% if has_administrator_role? %>

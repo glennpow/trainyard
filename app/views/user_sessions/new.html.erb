@@ -1,3 +1,8 @@
 <% title t(:login, :scope => [ :authentication ]) %>
 
 <%= render :partial => 'new' %>
+
+<%= render_actions([
+  link_to(t(:join, :scope => [ :authentication ]), new_user_path),
+  link_to(t(:forgot_password, :scope => [ :authentication ]), forgot_password_path)
+]) %>
