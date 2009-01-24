@@ -124,21 +124,6 @@ module ThemeHelper
     options[:class] = merge_classes(options[:class], 'bar-list')
     render_list(values, options)
   end
-  
-  def render_row(indexer, object, columns, options = {})
-    locals = {
-      :indexer => indexer,
-      :object => object,
-      :columns => columns,
-      :headers => options[:headers],
-      :actions => actions_for(options[:actions]),
-      :row_class => cycle('odd', 'even'),
-      :row_url => options[:url] || url_for(object)
-    }
-    capture do
-      render :partial => 'theme/row', :locals => locals
-    end
-  end
 
   def render_formatted(text, options = {})
     options[:class] = merge_classes(options[:class], 'formatted')
