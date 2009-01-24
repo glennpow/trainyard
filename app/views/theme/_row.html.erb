@@ -12,7 +12,7 @@
 </tr>
 <% end %>
 
-<tr class='indexer-tr <%= row_class %>'>
+<tr class='indexer-tr <%= row_class %> clickable' onclick="location.href='<%= row_url %>'">
   <% if indexer && indexer.selectable %>
     <td class='indexer-td'>
       <%= check_box(indexer.klass.to_s.underscore, object.id) %>
@@ -25,7 +25,7 @@
         <%= column[:content] %>
       </td>
     <% else %>
-      <td class='indexer-td'><%= column %></td>
+      <td class='indexer-td <%= column[:class] || '' %>'><%= column %></td>
     <% end %>
   <% end %>
   

@@ -193,6 +193,19 @@ tr.indexer-tr.even {
   border-bottom: 1px dotted <%= theme.secondary_color %>;
 }
 
+tr.indexer-tr.clickable:hover {
+  background: <%= theme.highlight_background %>;
+  color: <%= theme.highlight_font_color %>;
+}
+
+tr.indexer-tr.clickable:hover a {
+  color: <%= theme.highlight_link_color %>;
+}
+
+tr.indexer-tr.clickable:hover a:hover {
+  color: <%= theme.highlight_link_hover_color %>;
+}
+
 td.searcher-td {
   border-bottom: 1px dotted <%= theme.secondary_color %>;
 }

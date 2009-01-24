@@ -130,6 +130,11 @@ class CreateContent < ActiveRecord::Migration
       t.string :secondary_font_color
       t.string :secondary_link_color
       t.string :secondary_link_hover_color
+      t.string :highlight_color
+      t.string :highlight_url
+      t.string :highlight_font_color
+      t.string :highlight_link_color
+      t.string :highlight_link_hover_color
       t.timestamps
     end
     

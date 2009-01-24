@@ -7,9 +7,6 @@
       (@themeable.theme == theme) ? icon(:check) : ""
     ],
     :actions => [
-      { :allow => [
-        icon_link_to(:show, t(:show), polymorphic_path([ @themeable, theme ]))
-      ] },
       { :if => is_editor_of?(@themeable) && (@themeable.theme != theme), :allow => [
         icon_link_to(:edit, t(:apply, :scope => [ :themes ]), apply_theme_path(:id => theme.id, :themeable_type => @themeable.class.to_s, :themeable_id => @themeable.id)),
       ] } ]) %>
@@ -21,9 +18,6 @@
       h(theme.name),
     ],
     :actions => [
-      { :allow => [
-        icon_link_to(:show, t(:show), theme)
-      ] },
       { :if => has_administrator_role?, :allow => [
         icon_link_to(:edit, t(:edit), edit_object_path(theme)),
         icon_link_to(:delete, t(:delete), theme, :confirm => t(:are_you_sure), :method => :delete)

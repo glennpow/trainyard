@@ -11,7 +11,6 @@
     ],
     :actions => [
       { :allow => [
-        icon_link_to(:show, t(:show), user),
         icon_link_to(:edit, tp(:edit_object, :object => t(:role, :scope => [ :authentication ])), user_roles_path(user))
       ] },
       { :if => user != current_user && user.active?, :allow => [
@@ -27,9 +26,5 @@
     [
       h(user.name),
       h(user.email)
-    ],
-    :actions => [
-      { :allow => [
-        icon_link_to(:show, t(:show), user)
-      ] } ]) %>
+    ]) %>
 <% end %>

@@ -17,4 +17,8 @@ class Theme < ActiveRecord::Base
   def secondary_background
     @secondary_background ||= "#{self.secondary_color}#{self.secondary_url.blank? ? '' : ' url(' + self.secondary_url + ') repeat'}"
   end
+  
+  def highlight_background
+    @highlight_background ||= "#{self.highlight_color}#{self.highlight_url.blank? ? '' : ' url(' + self.highlight_url + ') repeat'}"
+  end
 end

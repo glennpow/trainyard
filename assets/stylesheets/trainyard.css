@@ -91,6 +91,10 @@ ul {
   font-size: smaller;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .align-left {
   text-align: left;
 }
