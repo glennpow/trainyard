@@ -1,4 +1,4 @@
-<% title t(:edit_object, :object => t(:blog, :scope => [ :blogs ])) %>
+<% title t(:edit_object, :object => t(:blog, :scope => [ :content ])) %>
 
 <% form_for :blog, :url => object_path, :html => { :method => :put } do |f| %>
   <%= render :partial => 'edit', :locals => { :f => f, :blog => @blog } %>

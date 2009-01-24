@@ -1,5 +1,10 @@
 module Trainyard
   module ContentSystem
+    def log_error(e)
+      logger.error("Error: #{e.message}")
+      e.backtrace.each { |trace| logger.error("  #{trace}") }
+    end
+
     def page_title
       @page_title ||= ''
     end

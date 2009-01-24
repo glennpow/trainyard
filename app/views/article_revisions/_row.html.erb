@@ -3,9 +3,7 @@
   article,
   [
     h(article.name),
-    h(article.user.name),
     link_to("#{h(article.resource.name)} (#{article.resource.class.to_s})", article.resource),
-    article.updated_at.to_s(:long),
     h(article.locale_name),
   ],
   :actions => [

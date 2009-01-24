@@ -158,7 +158,8 @@ module Trainyard
     def self.included(base)
       base.send :filter_parameter_logging, :password, :password_confirmation if base.respond_to? :filter_parameter_logging
       base.send :helper_method, :current_user_session, :current_user, :logged_in?,
-        :has_role?, :has_administrator_role?, :user_role, :is_moderator_of?, :is_editor_of? if base.respond_to? :helper_method
+        :has_role?, :has_administrator_role?, :is_moderator_of?, :is_member_of?,
+        :has_permission?, :is_editor_of?, :is_viewer_of? if base.respond_to? :helper_method
     end
   end
 end

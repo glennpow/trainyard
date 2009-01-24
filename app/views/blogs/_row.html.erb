@@ -1,7 +1,9 @@
-<%= render_row([
-  h(blog.name),
-  link_to_show(blog.group.name, blog.group),
-  h(blog.created_at),
+<%= render_row(
+  indexer,
+  blog,
+  [
+    h(blog.name),
+    link_to(blog.group.name, blog.group),
   ],
   :actions => [
     { :allow => [

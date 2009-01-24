@@ -1,0 +1,15 @@
+<%= render_row(
+  indexer,
+  wiki,
+  [
+    h(wiki.name),
+    link_to(wiki.group.name, wiki.group)
+  ],
+  :actions => [
+    { :allow => [
+      icon_link_to(:show, t(:show), wiki)
+    ] },
+    { :if => is_editor_of?(wiki), :allow => [
+      icon_link_to(:edit, t(:edit), edit_object_path(wiki)),
+      icon_link_to(:delete, t(:delete), wiki, :confirm => t(:are_you_sure), :method => :delete)
+    ] } ]) %>

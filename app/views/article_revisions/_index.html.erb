@@ -1,0 +1,7 @@
+<%= render_heading(t(:object_for_parent, :object => tp(:article, :scope => [ :content ]), :parent => resource.name)) %>
+
+<% if is_editor_of?(resource) %>
+  <% indexer.footers = link_to(t(:create_object, :object => t(:article, :scope => [ :content ])), new_object_path) %>
+<% end %>
+
+<%= render_indexer(indexer) %>

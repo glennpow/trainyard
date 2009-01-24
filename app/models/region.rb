@@ -10,7 +10,7 @@ class Region < ActiveRecord::Base
   end
 
   def iso_code
-    "#{country}-#{alpha_code}"
+    @iso_code ||= "#{country}-#{alpha_code}"
   end
   
   def name

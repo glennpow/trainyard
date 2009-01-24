@@ -200,12 +200,26 @@ module Trainyard
      
     def locale_select(name, options = {}, html_options = {})
       options[:selected] ||= @template.current_locale.id
-      if options.has_key?(:localized) && options.delete(:localized)
+      if options.delete(:localized)
         choices = Locale.find_by_localized_name.map { |locale| [ locale.localized_name, locale.id ] }
       else
         choices = Locale.find_by_name.map { |locale| [ locale.name, locale.id ] }
       end
       select(name, choices, options, html_options)
+    end
+     
+    def group_select(name, options = {}, html_options = {})
+      order = options.delete(:order) || 'name ASC'
+      if memberships_options = options.delete(:memberships)
+        user = memberships_options[:user]
+        roles = (memberships_options[:roles] || [ Role.user ]).map(&:id)
+      end
+      groups = if user
+        Group.all(:include => :memberships, :conditions => { "#{Membership.table_name}.user_id" => user, "#{Membership.table_name}.role_id" => roles }, :order => order)
+      else
+        groups = Group.all(:order => order)
+      end
+      collection_select(name, groups, :id, :name, options, html_options)
     end
   
     def rating_select(name, options = {}, html_options = {})

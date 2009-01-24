@@ -1,0 +1,9 @@
+<% title t(:wiki, :scope => [ :content ]) %>
+
+<%= render_heading(t(:wiki, :scope => [ :content ])) %>
+
+<% if is_editor_of?(@group) %>
+  <% @indexer.footers = link_to(t(:add_object, :object => t(:wiki, :scope => [ :content ])), new_object_path) %>
+<% end %>
+
+<%= render_indexer(@indexer) %>

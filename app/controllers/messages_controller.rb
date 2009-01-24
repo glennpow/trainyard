@@ -32,7 +32,7 @@ class MessagesController < ApplicationController
     respond_with_indexer do |options|
       options[:default_sort] = :name
       options[:headers] = [
-        { :name => t(@mailbox == :inbox ? :from : :to, :scope => [ :content ]), :sort => :user, :include => (@mailbox == :inbox ? :from_user : :to_user), :order => 'users.name' },
+        { :name => t(@mailbox == :inbox ? :from : :to, :scope => [ :content ]), :sort => :user, :include => (@mailbox == :inbox ? :from_user : :to_user), :order => "#{User.table_name}.name" },
         { :name => t(:subject, :scope => [ :content ]), :sort => :subject },
         { :name => t(@mailbox == :inbox ? :received : :sent, :scope => [ :content ]), :sort => :created_at }
       ]

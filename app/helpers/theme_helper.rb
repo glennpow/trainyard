@@ -72,10 +72,6 @@ module ThemeHelper
   def icon_label(icon_name, name, options = {})
     image_label(icon_src(icon_name), name, options)
   end
-
-  def link_to_show(name, options = {}, html_options = {})
-    link_to(name, options, html_options)
-  end
   
   def button_link_to(name, options = {}, html_options = {})
     button_class = html_options.delete(:class)

@@ -26,14 +26,6 @@ class User < ActiveRecord::Base
     UserMailer.deliver_confirmation(self)
   end
   
-  def confirmed?
-    self.confirmed
-  end
- 
-  def active?
-    self.active
-  end
-  
   def forgot_password!
     self.reset_perishable_token!
     UserMailer.deliver_forgot_password(self)
@@ -44,15 +36,15 @@ class User < ActiveRecord::Base
   end
   
   def name
-    super.blank? ? self.login : super
+    @name ||= super.blank? ? self.login : super
   end
 
   def self.administrator
-    self.admins.first
+    self.administrators.first
   end
 
   def self.administrators
-    @administrators ||= Membership.all(:include => :user, :conditions => { :group_id => nil, :role_id => Role.administrator.id }).map(&:user)
+    @@administrators ||= Membership.all(:include => :user, :conditions => { :group_id => nil, :role_id => Role.administrator.id }).map(&:user)
   end
   
   def roles(group = nil)
@@ -75,10 +67,6 @@ class User < ActiveRecord::Base
     Membership.create(:user_id => self.id, :role_id => role.id, :group_id => group) unless self.has_role?(role, group)
   end
   
-  def groups_with_moderated
-    (self.moderated_groups + self.groups).uniq
-  end
-  
   def is_moderator_of?(resource)
     return false if resource.nil?
     return true if has_administrator_role?
@@ -97,16 +85,11 @@ class User < ActiveRecord::Base
   end
   
   def is_editor_of?(resource)
-    return false if resource.nil?
-    return true if has_administrator_role?
-    return resource.user == self if resource.respond_to?(:user)
-    return resource.respond_to?(:group) && has_editor_role?(resource.group)
+    return permitted?(Action.edit, resource)
   end
   
   def is_viewer_of?(resource)
-    return false if resource.nil?
-    return true if has_administrator_role?
-    return resource.respond_to?(:group) && has_editor_role?(resource.group)
+    return permitted?(Action.view, resource)
   end
 
   def groups_of(klass)
@@ -118,7 +101,7 @@ class User < ActiveRecord::Base
   end
   
   def identities
-    self.has_role?(Role.administrator) ? [ I18n.t(:admin, :scope => [ :authentication, :roles ]) ] : []
+    self.has_administrator_role? ? [ I18n.t(:admin, :scope => [ :authentication, :roles ]) ] : []
   end
  
   

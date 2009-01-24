@@ -6,14 +6,15 @@ module Trainyard
   
     module MacroMethods
       def acts_as_contactable(*args)
-        name = args.first || :contact
+        options = args.extract_options!
+        attribute_name = args.first || :contact
         
         class_eval do
-          has_one name, :as => :resource, :class_name => 'Contact', :dependent => :destroy
+          has_one attribute_name, options.reverse_merge(:as => :resource, :class_name => 'Contact', :dependent => :destroy)
 
-          has_accessible name
+          has_accessible attribute_name
 
-          attr_accessible name
+          attr_accessible attribute_name
         end
       end
     end

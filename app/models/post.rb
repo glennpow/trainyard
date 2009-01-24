@@ -13,11 +13,12 @@ class Post < ActiveRecord::Base
   searches_on :body
   
   def first?
-    self == self.topic.posts.first
+    return @first if defined?(@first)
+    @first = self == self.topic.posts.first
   end
   
   def topic_name
-    self.first? ? self.topic.name : I18n.t(:regarding_topic, :scope => [ :forums ], :topic => self.topic.name)
+    @topic_name ||= self.first? ? self.topic.name : I18n.t(:regarding_topic, :scope => [ :forums ], :topic => self.topic.name)
   end
   
   def quote_from(post)
@@ -31,7 +32,7 @@ class Post < ActiveRecord::Base
   end
   
   def watching_users
-    self.topic.watching_users.reject { |user| user.id == self.user_id }
+    @watching_users ||= self.topic.watching_users.reject { |user| user.id == self.user_id }
   end
   
   

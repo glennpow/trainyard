@@ -19,6 +19,7 @@ class Address < ActiveRecord::Base
   end
   
   def full_address(options = {})
+    return @full_address if defined?(@full_address)
     address = []
     address << self.street_1
     address << self.street_2 unless self.street_2.blank?
@@ -26,7 +27,8 @@ class Address < ActiveRecord::Base
     address << self.region.name
     address << self.postal_code
     address << self.country.alpha_3_code
-    address.join(", ")
+    @full_address = address.join(", ")
+    @full_address
   end
 
   def blank?

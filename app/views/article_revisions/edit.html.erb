@@ -1,11 +1,9 @@
-<% title t(:create_object, :object => t(:article, :scope => [ :content ])) %>
+<% title t(:edit_object, :object => t(:article, :scope => [ :content ])) %>
 
 <%= render_heading(t(:article_for_object, :scope => [ :content ], :count => 1, :object => @article.resource.name)) %>
 
-<% form_for(:article, :url => objects_path) do |f| %>
+<% form_for :article, :url => object_path, :html => { :method => :put } do |f| %>
   <%= render :partial => 'edit', :locals => { :f => f, :article => @article } %>
-  
-  <%= f.hidden_field(:revisionable) %>
 
-  <%= f.submit t(:create) %>
+  <%= f.submit t(:save) %>
 <% end %>

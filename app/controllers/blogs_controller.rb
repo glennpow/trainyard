@@ -18,10 +18,11 @@ class BlogsController < ApplicationController
   end
   
   def resourceful_name
-    t(:blog, :scope => [ :blogs ])
+    t(:blog, :scope => [ :content ])
   end
 
   before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
+  before_filter :check_group, :only => [ :index, :new, :create ]
   before_filter :check_editor_of, :only => [ :new, :create, :edit, :update, :destroy ]
   
   def index
@@ -79,6 +80,10 @@ class BlogsController < ApplicationController
   
   
   private
+  
+  def check_group
+    check_condition(@group)
+  end
   
   def check_editor_of
     check_editor(@group || @blog)

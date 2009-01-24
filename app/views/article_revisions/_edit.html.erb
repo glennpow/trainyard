@@ -1,0 +1,11 @@
+<%= javascript 'fckeditor/fckeditor' %>
+
+<%= f.text_field :name %>
+
+<%= f.locale_select(:locale_id) %>
+
+<%= f.yes_no_select(:commentable) %>
+
+<%= f.yes_no_select(:reviewable) %>
+
+<%= fckeditor_textarea(:article, :body, :toolbarSet => 'Simple', :width => '100%', :height => '200px') %>

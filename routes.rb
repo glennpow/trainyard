@@ -17,7 +17,7 @@ resources :users, :member => { :enable => :put }, :has_many => [ :groups, :posts
 
 resources :addresses, :collection => { :update_regions => :get }
 
-resources :articles, :has_many => [ :comments, :medias, :reviews ]
+resources :articles, :has_many => [ :articles, :article_revisions, :comments, :medias, :reviews ]
 blog_article '/blogs/:id/articles/:article_id', :controller => 'blogs', :action => 'article'
 resources :blogs, :member => { :contents => :get }, :has_many => [ :articles ]
 resources :comments
@@ -31,3 +31,4 @@ stylesheet_theme '/stylesheet_theme/:id.css', :controller => 'themes', :action =
 resources :themes, :collection => { :preview => :get }
 apply_theme '/:themeable_type/:themeable_id/themes/:id/apply', :controller => 'themes', :action => 'apply', :method => :post
 resources :topics, :has_many => [ :posts ]
+resources :wikis, :has_many => [ :articles ]

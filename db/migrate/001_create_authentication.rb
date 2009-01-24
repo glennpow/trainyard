@@ -18,6 +18,7 @@ class CreateAuthentication < ActiveRecord::Migration
       t.references :group
       t.references :role, :null => false
       t.references :user, :null => false
+      t.timestamps
     end
     
     add_index :memberships, :group_id

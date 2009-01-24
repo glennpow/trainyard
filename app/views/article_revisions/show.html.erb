@@ -2,13 +2,7 @@
 
 <%= render_heading(h(@article.name)) %>
 
-<%= render_field(content_tag(:span, @article.updated_at.to_s(:long), :class => 'timestamp')) %>
-
-<%= render_field(tp(:author, :scope => [ :content ]), @article.authors.map { |user| user.name }.to_sentence) %>
-
-<% if @article.revisionable? %>
-  <%= render_field(t(:revision, :scope => [ :content ]), @article.revision) %>
-<% end %>
+<%= render_field(content_tag(:span, @article.created_at.to_s(:long), :class => 'timestamp')) %>
 
 <% if is_reviewable?(@article) %>
   <%= render_field(render_rating(@article)) %>
@@ -28,4 +22,3 @@
 
 <% page_actions << link_to(@article.resource.name, @article.resource) %>
 <% page_actions << icon_link_to(:edit, t(:edit_object, :object => t(:article, :scope => [ :content ])), edit_object_path) if is_editor_of?(@article) %>
-<% page_actions << icon_link_to(:add, t(:add_object, :object => t(:article, :scope => [ :content ])), new_article_article_path(@article)) if has_permission?(Action.add_article, @article) %>

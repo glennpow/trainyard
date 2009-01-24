@@ -18,7 +18,7 @@ class Topic < ActiveRecord::Base
   searches_on :name
 
   def author_count
-    self.posts.map { |post| post.user_id }.uniq.size
+    @author_count ||= self.posts.map { |post| post.user_id }.uniq.size
   end
   
   def hit!
@@ -30,10 +30,10 @@ class Topic < ActiveRecord::Base
   end
   
   def guru_points_available
-    self.guru_points - self.posts.map(&:guru_points).sum
+    @guru_points_available ||= self.guru_points - self.posts.map(&:guru_points).sum
   end
   
   def watching_users
-    self.posts.map(&:user).uniq
+    @watching_users ||= self.posts.map(&:user).uniq
   end
 end

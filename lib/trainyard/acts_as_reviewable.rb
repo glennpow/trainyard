@@ -6,10 +6,11 @@ module Trainyard
   
     module MacroMethods
       def acts_as_reviewable(*args)
-        name = args.first || :reviews
+        options = args.extract_options!
+        attribute_name = args.first || :reviews
         
         class_eval do
-          has_many name, :as => :resource, :class_name => 'Review', :order => 'created_at ASC', :dependent => :destroy
+          has_many attribute_name, options.reverse_merge(:as => :resource, :class_name => 'Review', :order => 'created_at ASC', :dependent => :destroy)
         end
       end
     end

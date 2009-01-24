@@ -102,6 +102,7 @@ en:
     parent_group: Parent Group
     child_group: Child Group
     actions:
+      add_article: Add Article
       edit: Edit
       view: View
     invites:
@@ -286,6 +287,7 @@ en:
     review_of_object:
       one: Review of {{object}}
       other: Reviews of {{object}}
+    revision: Revision
     send_message: Send Message
     sent: Sent
     subject: Subject
@@ -293,6 +295,7 @@ en:
     to: To
     topic: Topic
     video: Video
+    wiki: Wiki
     view_comments:
       zero: No Comments
       one: View Comment

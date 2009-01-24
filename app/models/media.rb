@@ -16,6 +16,6 @@ class Media < ActiveRecord::Base
   end
   
   def source
-    self.media.file? ? self.media.url : self.url;
+    @source ||= self.media.file? ? self.media.url : self.url
   end
 end

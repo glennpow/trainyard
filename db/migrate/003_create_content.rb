@@ -2,14 +2,29 @@ class CreateContent < ActiveRecord::Migration
   def self.up
     create_table :articles do |t|
       t.references :resource, :polymorphic => true, :null => false
+      t.references :group
+      t.references :user, :null => false
       t.string :name, :null => false
       t.text :body, :null => false
       t.references :locale
       t.boolean :commentable, :default => true
       t.boolean :reviewable, :default => true
+      t.boolean :erased, :default => false
+      t.boolean :revisionable, :default => false
+      t.integer :revision, :default => 1
       t.timestamps
     end
-  
+      
+    create_table :article_revisions do |t|
+      t.references :article, :null => false
+      t.references :user, :null => false
+      t.string :name, :null => false
+      t.text :body
+      t.boolean :erased, :default => false
+      t.integer :revision
+      t.datetime :created_at
+    end
+
     create_table :blogs do |t|
       t.references :group, :null => false
       t.string :name, :null => false
@@ -25,7 +40,8 @@ class CreateContent < ActiveRecord::Migration
     end
     
     create_table :forums do |t|
-      t.string :name
+      t.references :group, :null => false
+      t.string :name, :null => false
       t.text :description
       t.integer :topics_count, :default => 0
       t.integer :posts_count, :default => 0
@@ -33,14 +49,6 @@ class CreateContent < ActiveRecord::Migration
       t.references :parent_forum
       t.timestamps
     end
-
-    create_table :forums_users do |t|
-      t.references :forum
-      t.references :user
-    end
-
-    add_index :forums_users, [ :forum_id ]
-    add_index :forums_users, [ :user_id ]
 
     create_table :languages do |t|
       t.string :code, :null => false
@@ -79,15 +87,15 @@ class CreateContent < ActiveRecord::Migration
     end
 
     create_table :pages do |t|
-      t.string :name
+      t.string :name, :null => false
       t.string :permalink, :null => false
       t.timestamps
     end
 
     create_table :posts do |t|
-      t.references :user
-      t.references :topic
-      t.text :body
+      t.references :user, :null => false
+      t.references :topic, :null => false
+      t.text :body, :null => false
       t.integer :guru_points, :default => 0
       t.timestamps
     end
@@ -133,9 +141,9 @@ class CreateContent < ActiveRecord::Migration
     add_index :themeables_themes, [ :themeable_id, :themeable_type ], :unique => true
 
     create_table :topics do |t|
-      t.references :forum
-      t.references :user
-      t.string :name
+      t.references :forum, :null => false
+      t.references :user, :null => false
+      t.string :name, :null => false
       t.integer :hits, :default => 0
       t.boolean :sticky, :default => false
       t.integer :guru_points, :default => 0
@@ -146,10 +154,17 @@ class CreateContent < ActiveRecord::Migration
 
     add_index :topics, [ :forum_id ]
     add_index :topics, [ :user_id ]
+    
+    create_table :wikis do |t|
+      t.references :group, :null => false
+      t.string :name, :null => false
+      t.timestamps
+    end
   end
 
   def self.down
     drop_table :articles
+    drop_table :article_revisions
     drop_table :blogs
     drop_table :comments
     drop_table :forums
@@ -164,5 +179,6 @@ class CreateContent < ActiveRecord::Migration
     drop_table :themes
     drop_table :themeables_themes
     drop_table :topics
+    drop_table :wikis
   end
 end

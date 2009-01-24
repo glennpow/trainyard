@@ -1,6 +1,10 @@
 <%= javascript 'fckeditor/fckeditor' %>
 
-<%= f.text_field :name %>
+<%= f.hidden_field(:user_id) %>
+
+<%= f.group_select(:group_id, :memberships => { :user => current_user, :roles => [ Role.administrator, Role.editor ] }) %>
+
+<%= f.text_field(:name) %>
 
 <%= f.locale_select(:locale_id) %>
 
@@ -8,4 +12,4 @@
 
 <%= f.yes_no_select(:reviewable) %>
 
-<%= fckeditor_textarea(:article, :body, :toolbarSet => 'Simple', :width => '100%', :height => '200px') %>
+<%= fckeditor_textarea(:article, :body, :toolbarSet => 'Simple', :width => '100%', :height => '300px') %>

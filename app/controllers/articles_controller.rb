@@ -6,6 +6,16 @@ class ArticlesController < ApplicationController
       load_comments(@article)
       load_reviews(@article)
     end
+    
+    before :new do
+      @article.group = @resource.group
+      @article.user = current_user
+      @article.revisionable = @resource.revisionable_articles? if @resource.respond_to?(:revisionable_articles?)
+    end
+    
+    before :edit do
+      @article.user = current_user
+    end
   end
   
   def resourceful_name
@@ -13,9 +23,9 @@ class ArticlesController < ApplicationController
   end
 
   before_filter :login_required, :only => [ :index, :new, :create, :edit, :update, :destroy ]
-  before_filter :check_editor_or_administrator, :only => [ :index ]
-  before_filter :check_resource, :only => [ :new, :create ]
-  before_filter :check_editor_of, :only => [ :new, :create, :edit, :update, :destroy ]
+  before_filter :check_viewer_or_administrator, :only => [ :index ]
+  before_filter :check_add_article_for, :only => [ :new, :create ]
+  before_filter :check_editor_of, :only => [ :edit, :update, :destroy ]
   before_filter :check_viewer_of, :only => [ :show ]
   
   def index
@@ -23,17 +33,17 @@ class ArticlesController < ApplicationController
       options[:default_sort] = :name
       options[:headers] = [
         { :name => t(:title, :scope => [ :content ]), :sort => :name },
+        { :name => t(:author, :scope => [ :content ]), :sort => :author, :include => :user, :order => "#{User.table_name}.name" },
         t(:topic, :scope => [ :content ]),
+        { :name => t(:date, :scope => [ :datetimes ]), :sort => :updated_at },
         t(:locale, :scope => [ :content ])
       ]
       options[:search] = true
     
-      options[:conditions] = {}
       if @resource
-        options[:conditions][:resource_type] = @resource.class.to_s
-        options[:conditions][:resource_id] = @resource.id
+        options[:conditions] = { :resource_type => @resource.class.to_s, :resource_id => @resource.id }
       elsif params[:resource_type]
-        options[:conditions][:resource_type] = params[:resource_type]
+        options[:conditions] = { :resource_type => params[:resource_type] }
       end
     end
   end
@@ -41,19 +51,19 @@ class ArticlesController < ApplicationController
   
   private
   
-  def check_editor_or_administrator
-    @resource ? check_editor_of : check_administrator_role
+  def check_viewer_or_administrator
+    @resource ? check_viewer(@resource) : check_administrator_role
   end
   
-  def check_resource
-    check_condition(@resource)
+  def check_add_article_for
+    @resource && check_permission(Action.add_article, @resource)
+  end
+  
+  def check_editor_of
+    check_editor(@article)
   end
   
   def check_viewer_of
     check_viewer(@article)
-  end
-  
-  def check_editor_of
-    check_editor(@resource || @article)
   end
 end

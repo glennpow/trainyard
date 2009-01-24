@@ -1,7 +1,7 @@
 <% title tp(:comment, :scope => [ :content ]) %>
 
 <%= render_heading(@resource.nil? ? tp(:comment, :scope => [ :content ]) :
-  t(:comment_for_object, :scope => [ :content ], :count => @indexer.collection.total_entries, :object => link_to_show(@resource.name, parent_path))) %>
+  t(:comment_for_object, :scope => [ :content ], :count => @indexer.collection.total_entries, :object => link_to(@resource.name, parent_path))) %>
 
 <% if may_review?(@resource) %>
   <% @indexer.footers = link_to(t(:create_object, :object => t(:comment, :scope => [ :content ])), new_object_path) %>

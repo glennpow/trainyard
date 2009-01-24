@@ -1,0 +1,7 @@
+<% title t(:edit_object, :object => t(:wiki, :scope => [ :content ])) %>
+
+<% form_for :wiki, :url => object_path, :html => { :method => :put } do |f| %>
+  <%= render :partial => 'edit', :locals => { :f => f, :wiki => @wiki } %>
+
+  <%= f.submit t(:save) %>
+<% end %>

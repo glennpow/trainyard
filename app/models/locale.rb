@@ -5,15 +5,15 @@ class Locale < ActiveRecord::Base
   validates_presence_of :language, :country
   
   def code
-    "#{self.language.code}-#{self.country.alpha_2_code}"
+    @code ||= "#{self.language.code}-#{self.country.alpha_2_code}"
   end
   
   def name
-    "#{self.language.name} (#{self.country.name})"
+    @name ||= "#{self.language.name} (#{self.country.name})"
   end
   
   def localized_name
-    "#{self.language.name(self.language.code)} (#{self.country.name})"
+    @localized_name ||= "#{self.language.name(self.language.code)} (#{self.country.name})"
   end
   
   def self.parse_language_code(code)

@@ -2,8 +2,8 @@ class Group < ActiveRecord::Base
   has_many :memberships, :dependent => :destroy
   has_many :users, :through => :memberships, :order => 'name ASC'
   has_many :moderators, :through => :memberships, :order => 'name ASC', :source => :user, :conditions => { "#{Membership.table_name}.role_id" => Role.administrator.id }
-  belongs_to :parent_group, :foreign_key => :parent_group_id, :class_name => 'Group'
-  has_many :child_groups, :foreign_key => :parent_group_id, :class_name => 'Group', :dependent => :destroy, :order => 'name ASC'
+  belongs_to :parent_group, :class_name => 'Group', :foreign_key => :parent_group_id
+  has_many :child_groups, :class_name => 'Group', :foreign_key => :parent_group_id, :order => 'name ASC', :dependent => :destroy
   has_many :permissions, :dependent => :destroy
   has_many :invites, :dependent => :destroy
   
