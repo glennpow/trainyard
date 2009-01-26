@@ -4,9 +4,11 @@ module ForumsHelper
   end
 
   def forum_descriptor(forum)
-    content_tag(:div, :class => 'forum-descriptor') do
-      concat content_tag(:p, link_to(h(forum.name), forum_path(forum)), :class => 'forum-name')
-      concat content_tag(:p, h(forum.description), :class => 'forum-description')
+    returning('') do |content|
+      content_tag(:div, :class => 'forum-descriptor') do
+        content << content_tag(:p, link_to(h(forum.name), forum_path(forum)), :class => 'forum-name')
+        content << content_tag(:p, h(forum.description), :class => 'forum-description')
+      end
     end
   end
   
@@ -18,9 +20,11 @@ module ForumsHelper
   end
 
   def topic_descriptor(topic)
-    content_tag(:div, :class => 'topic-descriptor') do
-      concat content_tag(:p, link_to(h(topic.name), topic_path(topic)), :class => "topic-name #{topic.sticky ? 'sticky' : ''}")
-      concat content_tag(:p, t(:by_author, :scope => [ :forums ], :author => link_to_user(topic.user)), :class => 'topic-user')
+    returning('') do |content|
+      content_tag(:div, :class => 'topic-descriptor') do
+        content << content_tag(:p, link_to(h(topic.name), topic_path(topic)), :class => "topic-name #{topic.sticky ? 'sticky' : ''}")
+        content << content_tag(:p, t(:by_author, :scope => [ :forums ], :author => link_to_user(topic.user)), :class => 'topic-user')
+      end
     end
   end
   

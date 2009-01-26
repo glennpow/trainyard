@@ -1,10 +1,12 @@
 module FormHelper
   # EXAMPLE: option_tags([["one", "One", { :title => "one-title" }], ["two", "Two"]], "two")
   def option_tags(choices, default = nil)
-    choices.each do |choice|
-      selected = (choice[1] == default)
-      options = choice[2] ? choice[2].inject("") { |result, value| " #{value[0]}='#{value[1]}'" } : ""
-      concat("<option value='#{choice[1]}'#{selected ? " selected='selected'" : ''}#{options}>#{choice[0]}</option>")
+    returning('') do |content|
+      choices.each do |choice|
+        selected = (choice[1] == default)
+        options = choice[2] ? choice[2].inject("") { |result, value| " #{value[0]}='#{value[1]}'" } : ""
+        content << "<option value='#{choice[1]}'#{selected ? " selected='selected'" : ''}#{options}>#{choice[0]}</option>"
+      end
     end
   end
   

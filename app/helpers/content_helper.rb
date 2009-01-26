@@ -77,12 +77,14 @@ module ContentHelper
   end
 
   def render_comments(resource)
-    if is_commentable?(resource)
-      resource_name = ActionController::RecordIdentifier.singular_class_name(resource)
-      concat render_heading(link_to(tp(:comment, :scope => [ :content ]), send(:"#{resource_name}_comments_path", resource)), :actions => [
-        link_to(t(:post_comment, :scope => [ :content ]), send(:"new_#{resource_name}_comment_path", resource))
-      ])
-      concat render_indexer(@comments_indexer) if @comments_indexer
+    returning('') do |content|
+      if is_commentable?(resource)
+        resource_name = ActionController::RecordIdentifier.singular_class_name(resource)
+        content << render_heading(link_to(tp(:comment, :scope => [ :content ]), send(:"#{resource_name}_comments_path", resource)), :actions => [
+          link_to(t(:post_comment, :scope => [ :content ]), send(:"new_#{resource_name}_comment_path", resource))
+        ])
+        content << render_indexer(@comments_indexer) if @comments_indexer
+      end
     end
   end
 
@@ -128,12 +130,14 @@ module ContentHelper
   end
   
   def render_reviews(resource)
-    if is_reviewable?(resource)
-      resource_name = ActionController::RecordIdentifier.singular_class_name(resource)
-      concat render_heading(link_to(tp(:review, :scope => [ :content ]), send(:"#{resource_name}_reviews_path", resource)), :actions => [
-        may_review?(resource) ? link_to(t(:post_review, :scope => [ :content ]), send(:"new_#{resource_name}_review_path", resource)) : nil
-      ])
-      concat render_indexer(@reviews_indexer) if @reviews_indexer
+    returning('') do |content|
+      if is_reviewable?(resource)
+        resource_name = ActionController::RecordIdentifier.singular_class_name(resource)
+        content << render_heading(link_to(tp(:review, :scope => [ :content ]), send(:"#{resource_name}_reviews_path", resource)), :actions => [
+          may_review?(resource) ? link_to(t(:post_review, :scope => [ :content ]), send(:"new_#{resource_name}_review_path", resource)) : nil
+        ])
+        content << render_indexer(@reviews_indexer) if @reviews_indexer
+      end
     end
   end
   
