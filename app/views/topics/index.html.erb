@@ -1,9 +1,9 @@
-<% title tp(:topic, :scope => [ :forums ]) %>
+<% title tp(:topic, :scope => [ :content ]) %>
 
 <% if @forum %>
   <%= render :partial => 'forums/show', :locals => { :forum => @forum } %>
 <% else %>
-  <%= render_heading(tp(:topic, :scope => [ :forums ])) %>
+  <%= render_heading(tp(:topic, :scope => [ :content ])) %>
 <% end %>
 
 <%= render_indexer(@indexer) %>

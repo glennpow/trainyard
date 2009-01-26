@@ -1,10 +1,10 @@
-<% title t(:add_object, :object => tp(:guru_point, :scope => [ :forums ])) %>
+<% title t(:add_object, :object => tp(:guru_point, :scope => [ :content ])) %>
 
-<%= render_heading(t(:add_object, :object => tp(:guru_point, :scope => [ :forums ]))) %>
+<%= render_heading(t(:add_object, :object => tp(:guru_point, :scope => [ :content ]))) %>
 
 <%= render_field(t(:user, :scope => [ :authentication ]), h(@post.user.name)) %>
 
-<%= render_field(t(:guru_points_available, :scope => [ :forums ]), @post.topic.guru_points_available) %>
+<%= render_field(t(:guru_points_available, :scope => [ :content ]), @post.topic.guru_points_available) %>
 
 <% form_for :post, :url => update_guru_points_post_path(@post), :html => { :method => :put } do |f| %>
   <%= f.text_field :guru_points, :value => @post.topic.guru_points_available %>

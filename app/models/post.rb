@@ -18,12 +18,12 @@ class Post < ActiveRecord::Base
   end
   
   def topic_name
-    @topic_name ||= self.first? ? self.topic.name : I18n.t(:regarding_topic, :scope => [ :forums ], :topic => self.topic.name)
+    @topic_name ||= self.first? ? self.topic.name : I18n.t(:regarding_topic, :scope => [ :content ], :topic => self.topic.name)
   end
   
   def quote_from(post)
     (self.body ||= "") << "\n\n\n" +
-      I18n.t(:quoted_from_post, :scope => [ :forums ], :post => "#{post.user.name} (#{post.created_at.to_s(:long)})") + "\n\n" +
+      I18n.t(:quoted_from_post, :scope => [ :content ], :post => "#{post.user.name} (#{post.created_at.to_s(:long)})") + "\n\n" +
       post.body.gsub(/^/, "> ")
   end
   

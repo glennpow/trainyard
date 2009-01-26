@@ -1,6 +1,6 @@
-<% title t(:edit_object, :object => t(:forum, :scope => [ :forums ])) %>
+<% title t(:edit_object, :object => t(:forum, :scope => [ :content ])) %>
 
-<%= render_heading(t(:edit_object, :object => t(:forum, :scope => [ :forums ]))) %>
+<%= render_heading(t(:edit_object, :object => t(:forum, :scope => [ :content ]))) %>
 
 <% form_for :forum, :url => object_path, :html => { :method => :put } do |f| %>
   <%= render :partial => 'edit', :locals => { :f => f, :forum => @forum } %>

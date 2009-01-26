@@ -11,5 +11,5 @@
     <%= icon_link_to(:delete, t(:delete), post, :confirm => t(:are_you_sure), :method => :delete) %>
   <% end %>
   
-  <%= icon_link_to(:reply, t(:post_reply, :scope => [ :forums ]), new_topic_post_path(post.topic, :reply_to_post_id => post.id)) %>
+  <%= icon_link_to(:reply, t(:post_reply, :scope => [ :content ]), new_topic_post_path(post.topic, :reply_to_post_id => post.id)) %>
 </div>

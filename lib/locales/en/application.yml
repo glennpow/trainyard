@@ -259,12 +259,22 @@ en:
       other: Articles for {{object}}
     author: Author
     blog: Blog
+    by_author: By {{author}}
     comment: Comment
     comment_for_object:
       one: Comment for {{object}}
       other: Comments for {{object}}
+    community: Community
+    forum: Forum
     from: From
+    guru_point: Guru Point
+    guru_points:
+      zero: No Guru Points
+      one: 1 Guru Point
+      other: "{{count}} Guru Points"
+    guru_points_available: Guru Points Available
     inbox: Inbox
+    last_post: Last Post
     locale: Locale
     mailer_alerts: Email Alerts
     mailer_alerts_hint: Receive emails regarding site activity related to you
@@ -273,13 +283,20 @@ en:
     messages_info:
       one: "{{count}} Message ({{unread}} new)"
       other: "{{count}} Messages ({{unread}} new)"
+    move_down: Move Down
+    move_up: Move Up
+    new_post_for_topic: "New post for forum topic: {{topic}}"
     page: Page
     permalink: Permalink
+    post: Post
     post_comment: Post Comment
+    post_reply: Post Reply
     post_review: Post Review
     preview: Preview
+    quoted_from_post: Quoted from {{post}}
     rating: Rating
     received: Received
+    regarding_topic: "Re: {{topic}}"
     review: Review
     reviews:
       zero: No Reviews Yet
@@ -309,26 +326,6 @@ en:
       flash: Adobe Flash Movie
       quicktime: Quicktime Movie
       windows: Windows Media Video
-  forums:
-    author: Author
-    by_author: By {{author}}
-    community: Community
-    forum: Forum
-    guru_point: Guru Point
-    guru_points:
-      zero: No Guru Points
-      one: 1 Guru Point
-      other: "{{count}} Guru Points"
-    guru_points_available: Guru Points Available
-    last_post: Last Post
-    move_down: Move Down
-    move_up: Move Up
-    new_post_for_topic: "New post for forum topic: {{topic}}"
-    post: Post
-    post_reply: Post Reply
-    quoted_from_post: Quoted from {{post}}
-    regarding_topic: "Re: {{topic}}"
-    topic: Topic
   themes:
     active: Active
     apply: Apply

@@ -21,7 +21,7 @@ class PostsController < ApplicationController
   end
   
   def resourceful_name
-    t(:post, :scope => [ :forums ])
+    t(:post, :scope => [ :content ])
   end
 
   before_filter :login_required, :only => [ :new, :create, :edit, :update ]
@@ -34,7 +34,7 @@ class PostsController < ApplicationController
     respond_with_indexer do |options|
       options[:order] = 'posts.created_at ASC'
       options[:search_include] = [ :user ]
-      options[:search] = { :context => @topic ? t(:in_object, :object => @topic.name) : t(:in_all_object, :object => tp(:topic, :scope => [ :forums ])) }
+      options[:search] = { :context => @topic ? t(:in_object, :object => @topic.name) : t(:in_all_object, :object => tp(:topic, :scope => [ :content ])) }
     
       if params[:topic_id]
         options[:conditions] = [ 'posts.topic_id = ?', params[:topic_id] ]
@@ -50,10 +50,10 @@ class PostsController < ApplicationController
   
   def update_guru_points
     if @post.update_attribute(:guru_points, params[:post][:guru_points])
-      flash[:notice] = t(:object_updated, :object => t(:post, :scope => [ :forums ]))
+      flash[:notice] = t(:object_updated, :object => t(:post, :scope => [ :content ]))
       redirect_to :action => 'index', :topic_id => @post.topic_id
     else
-      flash[:error] = t(:object_not_updated, :object => t(:post, :scope => [ :forums ]))
+      flash[:error] = t(:object_not_updated, :object => t(:post, :scope => [ :content ]))
       render :action => 'edit_guru_points'
     end
   end

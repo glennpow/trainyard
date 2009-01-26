@@ -14,9 +14,9 @@
 
 <%= render_field(t(:locale, :scope => [ :content ]), h(user.locale.name)) %>
   
-<%= render_field(tp(:post, :scope => [ :forums ]), user.posts_count) %>
+<%= render_field(tp(:post, :scope => [ :content ]), user.posts_count) %>
   
-<%= render_field(tp(:guru_point, :scope => [ :forums ]), user.guru_points) %>
+<%= render_field(tp(:guru_point, :scope => [ :content ]), user.guru_points) %>
 
 <% if has_administrator_role? %>
   <%= render_field(t(:primary_email, :scope => [ :authentication ]), h(user.email)) %>

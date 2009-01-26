@@ -8,10 +8,10 @@ class ForumsController < ApplicationController
         options[:order] = 'topics.sticky DESC, topics.replied_at DESC'
         options[:include] = :user
         options[:headers] = [
-          t(:topic, :scope => [ :forums ]),
+          t(:topic, :scope => [ :content ]),
           { :name => tp(:reply), :sort => :posts_count },
           { :name => tp(:view), :sort => :hits },
-          t(:last_post, :scope => [ :forums ])
+          t(:last_post, :scope => [ :content ])
         ]
         options[:search_include] = [ :posts, :user ]
         options[:search] = { :url => { :controller => 'topics', :forum_id => @forum.id } }
@@ -20,7 +20,7 @@ class ForumsController < ApplicationController
   end
   
   def resourceful_name
-    t(:forum, :scope => [ :forums ])
+    t(:forum, :scope => [ :content ])
   end
 
   before_filter :login_required, :only => [ :edit, :update, :destroy ]
@@ -31,9 +31,9 @@ class ForumsController < ApplicationController
     respond_with_indexer do |options|
       options[:order] = 'position ASC'
       options[:headers] = [
-        t(:forum, :scope => [ :forums ]),
-        tp(:topic, :scope => [ :forums ]),
-        tp(:post, :scope => [ :forums ]),
+        t(:forum, :scope => [ :content ]),
+        tp(:topic, :scope => [ :content ]),
+        tp(:post, :scope => [ :content ]),
       ]
       options[:search] = { :url => { :controller => 'topics' } }
     end

@@ -29,7 +29,7 @@ class TopicsController < ApplicationController
   end
   
   def resourceful_name
-    t(:topic, :scope => [ :forums ])
+    t(:topic, :scope => [ :content ])
   end
 
   before_filter :login_required, :only => [ :new, :create ]
@@ -41,13 +41,13 @@ class TopicsController < ApplicationController
       options[:order] = 'topics.sticky DESC, topics.replied_at DESC'
       options[:include] = :user
       options[:headers] = [
-        t(:topic, :scope => [ :forums ]),
+        t(:topic, :scope => [ :content ]),
         { :name => tp(:reply), :sort => :posts_count },
         { :name => tp(:view), :sort => :hits },
-        t(:last_post, :scope => [ :forums ])
+        t(:last_post, :scope => [ :content ])
       ]
       options[:search_include] = [ :posts, :user ]
-      options[:search] = { :context => @forum ? t(:in_object, :object => @forum.name) : t(:in_all_object, :object => tp(:forum, :scope => [ :forums ])) }
+      options[:search] = { :context => @forum ? t(:in_object, :object => @forum.name) : t(:in_all_object, :object => tp(:forum, :scope => [ :content ])) }
         
       if params[:forum_id]
         options[:conditions] = [ 'topics.forum_id = ?', params[:forum_id] ]

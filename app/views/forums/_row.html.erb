@@ -12,6 +12,6 @@
       icon_link_to(:delete, t(:delete), forum, :confirm => t(:are_you_sure), :method => :delete)
     ] },
     { :if => has_administrator_role?, :allow => [
-      icon_link_to(:move_up, t(:move_up, :scope => [ :forums ]), move_up_forum_path(forum), :method => :post),
-      icon_link_to(:move_down, t(:move_down, :scope => [ :forums ]), move_down_forum_path(forum), :method => :post),
+      icon_link_to(:move_up, t(:move_up, :scope => [ :content ]), move_up_forum_path(forum), :method => :post),
+      icon_link_to(:move_down, t(:move_down, :scope => [ :content ]), move_down_forum_path(forum), :method => :post),
     ] } ]) %>
