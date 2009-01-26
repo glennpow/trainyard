@@ -1,5 +1,5 @@
 class Role < ActiveEnumeration::Base
-  has_enumerated :administrator, :name => I18n.t('authentication.roles.administrator')
-  has_enumerated :editor, :name => I18n.t('authentication.roles.editor')
-  has_enumerated :user, :name => I18n.t('authentication.roles.user')
+  has_enumerated :administrator, :translate_key => 'authentication.roles.administrator'
+  has_enumerated :editor, :translate_key => 'authentication.roles.editor'
+  has_enumerated :user, :translate_key => 'authentication.roles.user'
 end
