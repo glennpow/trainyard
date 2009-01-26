@@ -56,17 +56,11 @@ module ContentHelper
     }
     case media.content_type
     when ContentType.mov
-      capture do
-        render :partial => 'medias/video_mov', :locals => locals
-      end
+      render :partial => 'medias/video_mov', :locals => locals
     when ContentType.swf
-      capture do
-        render :partial => 'medias/video_swf', :locals => locals
-      end
+      render :partial => 'medias/video_swf', :locals => locals
     when ContentType.wmv
-      capture do
-        render :partial => 'medias/video_wmv', :locals => locals
-      end
+      render :partial => 'medias/video_wmv', :locals => locals
     end
   end
 
@@ -85,12 +79,10 @@ module ContentHelper
   def render_comments(resource)
     if is_commentable?(resource)
       resource_name = ActionController::RecordIdentifier.singular_class_name(resource)
-      returning('') do |content|
-        content << render_heading(link_to(tp(:comment, :scope => [ :content ]), send(:"#{resource_name}_comments_path", resource)), :actions => [
-          link_to(t(:post_comment, :scope => [ :content ]), send(:"new_#{resource_name}_comment_path", resource))
-        ])
-        content << render_indexer(@comments_indexer) if @comments_indexer
-      end
+      concat render_heading(link_to(tp(:comment, :scope => [ :content ]), send(:"#{resource_name}_comments_path", resource)), :actions => [
+        link_to(t(:post_comment, :scope => [ :content ]), send(:"new_#{resource_name}_comment_path", resource))
+      ])
+      concat render_indexer(@comments_indexer) if @comments_indexer
     end
   end
 
@@ -138,12 +130,10 @@ module ContentHelper
   def render_reviews(resource)
     if is_reviewable?(resource)
       resource_name = ActionController::RecordIdentifier.singular_class_name(resource)
-      returning('') do |content|
-        content << render_heading(link_to(tp(:review, :scope => [ :content ]), send(:"#{resource_name}_reviews_path", resource)), :actions => [
-          may_review?(resource) ? link_to(t(:post_review, :scope => [ :content ]), send(:"new_#{resource_name}_review_path", resource)) : nil
-        ])
-        content << render_indexer(@reviews_indexer) if @reviews_indexer
-      end
+      concat render_heading(link_to(tp(:review, :scope => [ :content ]), send(:"#{resource_name}_reviews_path", resource)), :actions => [
+        may_review?(resource) ? link_to(t(:post_review, :scope => [ :content ]), send(:"new_#{resource_name}_review_path", resource)) : nil
+      ])
+      concat render_indexer(@reviews_indexer) if @reviews_indexer
     end
   end
   

@@ -5,4 +5,4 @@
   <%= f.text_field :user_name, :label => { :name => t(:author, :scope => [ :content ]) }, :required => true %>
 <% end %>
 
-<%= f.text_area :body, :required => true, :hint => link_to_textile_hint %>
+<%= f.text_area :body, :required => true, :preview => true, :hint => link_to_textile_hint %>

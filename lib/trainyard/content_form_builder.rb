@@ -1,6 +1,3 @@
-# TODO
-#require_dependency 'locale'
-
 module Trainyard
   class ContentFormBuilder < ActionView::Helpers::FormBuilder
     def initialize(object_name, object, template, options, proc)
@@ -45,8 +42,13 @@ module Trainyard
     end
   
     def text_area(field, options = {})
-      labeled_field(field, options.merge({ :input_class => 'text-area' })) do
-        super(field, options.merge({ :rows => 8 }))
+      @template.capture do
+        @template.concat(labeled_field(field, options.merge({ :input_class => 'text-area' })) do
+          super(field, options.merge({ :rows => 8 }))
+        end)
+        if options[:preview]
+          @template.concat(@template.render(:partial => 'theme/text_area_preview_area', :locals => { :text_area_id => "#{object_name}_#{field}" }))
+        end
       end
     end
   

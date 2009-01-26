@@ -6,9 +6,7 @@ module ThemesHelper
       returning('') do |content|
         args.each do |stylesheet_template|
           stylesheet_template << ".css.erb"
-          content << content_tag(:style, :class => 'text/css') do
-            render :partial => stylesheet_template, :locals => { :theme => @theme }
-          end
+          content << content_tag(:style, render(:partial => stylesheet_template, :locals => { :theme => @theme }), :class => 'text/css')
         end
       end
     end

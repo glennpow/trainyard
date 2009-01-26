@@ -64,6 +64,14 @@ class ThemesController < ApplicationController
       format.css  # stylesheet.css.erb
     end
   end
+  
+  def text_area_preview
+    @text = params[:text]
+    
+    respond_to do |format|
+      format.html { render :layout => false } #text_area_preview.html.erb
+    end
+  end
  
   
   private

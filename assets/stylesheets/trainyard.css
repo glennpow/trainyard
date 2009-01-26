@@ -138,6 +138,11 @@ ul.clean-list li {
   font-size: x-large;
 }
 
+table.login-table {
+  width: 100%;
+  border-spacing: 5px;
+}
+
 table.form-table {
   table-layout: fixed;
   width: 100%;
@@ -188,6 +193,10 @@ table.item-table td {
 
 .show-field, .form-element {
   text-align: center;
+}
+
+.form-element {
+  margin: 5px 0px;
 }
 
 ul.show-field-list li {

@@ -38,9 +38,7 @@ module ThemeHelper
       :label_align => options.delete(:label_align) || :right,
       :options => options.reverse_merge({ :alt => name, :title => name })
     }
-    capture do
-      render :partial => 'theme/image_label', :locals => locals
-    end
+    render :partial => 'theme/image_label', :locals => locals
   end
   
   def icon_link_to(icon_name, name, options = {}, html_options = {})
@@ -93,9 +91,7 @@ module ThemeHelper
       :label => label,
       :actions => actions_for(options[:actions])
     }
-    capture do
-      render :partial => 'theme/heading', :locals => locals
-    end
+    render :partial => 'theme/heading', :locals => locals
   end
   
   def render_field(*args)
@@ -108,9 +104,7 @@ module ThemeHelper
       :label => label,
       :actions => actions_for(options[:actions])
     }
-    capture do
-      render :partial => 'theme/show_field', :locals => locals
-    end
+    render :partial => 'theme/show_field', :locals => locals
   end
   
   def render_list(values, options = {})
@@ -149,9 +143,7 @@ module ThemeHelper
       :user => user,
       :image_style => options[:image_style] || :thumb
     }
-    capture do
-      render :partial => 'theme/user_card', :locals => locals
-    end
+    render :partial => 'theme/user_card', :locals => locals
   end
   
   

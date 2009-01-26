@@ -4,7 +4,7 @@
   <p><%= button_link_to(t(:logout, :scope => [ :authentication ]), logout_path) %></p>
 <% else %>
   <% form_tag user_session_path do %>
-    <table class="form-field">
+    <table class="login-table">
       <tr>
         <td>
           <div class="label">

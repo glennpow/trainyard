@@ -1,0 +1,3 @@
+<%= form_element(button_to_remote(t(:preview, :scope => [ :content ]), :update => "#{text_area_id}_preview", :url => { :controller => 'trainyard', :action => 'text_area_preview' }, :with => "'text=' + $('#{text_area_id}').value")) %>
+
+<div id="<%= text_area_id %>_preview" class="text-area-preview"></div>
