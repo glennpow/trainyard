@@ -4,7 +4,7 @@ module ThemeHelper
   end
   
   def link_to_back(name = nil)
-    name ||= t(:back_link)
+    name ||= t(:back)
     link_to name, :back, :class => 'back'
   end
 
@@ -125,11 +125,11 @@ module ThemeHelper
   end
   
   def render_actions(actions, options = {})
-    render_bar_list(actions, :class => merge_classes(options[:class], 'actions'))
+    render_bar_list(actions_for(actions), :class => merge_classes(options[:class], 'actions'))
   end
   
   def render_page_actions(options = {})
-    render_bar_list(page_actions, :class => merge_classes(options[:class], 'page-actions'))
+    render_bar_list(actions_for(page_actions), :class => merge_classes(options[:class], 'page-actions'))
   end
   
   def render_submit(value, options = {})

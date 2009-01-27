@@ -21,7 +21,7 @@ class Group < ActiveRecord::Base
   end
   
   def parent_group_name
-    self.parent_group.name if self.parent_group
+    self.parent_group.name unless self.parent_group.nil?
   end
   
   def has_child?(group)

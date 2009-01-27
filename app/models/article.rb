@@ -72,10 +72,6 @@ class Article < ActiveRecord::Base
   end
   alias_method_chain :save!, :revision
   
-  def self.clone_revision(src, dst)
-    dst.attributes=(src.revisioned_attributes)
-  end
-  
   def revert_to!(revision_or_article_revision)
     Article.transaction do
       article_revision = case revision_or_article_revision
@@ -99,7 +95,11 @@ class Article < ActiveRecord::Base
   def revisionable_articles?
     self.revisionable?
   end
-  
+    
+  def self.clone_revision(src, dst)
+    dst.attributes=(src.revisioned_attributes)
+  end
+
   def self.first_by_resource(resource)
     self.first(:conditions => { :resource_type => resource.class.to_s, :resource_id => resource.id })
   end

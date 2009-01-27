@@ -7,7 +7,7 @@ class GroupsController < ApplicationController
     end
     
     before :edit do
-      @parent_groups = Group.find(:all, :conditions => ["id != ?", @group.id]) - @group.child_groups
+      @parent_groups = Group.find(:all, :conditions => [ "id != ?", @group.id ]) - @group.child_groups
     end
   end
   
@@ -21,7 +21,7 @@ class GroupsController < ApplicationController
     respond_with_indexer do |options|
       options[:default_sort] = :name
       options[:headers] = [
-        { :name => t(:name), :sort => :name, :order => 'groups.name' },
+        { :name => t(:name), :sort => :name },
         t(:parent_group, :scope => [ :authentication ]),
         tp(:child_group, :scope => [ :authentication ]),
         t(:moderator, :scope => [ :authentication ]),
@@ -30,8 +30,8 @@ class GroupsController < ApplicationController
       options[:search] = true
 
       if @user
-        options[:include] = :users
-        options[:conditions] = [ 'users.id = ? OR moderator_id = ?', @user.id, @user.id ]
+        options[:include] = :memberships
+        options[:conditions] = [ "#{Membership.table_name}.user_id = ?", @user.id ]
       end
     end
   end

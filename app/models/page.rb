@@ -1,5 +1,7 @@
 class Page < ActiveRecord::Base
-  has_many :articles, :as => :resource, :order => 'created_at DESC', :dependent => :destroy
+  acts_as_resource :group => false
+  
+  has_many_articles
   
   validates_presence_of :name, :permalink
 end

@@ -1,7 +1,15 @@
 class Address < ActiveRecord::Base
-  if defined?(Geographer)
-    acts_as_mappable :lat_column_name => :latitude, :lng_column_name => :longitude,
-      :auto_geocode => { :field => :full_address, :error_message => I18n.t(:invalid_address, :scope => [ :contacts ]) }
+  if defined?(Geokit)
+    acts_as_mappable :lat_column_name => :latitude, :lng_column_name => :longitude
+
+    before_update do |record|
+      geo = Geokit::Geocoders::MultiGeocoder.geocode(self.full_address)
+      if geo.success
+        self.latitude = geo.lat
+        self.longitude = geo.lng
+      end
+      true
+    end
   end
   
   belongs_to :resource, :polymorphic => true
@@ -9,8 +17,6 @@ class Address < ActiveRecord::Base
   belongs_to :country
   
   validates_presence_of :street_1, :city, :postal_code, :region, :country
-
-  before_validation_on_update :auto_geocode_address        
   
   attr_accessible :distance
   
@@ -18,7 +24,7 @@ class Address < ActiveRecord::Base
     [ self.street_1 ] + (self.street_2.blank? ? [] : [ self.street_2 ])
   end
   
-  def full_address(options = {})
+  def full_address
     return @full_address if defined?(@full_address)
     address = []
     address << self.street_1

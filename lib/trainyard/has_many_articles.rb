@@ -11,7 +11,7 @@ module Trainyard
         revisionable_articles = options.delete(:revisionable)
       
         class_eval do
-          has_many articles_name, options.reverse_merge(:as => :resource, :order => 'name ASC', :dependent => :destroy) do
+          has_many articles_name, options.reverse_merge(:as => :resource, :order => 'created_at ASC', :dependent => :destroy) do
             def active
               @active_wiki_articles ||= find(:all, :conditions => { :erased => false })
             end
@@ -34,6 +34,7 @@ module Trainyard
           end
         end
 
+        # TODO - this method is a bit messy
         define_method :all_articles do
           all_articles = []
           child_articles = self.send(articles_name)

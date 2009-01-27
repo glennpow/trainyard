@@ -95,6 +95,10 @@ ul {
   cursor: pointer;
 }
 
+.back:before {
+  content: "« ";
+}
+
 .align-left {
   text-align: left;
 }

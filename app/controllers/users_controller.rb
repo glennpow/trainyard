@@ -26,8 +26,8 @@ class UsersController < ApplicationController
       options[:search] = true
     
       if @group
-        options[:include] = :groups
-        options[:conditions] = [ "groups.id = ?", @group.id ]
+        options[:include] = :memberships
+        options[:conditions] = [ "#{Membership.table_name}.group_id = ?", @group.id ]
       end
     end
   end

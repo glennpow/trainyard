@@ -2,6 +2,8 @@ class ArticlesController < ApplicationController
   make_resourceful do
     belongs_to :resource
     
+    member_actions :erase
+    
     before :show do
       load_comments(@article)
       load_reviews(@article)
@@ -22,10 +24,11 @@ class ArticlesController < ApplicationController
     t(:article, :scope => [ :content ])
   end
 
-  before_filter :login_required, :only => [ :index, :new, :create, :edit, :update, :destroy ]
+  before_filter :login_required, :only => [ :index, :new, :create, :edit, :update, :destroy, :erase ]
+  before_filter :check_administrator_role, :only => [ :destroy ]
   before_filter :check_viewer_or_administrator, :only => [ :index ]
   before_filter :check_add_article_for, :only => [ :new, :create ]
-  before_filter :check_editor_of, :only => [ :edit, :update, :destroy ]
+  before_filter :check_editor_of, :only => [ :edit, :update, :erase ]
   before_filter :check_viewer_of, :only => [ :show ]
   
   def index
@@ -47,6 +50,15 @@ class ArticlesController < ApplicationController
       end
     end
   end
+
+  def erase
+    @article.update_attributes(:user => current_user, :erased => true)
+
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js
+    end
+  end
   
   
   private
@@ -56,7 +68,7 @@ class ArticlesController < ApplicationController
   end
   
   def check_add_article_for
-    @resource && check_permission(Action.add_article, @resource)
+    check_permission(Action.add_article, @resource)
   end
   
   def check_editor_of

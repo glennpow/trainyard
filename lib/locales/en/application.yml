@@ -7,7 +7,6 @@ en:
   anonymous: Anonymous
   are_you_sure: Are you sure?
   back: Back
-  back_link: "&laquo; Back"
   cancel: Cancel
   create: Create
   create_object: Create {{object}}
@@ -205,6 +204,7 @@ en:
     email: Email
     first_name: First Name
     gender: Gender
+    invalid_address: Invalid Address
     last_name: Last Name
     middle_name: Middle Name
     phone: Phone Number

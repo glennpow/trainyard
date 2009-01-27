@@ -17,7 +17,7 @@ resources :users, :member => { :enable => :put }, :has_many => [ :groups, :posts
 
 resources :addresses, :collection => { :update_regions => :get }
 
-resources :articles, :has_many => [ :articles, :article_revisions, :comments, :medias, :reviews ]
+resources :articles, :member => { :erase => :put }, :has_many => [ :articles, :article_revisions, :comments, :medias, :reviews ]
 blog_article '/blogs/:id/articles/:article_id', :controller => 'blogs', :action => 'article'
 resources :blogs, :member => { :contents => :get }, :has_many => [ :articles ]
 resources :comments
