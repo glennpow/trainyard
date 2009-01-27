@@ -87,6 +87,7 @@ class CreateContent < ActiveRecord::Migration
     end
 
     create_table :pages do |t|
+      t.references :group, :null => false
       t.string :name, :null => false
       t.string :permalink, :null => false
       t.timestamps

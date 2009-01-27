@@ -8,22 +8,28 @@ module Trainyard
       def acts_as_resource(*args)
         options = args.extract_options!
         
-        unless options[:group] == false
-          group_options = options[:group] || {}
-        
+        group_options = options[:group] || {}
+      
+        case group_options
+        when Proc
+          define_method :group do
+            group_options.call(self)
+          end
+        else
+          group_options = {} unless group_options.is_a?(Hash)
           class_eval do
             if group_options[:through]
-              has_one :group, group_options
+              has_one :group, group_options.reverse_merge(:source => :group)
             else
               belongs_to :group, group_options.reverse_merge(:class_name => 'Group')
-            end
 
-            has_accessible :group if group_options[:dependent] == :destroy
+              has_accessible :group if group_options[:dependent] == :destroy
+            end
           end
-        
-          define_method :moderators do
-            @moderators ||= self.group.moderators
-          end
+        end
+      
+        define_method :moderators do
+          @moderators ||= self.group.moderators
         end
 
         permissions_options = options[:permissions] || {}
@@ -34,7 +40,7 @@ module Trainyard
           after_create :create_default_permissions
           
           def create_default_permissions
-            Permission.create(:group_id => self.group_id, :action_id => Action.edit.id, :role_id => Role.editor.id, :resource => self)
+            Permission.create(:group_id => self.group.id, :action_id => Action.edit.id, :role_id => Role.editor.id, :resource => self)
           end
         end
       end

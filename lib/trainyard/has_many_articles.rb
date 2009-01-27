@@ -19,7 +19,7 @@ module Trainyard
 
           def create_default_permissions_with_articles
             create_default_permissions_without_articles
-            Permission.create(:group_id => self.group_id, :action_id => Action.add_article.id, :role_id => Role.editor.id, :resource => self)
+            Permission.create(:group_id => self.group.id, :action_id => Action.add_article.id, :role_id => Role.editor.id, :resource => self)
           end
           alias_method_chain :create_default_permissions, :articles
         end

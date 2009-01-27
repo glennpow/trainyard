@@ -151,6 +151,6 @@ module ThemeHelper
   
   def actions_for(actions)
     # TODO - get rid of Hash variation
-    (actions || []).map { |action| action.is_a?(Hash) ? ((!action.has_key?(:if) || action[:if]) ? action[:allow] : nil) : action }.flatten.compact
+    (actions || []).flatten.map { |action| action.is_a?(Hash) ? ((!action.has_key?(:if) || action[:if]) ? action[:allow] : nil) : action }.flatten.compact
   end
 end
