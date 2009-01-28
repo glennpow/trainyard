@@ -14,6 +14,10 @@ class PostsController < ApplicationController
     before :create do
       @post.user = current_user
     end
+       
+    response_for :create do |format|
+      format.html { redirect_to topic_path(@post.topic) }
+    end
 
     response_for :update do |format|
       format.html { redirect_to topic_path(@post.topic) }
