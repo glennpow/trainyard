@@ -1,424 +1,424 @@
 region_AB:
   numeric_code: 124001
   country: country_CA
-  name: Alberta
-  alpha_code: AB
+  name: "Alberta"
+  alpha_code: "AB"
 
 region_BC:
   numeric_code: 124002
   country: country_CA
-  name: British Columbia
-  alpha_code: BC
+  name: "British Columbia"
+  alpha_code: "BC"
 
 region_MB:
   numeric_code: 124003
   country: country_CA
-  name: Manitoba
-  alpha_code: MB
+  name: "Manitoba"
+  alpha_code: "MB"
 
 region_NB:
   numeric_code: 124004
   country: country_CA
-  name: New Brunswick
-  alpha_code: NB
+  name: "New Brunswick"
+  alpha_code: "NB"
 
 region_NL:
   numeric_code: 124005
   country: country_CA
-  name: Newfoundland and Labrador
-  alpha_code: NL
+  name: "Newfoundland and Labrador"
+  alpha_code: "NL"
 
 region_NS:
   numeric_code: 124006
   country: country_CA
-  name: Nova Scotia
-  alpha_code: NS
+  name: "Nova Scotia"
+  alpha_code: "NS"
 
 region_ON:
   numeric_code: 124007
   country: country_CA
-  name: Ontario
-  alpha_code: ON
+  name: "Ontario"
+  alpha_code: "ON"
 
 region_PE:
   numeric_code: 124008
   country: country_CA
-  name: Prince Edward Island
-  alpha_code: PE
+  name: "Prince Edward Island"
+  alpha_code: "PE"
 
 region_QC:
   numeric_code: 124009
   country: country_CA
-  name: Quebec
-  alpha_code: QC
+  name: "Quebec"
+  alpha_code: "QC"
 
 region_SK:
   numeric_code: 124010
   country: country_CA
-  name: Saskatchewan
-  alpha_code: SK
+  name: "Saskatchewan"
+  alpha_code: "SK"
 
     
 region_NT:
   numeric_code: 124011
   country: country_CA
-  name: Northwest Territories
-  alpha_code: NT
+  name: "Northwest Territories"
+  alpha_code: "NT"
 
 region_NU:
   numeric_code: 124012
   country: country_CA
-  name: Nunavut
-  alpha_code: NU
+  name: "Nunavut"
+  alpha_code: "NU"
 
 region_YT:
   numeric_code: 124013
   country: country_CA
-  name: Yukon Territory
-  alpha_code: YT
+  name: "Yukon Territory"
+  alpha_code: "YT"
 
   
 region_AL:
   numeric_code: 840001
   country: country_US
-  name: Alabama
-  alpha_code: AL
+  name: "Alabama"
+  alpha_code: "AL"
 
 region_AK:
   numeric_code: 840002
   country: country_US
-  name: Alaska
-  alpha_code: AK
+  name: "Alaska"
+  alpha_code: "AK"
 
 region_AZ:
   numeric_code: 840003
   country: country_US
-  name: Arizona
-  alpha_code: AZ
+  name: "Arizona"
+  alpha_code: "AZ"
 
 region_AR:
   numeric_code: 840004
   country: country_US
-  name: Arkansas
-  alpha_code: AR
+  name: "Arkansas"
+  alpha_code: "AR"
 
 region_CA:
   numeric_code: 840005
   country: country_US
-  name: California
-  alpha_code: CA
+  name: "California"
+  alpha_code: "CA"
 
 region_CO:
   numeric_code: 840006
   country: country_US
-  name: Colorado
-  alpha_code: CO
+  name: "Colorado"
+  alpha_code: "CO"
 
 region_CT:
   numeric_code: 840007
   country: country_US
-  name: Connecticut
-  alpha_code: CT
+  name: "Connecticut"
+  alpha_code: "CT"
 
 region_DE:
   numeric_code: 840008
   country: country_US
-  name: Delaware
-  alpha_code: DE
+  name: "Delaware"
+  alpha_code: "DE"
 
 region_FL:
   numeric_code: 840009
   country: country_US
-  name: Florida
-  alpha_code: FL
+  name: "Florida"
+  alpha_code: "FL"
 
 region_GA:
   numeric_code: 840010
   country: country_US
-  name: Georgia
-  alpha_code: GA
+  name: "Georgia"
+  alpha_code: "GA"
 
 region_HI:
   numeric_code: 840011
   country: country_US
-  name: Hawaii
-  alpha_code: HI
+  name: "Hawaii"
+  alpha_code: "HI"
 
 region_ID:
   numeric_code: 840012
   country: country_US
-  name: Idaho
-  alpha_code: ID
+  name: "Idaho"
+  alpha_code: "ID"
 
 region_IL:
   numeric_code: 840013
   country: country_US
-  name: Illinois
-  alpha_code: IL
+  name: "Illinois"
+  alpha_code: "IL"
 
 region_IN:
   numeric_code: 840014
   country: country_US
-  name: Indiana
-  alpha_code: IN
+  name: "Indiana"
+  alpha_code: "IN"
 
 region_IA:
   numeric_code: 840015
   country: country_US
-  name: Iowa
-  alpha_code: IA
+  name: "Iowa"
+  alpha_code: "IA"
 
 region_KS:
   numeric_code: 840016
   country: country_US
-  name: Kansas
-  alpha_code: KS
+  name: "Kansas"
+  alpha_code: "KS"
 
 region_KY:
   numeric_code: 840017
   country: country_US
-  name: Kentucky
-  alpha_code: KY
+  name: "Kentucky"
+  alpha_code: "KY"
 
 region_LA:
   numeric_code: 840018
   country: country_US
-  name: Louisiana
-  alpha_code: LA
+  name: "Louisiana"
+  alpha_code: "LA"
 
 region_ME:
   numeric_code: 840019
   country: country_US
-  name: Maine
-  alpha_code: ME
+  name: "Maine"
+  alpha_code: "ME"
 
 region_MD:
   numeric_code: 840020
   country: country_US
-  name: Maryland
-  alpha_code: MD
+  name: "Maryland"
+  alpha_code: "MD"
 
 region_MA:
   numeric_code: 840021
   country: country_US
-  name: Massachusetts
-  alpha_code: MA
+  name: "Massachusetts"
+  alpha_code: "MA"
 
 region_MI:
   numeric_code: 840022
   country: country_US
-  name: Michigan
-  alpha_code: MI
+  name: "Michigan"
+  alpha_code: "MI"
 
 region_MN:
   numeric_code: 840023
   country: country_US
-  name: Minnesota
-  alpha_code: MN
+  name: "Minnesota"
+  alpha_code: "MN"
 
 region_MS:
   numeric_code: 840024
   country: country_US
-  name: Mississippi
-  alpha_code: MS
+  name: "Mississippi"
+  alpha_code: "MS"
 
 region_MO:
   numeric_code: 840025
   country: country_US
-  name: Missouri
-  alpha_code: MO
+  name: "Missouri"
+  alpha_code: "MO"
 
 region_MT:
   numeric_code: 840026
   country: country_US
-  name: Montana
-  alpha_code: MT
+  name: "Montana"
+  alpha_code: "MT"
 
 region_NE:
   numeric_code: 840027
   country: country_US
-  name: Nebraska
-  alpha_code: NE
+  name: "Nebraska"
+  alpha_code: "NE"
 
 region_NV:
   numeric_code: 840028
   country: country_US
-  name: Nevada
-  alpha_code: NV
+  name: "Nevada"
+  alpha_code: "NV"
 
 region_NH:
   numeric_code: 840029
   country: country_US
-  name: New Hampshire
-  alpha_code: NH
+  name: "New Hampshire"
+  alpha_code: "NH"
 
 region_NJ:
   numeric_code: 840030
   country: country_US
-  name: New Jersey
-  alpha_code: NJ
+  name: "New Jersey"
+  alpha_code: "NJ"
 
 region_NM:
   numeric_code: 840031
   country: country_US
-  name: New Mexico
-  alpha_code: NM
+  name: "New Mexico"
+  alpha_code: "NM"
 
 region_NY:
   numeric_code: 840032
   country: country_US
-  name: New York
-  alpha_code: NY
+  name: "New York"
+  alpha_code: "NY"
 
 region_NC:
   numeric_code: 840033
   country: country_US
-  name: North Carolina
-  alpha_code: NC
+  name: "North Carolina"
+  alpha_code: "NC"
 
 region_ND:
   numeric_code: 840034
   country: country_US
-  name: North Dakota
-  alpha_code: ND
+  name: "North Dakota"
+  alpha_code: "ND"
 
 region_OH:
   numeric_code: 840035
   country: country_US
-  name: Ohio
-  alpha_code: OH
+  name: "Ohio"
+  alpha_code: "OH"
 
 region_OK:
   numeric_code: 840036
   country: country_US
-  name: Oklahoma
-  alpha_code: OK
+  name: "Oklahoma"
+  alpha_code: "OK"
 
 region_OR:
   numeric_code: 840037
   country: country_US
-  name: Oregon
-  alpha_code: OR
+  name: "Oregon"
+  alpha_code: "OR"
 
 region_PA:
   numeric_code: 840038
   country: country_US
-  name: Pennsylvania
-  alpha_code: PA
+  name: "Pennsylvania"
+  alpha_code: "PA"
 
 region_RI:
   numeric_code: 840039
   country: country_US
-  name: Rhode Island
-  alpha_code: RI
+  name: "Rhode Island"
+  alpha_code: "RI"
 
 region_SC:
   numeric_code: 840040
   country: country_US
-  name: South Carolina
-  alpha_code: SC
+  name: "South Carolina"
+  alpha_code: "SC"
 
 region_SD:
   numeric_code: 840041
   country: country_US
-  name: South Dakota
-  alpha_code: SD
+  name: "South Dakota"
+  alpha_code: "SD"
 
 region_TN:
   numeric_code: 840042
   country: country_US
-  name: Tennessee
-  alpha_code: TN
+  name: "Tennessee"
+  alpha_code: "TN"
 
 region_TX:
   numeric_code: 840043
   country: country_US
-  name: Texas
-  alpha_code: TX
+  name: "Texas"
+  alpha_code: "TX"
 
 region_UT:
   numeric_code: 840044
   country: country_US
-  name: Utah
-  alpha_code: UT
+  name: "Utah"
+  alpha_code: "UT"
 
 region_VT:
   numeric_code: 840045
   country: country_US
-  name: Vermont
-  alpha_code: VT
+  name: "Vermont"
+  alpha_code: "VT"
 
 region_VA:
   numeric_code: 840046
   country: country_US
-  name: Virginia
-  alpha_code: VA
+  name: "Virginia"
+  alpha_code: "VA"
 
 region_WA:
   numeric_code: 840047
   country: country_US
-  name: Washington
-  alpha_code: WA
+  name: "Washington"
+  alpha_code: "WA"
 
 region_WV:
   numeric_code: 840048
   country: country_US
-  name: West Virginia
-  alpha_code: WV
+  name: "West Virginia"
+  alpha_code: "WV"
 
 region_WI:
   numeric_code: 840049
   country: country_US
-  name: Wisconsin
-  alpha_code: WI
+  name: "Wisconsin"
+  alpha_code: "WI"
 
 region_WY:
   numeric_code: 840050
   country: country_US
-  name: Wyoming
-  alpha_code: WY
+  name: "Wyoming"
+  alpha_code: "WY"
 
     
 region_DC:
   numeric_code: 840051
   country: country_US
-  name: District of Columbia
-  alpha_code: DC
+  name: "District of Columbia"
+  alpha_code: "DC"
 
     
 region_AS:
   numeric_code: 840052
   country: country_US
-  name: American Samoa
-  alpha_code: AS
+  name: "American Samoa"
+  alpha_code: "AS"
 
 region_GU:
   numeric_code: 840053
   country: country_US
-  name: Guam
-  alpha_code: GU
+  name: "Guam"
+  alpha_code: "GU"
 
 region_MP:
   numeric_code: 840054
   country: country_US
-  name: Northern Mariana Islands
-  alpha_code: MP
+  name: "Northern Mariana Islands"
+  alpha_code: "MP"
 
 region_PR:
   numeric_code: 840055
   country: country_US
-  name: Puerto Rico
-  alpha_code: PR
+  name: "Puerto Rico"
+  alpha_code: "PR"
 
 region_UM:
   numeric_code: 840056
   country: country_US
-  name: United States Minor Outlying Islands
-  alpha_code: UM
+  name: "United States Minor Outlying Islands"
+  alpha_code: "UM"
 
 region_VI:
   numeric_code: 840057
   country: country_US
-  name: Virgin Islands
-  alpha_code: VI
+  name: "Virgin Islands"
+  alpha_code: "VI"
 

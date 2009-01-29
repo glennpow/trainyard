@@ -3,7 +3,7 @@ class Contact < ActiveRecord::Base
   has_enumeration :prefix
   has_enumeration :suffix
   has_enumeration :gender
-  has_one :address, :as => :resource, :dependent => :destroy
+  has_one :address, :dependent => :destroy
   has_many :emails, :as => :resource, :dependent => :destroy
   has_many :phones, :as => :resource, :dependent => :destroy
   has_many :urls, :as => :resource, :dependent => :destroy

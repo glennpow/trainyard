@@ -129,7 +129,7 @@ module Trainyard
       return false
     end
 
-    def permission_denied      
+    def permission_denied
       respond_to do |format|
         format.html do
           domain_name = "http://#{Configuration.application_domain}"

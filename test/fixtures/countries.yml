@@ -1,12 +1,12 @@
 country_CA:
-  name: Canada
+  name: "Canada"
   numeric_3_code: 124
-  alpha_2_code: CA
-  alpha_3_code: CAN
+  alpha_2_code: "CA"
+  alpha_3_code: "CAN"
   
 country_US:
-  name: United States
-  official_name: United States of America
+  name: "United States"
+  official_name: "United States of America"
   numeric_3_code: 840
-  alpha_2_code: US
-  alpha_3_code: USA
+  alpha_2_code: "US"
+  alpha_3_code: "USA"

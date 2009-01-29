@@ -12,13 +12,13 @@ class Address < ActiveRecord::Base
     end
   end
   
-  belongs_to :resource, :polymorphic => true
+  belongs_to :contact
   belongs_to :region
   belongs_to :country
   
-  validates_presence_of :street_1, :city, :postal_code, :region, :country
+  validates_presence_of :contact, :street_1, :city, :postal_code, :region, :country
   
-  attr_accessible :distance
+  attr_accessor :distance
   
   def streets
     [ self.street_1 ] + (self.street_2.blank? ? [] : [ self.street_2 ])
@@ -32,7 +32,7 @@ class Address < ActiveRecord::Base
     address << self.city
     address << self.region.name
     address << self.postal_code
-    address << self.country.alpha_3_code
+    address << self.country.name
     @full_address = address.join(", ")
     @full_address
   end

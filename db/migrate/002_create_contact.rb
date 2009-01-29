@@ -1,6 +1,7 @@
 class CreateContact < ActiveRecord::Migration
   def self.up
     create_table :addresses do |t|
+      t.references :contact, :null => false
       t.string :street_1, :null => false
       t.string :street_2
       t.string :city, :null => false
@@ -8,7 +9,6 @@ class CreateContact < ActiveRecord::Migration
       t.string :postal_code, :null => false
       t.references :country, :null => false
       t.references :address_type
-      t.references :resource, :polymorphic => true
       t.float :latitude
       t.float :longitude
       t.timestamps
