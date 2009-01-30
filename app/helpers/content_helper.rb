@@ -42,9 +42,9 @@ module ContentHelper
   
   def link_to_resource(resource, options = {}, html_options = {})
     if resource
-      name_method = options.delete(:name_method) || :name
-      name = options.delete(:name) || h(resource.send(name_method))
-      link_to(name, resource, options, html_options)
+      label_method = options.delete(:label_method) || :name
+      label = options.delete(:label) || h(resource.send(label_method))
+      link_to(label, resource, options, html_options)
     else
       options[:nil_label] || "-"
     end

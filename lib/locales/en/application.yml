@@ -218,7 +218,11 @@ en:
     visible_contact_hint: Whether or not your full name and address are publicly viewable
     addresses: 
       city: City
+      distance: Distance
       country: Country
+      miles_away: 
+        one: 1 mile away
+        other: "{{count}} miles away"
       postal_code: Postal Code
       region: State / Province
       street: Street
