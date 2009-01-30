@@ -35,13 +35,18 @@ module Trainyard
         permissions_options = options[:permissions] || {}
         
         class_eval do
-          has_many :permissions, permissions_options.reverse_merge(:class_name => 'Permission', :as => :resource, :dependent => :destroy)
+          has_many :permissions, permissions_options.reverse_merge(:as => :resource, :dependent => :destroy)
           
           after_create :create_default_permissions
           
           def create_default_permissions
             Permission.create(:group_id => self.group.id, :action_id => Action.edit.id, :role_id => Role.editor.id, :resource => self)
           end
+        end
+        
+        class_eval do
+          has_many :watchings, permissions_options.reverse_merge(:as => :resource, :dependent => :destroy)
+          has_many :watching_users, :through => :watchings, :source => :user
         end
       end
     end

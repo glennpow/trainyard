@@ -3,7 +3,7 @@
   wiki,
   [
     h(wiki.name),
-    link_to(wiki.group.name, wiki.group)
+    link_to_resource(wiki.group)
   ],
   :actions => [
     { :if => is_editor_of?(wiki), :allow => [

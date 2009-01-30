@@ -1,0 +1,11 @@
+<%= render_row(
+  indexer,
+  watching,
+  [
+    @user ? link_to_resource(watching.resource) : h(watching.user.name),
+    watching.created_at.to_s(:long),
+  ],
+  :url => nil,
+  :actions => [
+    watching.user_id == current_user.id ? icon_link_to(:delete, t(:unwatch, :scope => [ :content ]), watching, :confirm => t(:are_you_sure), :method => :delete) : nil
+  ]) %>

@@ -39,10 +39,32 @@ module ContentHelper
   def auto_format(text)
     textilize(auto_link(text))
   end
+  
+  def link_to_resource(resource, options = {}, html_options = {})
+    if resource
+      name_method = options.delete(:name_method) || :name
+      name = options.delete(:name) || h(resource.send(name_method))
+      link_to(name, resource, options, html_options)
+    else
+      options[:nil_label] || "-"
+    end
+  end
 
   def link_to_textile_hint
     t(:text_style_hint, :scope => [ :site_content ],
       :link => link_to("Textile", "http://hobix.com/textile/quick.html", :target => "_blank"))
+  end
+  
+  def render_article(article, options = {})
+    article_class = [ options[:class], 'article' ].join(' ')
+    render :partial => 'articles/show', :locals => { :article => article, :article_class => article_class }
+  end
+  
+  def for_page_content(options = {}, &block)
+    path = options[:route] ? "/#{controller_name}/#{action_name}" : request.path
+    page = Page.find_by_permalink(path)
+    article = Article.first_by_resource(page) if page
+    block.call(article) if article
   end
 
   def render_media(media, options = {})
@@ -141,15 +163,19 @@ module ContentHelper
     end
   end
   
-  def render_article(article, options = {})
-    article_class = [ options[:class], 'article' ].join(' ')
-    render :partial => 'articles/show', :locals => { :article => article, :article_class => article_class }
-  end
-  
-  def for_page_content(options = {}, &block)
-    path = options[:route] ? "/#{controller_name}/#{action_name}" : request.path
-    page = Page.find_by_permalink(path)
-    article = Article.first_by_resource(page) if page
-    block.call(article) if article
+  def render_watching(resource, options = {})
+    if logged_in? && current_user.is_watching?(resource)
+      if options[:type] == :button
+        button_to(t(:watching, :scope => [ :content ]), user_watchings_path(current_user, :resource_type => resource.class.to_s))
+      else
+        icon_link_to(:check, t(:watching, :scope => [ :content ]), user_watchings_path(current_user, :resource_type => resource.class.to_s))
+      end
+    else
+      if options[:type] == :button
+        button_to(t(:watch, :scope => [ :content ]), watchings_path(:resource_type => resource.class.to_s, :resource_id => resource.id), :method => :post)
+      else
+        icon_link_to(:add, t(:watch, :scope => [ :content ]), watchings_path(:resource_type => resource.class.to_s, :resource_id => resource.id), :method => :post)
+      end
+    end
   end
 end

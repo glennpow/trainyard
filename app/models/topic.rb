@@ -33,7 +33,7 @@ class Topic < ActiveRecord::Base
     @guru_points_available ||= self.guru_points - self.posts.map(&:guru_points).sum
   end
   
-  def watching_users
-    @watching_users ||= self.posts.map(&:user).uniq
+  def contributors
+    @contributors ||= self.posts.map(&:user).uniq
   end
 end

@@ -7,6 +7,7 @@ class CreateContent < ActiveRecord::Migration
       t.string :name, :null => false
       t.text :body, :null => false
       t.references :locale
+      t.boolean :heirarchical, :default => false
       t.boolean :commentable, :default => true
       t.boolean :reviewable, :default => true
       t.boolean :erased, :default => false
@@ -26,7 +27,7 @@ class CreateContent < ActiveRecord::Migration
     end
 
     create_table :blogs do |t|
-      t.references :group, :null => false
+      t.references :group
       t.string :name, :null => false
       t.timestamps
     end
@@ -40,7 +41,7 @@ class CreateContent < ActiveRecord::Migration
     end
     
     create_table :forums do |t|
-      t.references :group, :null => false
+      t.references :group
       t.string :name, :null => false
       t.text :description
       t.integer :topics_count, :default => 0
@@ -87,7 +88,7 @@ class CreateContent < ActiveRecord::Migration
     end
 
     create_table :pages do |t|
-      t.references :group, :null => false
+      t.references :group
       t.string :name, :null => false
       t.string :permalink, :null => false
       t.timestamps
@@ -161,8 +162,17 @@ class CreateContent < ActiveRecord::Migration
     add_index :topics, [ :forum_id ]
     add_index :topics, [ :user_id ]
     
+    create_table :watchings do |t|
+      t.references :resource, :polymorphic => true, :null => false
+      t.references :user, :null => false
+      t.timestamps
+    end
+
+    add_index :watchings, [ :resource_type, :resource_id ]
+    add_index :watchings, :user_id
+    
     create_table :wikis do |t|
-      t.references :group, :null => false
+      t.references :group
       t.string :name, :null => false
       t.timestamps
     end
@@ -185,6 +195,7 @@ class CreateContent < ActiveRecord::Migration
     drop_table :themes
     drop_table :themeables_themes
     drop_table :topics
+    drop_table :watchings
     drop_table :wikis
   end
 end

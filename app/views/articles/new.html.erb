@@ -5,6 +5,7 @@
 <% form_for(:article, :url => objects_path) do |f| %>
   <%= render :partial => 'edit', :locals => { :f => f, :article => @article } %>
   
+  <%= f.hidden_field(:heirarchical) %>
   <%= f.hidden_field(:revisionable) %>
 
   <%= f.submit t(:create) %>

@@ -1,6 +1,10 @@
 <% title t(:wiki, :scope => [ :content ]) %>
 
-<%= render_heading(t(:wiki, :scope => [ :content ])) %>
+<% if @group %>
+  <%= render_heading(t(:object_for_parent, :object => tp(:wiki, :scope => [ :content ]), :count => @indexer.collection.total_entries, :parent => @group.name)) %>
+<% else %>
+  <%= render_heading(tp(:wiki, :scope => [ :content ])) %>
+<% end %>
 
 <% if is_editor_of?(@group) %>
   <% @indexer.footers = link_to(t(:add_object, :object => t(:wiki, :scope => [ :content ])), new_object_path) %>

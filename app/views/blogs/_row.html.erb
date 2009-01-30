@@ -3,7 +3,7 @@
   blog,
   [
     h(blog.name),
-    link_to(blog.group.name, blog.group),
+    link_to_resource(blog.group),
   ],
   :actions => [
     { :if => is_editor_of?(blog), :allow => [

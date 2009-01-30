@@ -11,5 +11,5 @@
       icon_link_to :show, t(:show), group_invite_path(invite.group, invite)
     ] },
     { :if => is_moderator_of?(invite), :allow => [
-      icon_link_to(:delete, t(:delete), group_invite_path(invite.group, invite), :confirm => t(:are_you_sure), :method => :delete)
+      icon_link_to(:delete, t(:delete), invite, :confirm => t(:are_you_sure), :method => :delete)
     ] } ]) %>

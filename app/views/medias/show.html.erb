@@ -2,11 +2,11 @@
 
 <%= render_heading(h(@media.name)) %>
 
-<%= render_field(t(:group, :scope => [ :authentication ]), link_to(@media.resource.name, @media.resource)) %>
+<%= render_field(t(:group, :scope => [ :authentication ]), link_to_resource(@media.resource)) %>
 
 <%= render_field(t(:date, :scope => [ :datetimes ]), h(@media.created_at)) %>
 
 <%= render :partial => 'show', :locals => { :media => @media } %>
 
 <% page_actions << icon_link_to(:edit, t(:edit), edit_object_path) if is_editor_of?(@media) %>
-<% page_actions << link_to(@media.resource.name, @media.resource) %>
+<% page_actions << link_to_resource(@media.resource) %>

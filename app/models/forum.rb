@@ -14,7 +14,7 @@ class Forum < ActiveRecord::Base
   end
   belongs_to :parent_forum, :class_name => 'Forum'
 
-  validates_presence_of :group, :name
+  validates_presence_of :name
   
   searches_on :name
 end

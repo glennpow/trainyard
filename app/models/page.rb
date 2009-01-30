@@ -3,5 +3,5 @@ class Page < ActiveRecord::Base
   
   has_many_articles
   
-  validates_presence_of :group, :name, :permalink
+  validates_presence_of :name, :permalink
 end

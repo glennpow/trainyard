@@ -1,6 +1,6 @@
 <%= render_row([
   h(media.name),
-  link_to(media.resource.name, media.resource),
+  link_to_resource(media.resource),
   h(media.created_at),
   ],
   :actions => [

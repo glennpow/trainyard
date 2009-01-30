@@ -7,9 +7,8 @@ class PagesController < ApplicationController
     t(:page, :scope => [ :content ])
   end
 
-  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
-  before_filter :check_administrator_role
-  before_filter :check_editor_of, :only => [ :new, :create, :edit, :update, :destroy ]
+  before_filter :login_required, :only => [ :index, :show, :new, :create, :edit, :update, :destroy ]
+  before_filter :check_editor_of, :only => [ :index, :show, :new, :create, :edit, :update, :destroy ]
   
   def index
     respond_with_indexer do |options|
@@ -17,13 +16,15 @@ class PagesController < ApplicationController
       options[:headers] = [
         { :name => t(:name), :sort => :name },
         { :name => t(:permalink, :scope => [ :content ]), :sort => :permalink },
-        { :name => t(:group, :scope => [ :authentication ]), :sort => :group, :include => :group, :order => 'groups.name' },
+        t(:group, :scope => [ :authentication ]),
       ]
       options[:search] = true
+
+      options[:conditions] = { :group_id => @group.id } if @group
     end
   end
-
-
+  
+  
   private
   
   def check_editor_of

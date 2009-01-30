@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :moderated_groups, :through => :memberships, :source => :group, :conditions => { "#{Membership.table_name}.role_id" => Role.administrator.id }
   has_many :permissions, :through => :groups
   has_attached_file :image, Configuration.default_image_options
+  has_many :watchings, :dependent => :destroy
 
   validates_attachment_size :image, Configuration.default_image_size_options
 
@@ -68,16 +69,16 @@ class User < ActiveRecord::Base
   end
   
   def is_moderator_of?(resource)
-    return false if resource.nil?
     return true if has_administrator_role?
+    return false if resource.nil?
     return resource.moderators.include?(self) if resource.respond_to?(:moderators)
-    return resource.respond_to?(:group) && resource.group.has_moderator?(self)
+    return resource.respond_to?(:group) && resource.group && resource.group.has_moderator?(self)
   end
   
   def is_member_of?(resource, with_child_groups = false)
-    return false if resource.nil?
     return true if has_administrator_role?
-    return resource.respond_to?(:group) && resource.group.has_member?(self, with_child_groups)
+    return false if resource.nil?
+    return resource.respond_to?(:group) && resource.group && resource.group.has_member?(self, with_child_groups)
   end
     
   def permitted?(action, resource)
@@ -102,6 +103,14 @@ class User < ActiveRecord::Base
   
   def identities
     self.has_administrator_role? ? [ I18n.t(:admin, :scope => [ :authentication, :roles ]) ] : []
+  end
+  
+  def watched(klass = nil)
+    self.watchings.all(:conditions => klass ? { :resource_type => klass.to_s } : nil).map(&:resource)
+  end
+  
+  def is_watching?(resource)
+    self.watchings.count(:conditions => { :resource_type => resource.class.to_s, :resource_id => resource.id }) > 0
   end
  
   

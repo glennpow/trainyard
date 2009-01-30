@@ -3,7 +3,11 @@ class Wiki < ActiveRecord::Base
 
   has_many_articles :order => 'name ASC', :revisionable => true
     
-  validates_presence_of :group, :name
+  validates_presence_of :name
   
   searches_on :name
+  
+  def heirarchical_articles?
+    true
+  end
 end

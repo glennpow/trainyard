@@ -2,13 +2,9 @@
 
 <%= render_field(t(:permalink, :scope => [ :content ]), link_to(page.permalink, '#')) %>
 
-<%= render_field(t(:group, :scope => [ :authentication ]), link_to(h(page.group.name), group_path(page.group))) %>
+<%= render_field(t(:group, :scope => [ :authentication ]), link_to_resource(page.group)) %>
 
 <% if is_editor_of?(page) %>
   <%= render_field(tp(:article, :scope => [ :content ]), page.articles.length,
     :actions => [ { :allow => link_to(t(:view), page_articles_path(page)) } ]) %>
-<% end %>
-
-<% for_all_by_locale(page.articles.site_contents) do |article| %>
-  <%= render_article(article) %>
 <% end %>

@@ -4,7 +4,7 @@
   [
     h(page.name),
     h(page.permalink),
-    h(page.group.name),
+    link_to_resource(page.group),
   ],
   :actions => [
     { :if => is_editor_of?(page), :allow => [

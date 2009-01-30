@@ -31,10 +31,6 @@ class Post < ActiveRecord::Base
     self.guru_points == 0 && self.topic.guru_points_available > 0 && !user.is_editor_of?(self) && user.is_editor_of?(self.topic)
   end
   
-  def watching_users
-    @watching_users ||= self.topic.watching_users.reject { |user| user.id == self.user_id }
-  end
-  
   
   private
   

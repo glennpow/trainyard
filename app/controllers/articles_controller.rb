@@ -12,6 +12,9 @@ class ArticlesController < ApplicationController
     before :new do
       @article.group = @resource.group
       @article.user = current_user
+      @article.heirarchical = @resource.heirarchical_articles? if @resource.respond_to?(:heirarchical_articles?)
+      @article.commentable = @resource.commentable_articles? if @resource.respond_to?(:commentable_articles?)
+      @article.reviewable = @resource.reviewable_articles? if @resource.respond_to?(:reviewable_articles?)
       @article.revisionable = @resource.revisionable_articles? if @resource.respond_to?(:revisionable_articles?)
     end
     
@@ -37,7 +40,7 @@ class ArticlesController < ApplicationController
       options[:headers] = [
         { :name => t(:title, :scope => [ :content ]), :sort => :name },
         { :name => t(:author, :scope => [ :content ]), :sort => :author, :include => :user, :order => "#{User.table_name}.name" },
-        t(:topic, :scope => [ :content ]),
+        t(:resource),
         { :name => t(:date, :scope => [ :datetimes ]), :sort => :updated_at },
         t(:locale, :scope => [ :content ])
       ]
@@ -52,7 +55,7 @@ class ArticlesController < ApplicationController
   end
 
   def erase
-    @article.update_attributes(:user => current_user, :erased => true)
+    @article.update_attributes(:user_id => current_user, :erased => true)
 
     respond_to do |format|
       format.html { redirect_to :back }

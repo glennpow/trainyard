@@ -1,0 +1,11 @@
+<% title t(:watching, :scope => [ :content ]) %>
+
+<% if @user %>
+  <%= render_heading(t(:watching, :scope => [ :content ])) %>
+<% elsif @resource %>
+  <%= render_heading(t(:users_watching_object, :scope => [ :content ], :count => @indexer.collection.total_entries, :object => @resource.name)) %>
+<% else %>
+  <%= render_heading(tp(:watching, :scope => [ :content ])) %>
+<% end %>
+
+<%= render_indexer(@indexer) %>

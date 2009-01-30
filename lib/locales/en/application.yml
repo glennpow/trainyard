@@ -44,6 +44,7 @@ en:
   remove_object: Remove {{object}}
   reply: Reply
   required: Required
+  resource: Resource
   save: Save
   search: Search
   search_results_for_query: Search results for '{{query}}'
@@ -312,7 +313,13 @@ en:
     title: Title
     to: To
     topic: Topic
+    unwatch: Unwatch
+    users_watching_object:
+      one: User Watching {{object}}
+      other: Users Watching {{object}}
     video: Video
+    watch: Watch
+    watching: Watching
     wiki: Wiki
     view_comments:
       zero: No Comments

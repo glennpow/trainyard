@@ -26,6 +26,6 @@
 
 <%= render_reviews(@article) %>
 
-<% page_actions << link_to(@article.resource.name, @article.resource) %>
+<% page_actions << link_to_resource(@article.resource) %>
 <% page_actions << icon_link_to(:edit, t(:edit_object, :object => t(:article, :scope => [ :content ])), edit_object_path) if is_editor_of?(@article) %>
-<% page_actions << icon_link_to(:add, t(:add_object, :object => t(:article, :scope => [ :content ])), new_article_article_path(@article)) if has_permission?(Action.add_article, @article) %>
+<% page_actions << icon_link_to(:add, t(:add_object, :object => t(:article, :scope => [ :content ])), new_article_article_path(@article)) if @article.heirarchical? && has_permission?(Action.add_article, @article) %>

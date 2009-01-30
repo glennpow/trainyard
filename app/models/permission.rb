@@ -6,9 +6,10 @@ class Permission < ActiveRecord::Base
   validates_presence_of :resource, :action_id, :group
   
   def self.permitted?(user, action, resource)
+    return true if user.has_administrator_role?
     return false if resource.nil?
     group = resource.respond_to?(:group) ? resource.group : nil
-    return true if user.has_administrator_role? || (group && user.has_administrator_role?(group))
+    return true if group && user.has_administrator_role?(group)
       
 # TODO Move this to comment/review/message specific permissions....
     return true if action == Action.edit && resource.respond_to?(:user) && resource.user == user

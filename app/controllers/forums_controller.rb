@@ -42,13 +42,17 @@ class ForumsController < ApplicationController
   def move_down
     @forum.move_lower
     
-    redirect_to :back
+    respond_to do |format|
+      format.html { redirect_to :back }
+    end
   end
   
   def move_up
     @forum.move_higher
     
-    redirect_to :back
+    respond_to do |format|
+      format.html { redirect_to :back }
+    end
   end
   
   def search

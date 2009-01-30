@@ -34,7 +34,18 @@ class Address < ActiveRecord::Base
     address << self.postal_code
     address << self.country.name
     @full_address = address.join(", ")
-    @full_address
+  end
+  
+  def locate
+    if defined?(Geokit)
+      geo = self.geocode(self.full_address)
+      if geo.success
+        self.latitude = geo.lat
+        self.longitude = geo.lng
+        return true
+      end
+    end
+    return false
   end
 
   def blank?

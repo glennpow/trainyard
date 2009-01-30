@@ -13,11 +13,11 @@ reset_password '/reset_password/:id', :controller => 'users', :action => 'reset_
 change_password '/change_password', :controller => 'users', :action => 'edit_password'
 update_locale '/update_locale/', :controller => 'users', :action => 'update_locale'
 resource :account, :controller => 'users'
-resources :users, :member => { :enable => :put }, :has_many => [ :groups, :posts, :products, :quote_requests ]
+resources :users, :member => { :enable => :put }, :has_many => [ :groups, :posts, :watchings ]
 
 resources :addresses, :collection => { :update_regions => :get }
 
-resources :articles, :member => { :erase => :put }, :has_many => [ :articles, :article_revisions, :comments, :medias, :reviews ]
+resources :articles, :member => { :erase => :put }, :has_many => [ :articles, :article_revisions, :comments, :medias, :reviews, :watchings ]
 blog_article '/blogs/:id/articles/:article_id', :controller => 'blogs', :action => 'article'
 resources :blogs, :member => { :contents => :get }, :has_many => [ :articles ]
 resources :comments
@@ -31,4 +31,5 @@ stylesheet_theme '/stylesheet_theme/:id.css', :controller => 'themes', :action =
 resources :themes, :collection => { :preview => :get }
 apply_theme '/:themeable_type/:themeable_id/themes/:id/apply', :controller => 'themes', :action => 'apply', :method => :post
 resources :topics, :has_many => [ :posts ]
+resources :watchings
 resources :wikis, :has_many => [ :articles ]

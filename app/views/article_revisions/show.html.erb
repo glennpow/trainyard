@@ -20,5 +20,5 @@
 
 <%= render_reviews(@article) %>
 
-<% page_actions << link_to(@article.resource.name, @article.resource) %>
+<% page_actions << link_to_resource(@article.resource) %>
 <% page_actions << icon_link_to(:edit, t(:edit_object, :object => t(:article, :scope => [ :content ])), edit_object_path) if is_editor_of?(@article) %>
