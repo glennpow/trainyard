@@ -4,8 +4,14 @@
 
 <%= render_heading(t(:preview, :scope => [ :themes ])) %>
 
-<% if is_editor_of?(@themeable) %>
-  <%= render_field(t(:click_to_apply, :scope => [ :themes ], :link => icon_link_to(:edit, t(:apply, :scope => [ :themes ]), apply_theme_path(:id => @theme.id, :themeable_type => @themeable.class.to_s, :themeable_id => @themeable.id)))) %>
+<% if has_administrator_role? %>
+  <% unless current_theme.id == @theme.id %>
+    <%= render_field(t(:apply_to_object, :scope => [ :themes ], :link => icon_link_to(:edit, t(:apply, :scope => [ :themes ]), apply_theme_path(@theme), :method => :post), :object => Configuration.application_name)) %>
+  <% end %>
+<% elsif is_editor_of?(@themeable) %>
+  <% unless @themeable.theme_id == @theme.id %>
+    <%= render_field(t(:apply_to_object, :scope => [ :themes ], :link => icon_link_to(:edit, t(:apply, :scope => [ :themes ]), apply_theme_path(@theme, :themeable_type => @themeable.class.to_s, :themeable_id => @themeable.id), :method => :post), :object => @themeable.name)) %>
+  <% end %>
 <% end %>
 
-<iframe src="<%= preview_themes_path(:theme_id => @theme.id) %>" width="860" height="600" style="margin-left: auto; margin-right: auto"></iframe>
+<p align="center"><iframe src="<%= preview_themes_path(:theme_id => @theme.id) %>" width="860" height="600" style="margin-left: auto; margin-right: auto"></iframe></p>

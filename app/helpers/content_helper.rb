@@ -39,7 +39,15 @@ module ContentHelper
   def auto_format(text)
     textilize(auto_link(text))
   end
-  
+
+  def strip_links(&block)
+    content = capture(&block)
+logger.info("CONTENT=#{content}")
+    content.gsub!(/href=['"][^'"]+['"]/, "href='#'")
+logger.info("CONTENT=#{content}")
+    block_called_from_erb?(block) ? concat(content) : content
+  end
+
   def link_to_resource(resource, options = {}, html_options = {})
     if resource
       label_method = options.delete(:label_method) || :name

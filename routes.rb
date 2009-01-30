@@ -28,8 +28,7 @@ resources :messages
 resources :posts, :member => { :edit_guru_points => :get, :update_guru_points => :put }
 resources :reviews
 stylesheet_theme '/stylesheet_theme/:id.css', :controller => 'themes', :action => 'stylesheet'
-resources :themes, :collection => { :preview => :get }
-apply_theme '/:themeable_type/:themeable_id/themes/:id/apply', :controller => 'themes', :action => 'apply', :method => :post
+resources :themes, :member => { :apply => :post }, :collection => { :preview => :get }
 resources :topics, :has_many => [ :posts ]
 resources :watchings
 resources :wikis, :has_many => [ :articles ]

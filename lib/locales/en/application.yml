@@ -340,11 +340,7 @@ en:
   themes:
     active: Active
     apply: Apply
-    click_to_apply: Click {{link}} to set this as your company's theme.
-    preview: Below is a preview of this theme.
+    apply_to_object: "{{link}} this theme to {{object}}"
+    preview: Below is a preview of this theme
     theme: Theme
     theme_name: Theme Name
-  website:
-    content: Site Content
-    exception: Site Exception
-    page: Site Page

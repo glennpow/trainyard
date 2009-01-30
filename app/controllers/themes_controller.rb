@@ -17,44 +17,40 @@ class ThemesController < ApplicationController
     'theme'
   end
 
-  before_filter :login_required, :only => [ :apply ]
   before_filter :check_administrator_role, :only => [ :new, :create, :edit, :update, :destroy ]
-  before_filter :check_editor_of_themeable, :only => [ :apply ]
+  before_filter :check_editor_or_administrator, :only => [ :index, :apply ]
 
   def index
     respond_with_indexer do |options|
       options[:default_sort] = :name
-      if @themeable
-        options[:headers] = [
-          { :name => t(:name), :sort => :name },
-          t(:active, :scope => [ :themes ])
-        ]
-      else
-        options[:headers] = [
-          { :name => t(:name), :sort => :name }
-        ]
-      end
+      options[:headers] = [
+        { :name => t(:name), :sort => :name },
+        t(:active, :scope => [ :themes ])
+      ]
       options[:search] = true
     end
   end
   
   def apply
-    if @themeable.update_attribute(:theme, @theme)
-      flash[:notice] = t(:object_updated, :object => resourceful_name)
+    if @themeable.nil?
+      themeable_theme = ThemeablesTheme.first(:conditions => { :themeable_type => nil, :themeable_id => nil }) || ThemeablesTheme.new
+      themeable_theme.theme = @theme
+      if themeable_theme.save
+        flash[:notice] = t(:object_updated, :object => t(:theme, :scope => [ :content ]))
+      else
+        flash[:error] = t(:object_not_updated, :object => t(:theme, :scope => [ :content ]))
+      end
     else
-      flash[:error] = t(:object_not_updated, :object => resourceful_name)
+      if @themeable.update_attribute(:theme, @theme)
+        flash[:notice] = t(:object_updated, :object => resourceful_name)
+      else
+        flash[:error] = t(:object_not_updated, :object => resourceful_name)
+      end
+      redirect_to polymorphic_path([ @themeable, Theme.new ])
     end
-    redirect_to polymorphic_path([ @themeable, Theme.new ])
   end
   
   def preview
-    respond_to do |format|
-      format.html do
-        strip_links do
-          render :controller => 'users', :action => 'show'
-        end
-      end
-    end
   end
   
   def stylesheet
@@ -64,20 +60,12 @@ class ThemesController < ApplicationController
       format.css  # stylesheet.css.erb
     end
   end
-  
-  def text_area_preview
-    @text = params[:text]
-    
-    respond_to do |format|
-      format.html { render :layout => false } #text_area_preview.html.erb
-    end
-  end
  
   
   private
   
-  def check_editor_of_themeable
+  def check_editor_or_administrator
     @themeable = params[:themeable_type].to_class.find(params[:themeable_id]) if params[:themeable_id] && params[:themeable_type]
-    check_condition(@theme && @themeable && @themeable.respond_to?(:theme) && is_editor_of?(@themeable))
+    check_condition(has_administrator_role? || (@theme && @themeable && @themeable.respond_to?(:theme=) && is_editor_of?(@themeable)))
   end
 end

@@ -4,11 +4,11 @@
     theme,
     [
       h(theme.name),
-      (@themeable.theme == theme) ? icon(:check) : ""
+      (@themeable.theme_id == theme.id) ? icon(:check) : ""
     ],
     :actions => [
       { :if => is_editor_of?(@themeable) && (@themeable.theme != theme), :allow => [
-        icon_link_to(:edit, t(:apply, :scope => [ :themes ]), apply_theme_path(:id => theme.id, :themeable_type => @themeable.class.to_s, :themeable_id => @themeable.id)),
+        icon_link_to(:edit, t(:apply, :scope => [ :themes ]), apply_theme_path(theme, :themeable_type => @themeable.class.to_s, :themeable_id => @themeable.id), :method => :post),
       ] } ]) %>
 <% else %>
   <%= render_row(
@@ -16,10 +16,12 @@
     theme,
     [
       h(theme.name),
+      (current_theme.id == theme.id) ? icon(:check) : ""
     ],
     :actions => [
       { :if => has_administrator_role?, :allow => [
         icon_link_to(:edit, t(:edit), edit_object_path(theme)),
+        icon_link_to(:edit, t(:apply, :scope => [ :themes ]), apply_theme_path(theme), :method => :post),
         icon_link_to(:delete, t(:delete), theme, :confirm => t(:are_you_sure), :method => :delete)
       ] } ]) %>
 <% end %>

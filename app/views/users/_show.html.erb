@@ -30,9 +30,6 @@
 
   <%= render_field(tp(:group, :scope => [ :authentication ]), user.groups.map(&:name),
     :actions => [ { :if => user.groups.any?, :allow => link_to(t(:view), user_groups_path(user)) } ]) %>
-
-  <%= render_field(tp(:role, :scope => [ :authentication ]), user.roles.map(&:name),
-    :actions => [ { :allow => icon_link_to(:edit, t(:edit), user_roles_path(user)) } ]) %>
 <% end %>
 
 <% unless user.contact.blank? || !user.visible_contact %>

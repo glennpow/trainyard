@@ -76,12 +76,6 @@ module ThemeHelper
     content_tag(:input, nil, html_options.merge({ :type => 'button', :value => name, :onclick => "location.href='#{url_for(options)}'" }))
   end
   
-  def strip_links(options = {}, &block)
-    content = capture(&block)
-    content.gsub!(/href=['"][^'"]+['"]/, "href='#'")
-    block_called_from_erb?(block) ? concat(content) : content
-  end
-  
   def render_separator(options = {})
     content_tag(:hr)
   end

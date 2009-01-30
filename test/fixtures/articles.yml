@@ -1,7 +1,10 @@
 article_root:
   resource: page_root (Page)
+  user: user_admin
   name: Test Article
   body: |
     <p><strong>Test Page</strong></p><br />
     <p>Test article text.  This should only be viewable by Preferred users.</p>
   locale: locale_en_US
+  commentable: false
+  reviewable: false

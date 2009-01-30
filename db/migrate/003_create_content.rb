@@ -141,7 +141,7 @@ class CreateContent < ActiveRecord::Migration
     end
     
     create_table :themeables_themes do |t|
-      t.references :themeable, :polymorphic => true, :null => false
+      t.references :themeable, :polymorphic => true
       t.references :theme, :null => false
     end
     
