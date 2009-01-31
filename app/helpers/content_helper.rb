@@ -42,9 +42,7 @@ module ContentHelper
 
   def strip_links(&block)
     content = capture(&block)
-logger.info("CONTENT=#{content}")
     content.gsub!(/href=['"][^'"]+['"]/, "href='#'")
-logger.info("CONTENT=#{content}")
     block_called_from_erb?(block) ? concat(content) : content
   end
 

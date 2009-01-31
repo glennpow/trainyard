@@ -36,9 +36,9 @@ class ThemesController < ApplicationController
       themeable_theme = ThemeablesTheme.first(:conditions => { :themeable_type => nil, :themeable_id => nil }) || ThemeablesTheme.new
       themeable_theme.theme = @theme
       if themeable_theme.save
-        flash[:notice] = t(:object_updated, :object => t(:theme, :scope => [ :content ]))
+        flash[:notice] = t(:object_updated, :object => t(:theme, :scope => [ :themes ]))
       else
-        flash[:error] = t(:object_not_updated, :object => t(:theme, :scope => [ :content ]))
+        flash[:error] = t(:object_not_updated, :object => t(:theme, :scope => [ :themes ]))
       end
     else
       if @themeable.update_attribute(:theme, @theme)

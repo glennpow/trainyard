@@ -19,7 +19,12 @@
       "&theme[secondary_url]=" + escape(document.getElementById("theme_secondary_url").value) +
       "&theme[secondary_font_color]=" + escape(document.getElementById("theme_secondary_font_color").value) +
       "&theme[secondary_link_color]=" + escape(document.getElementById("theme_secondary_link_color").value) +
-      "&theme[secondary_link_hover_color]=" + escape(document.getElementById("theme_secondary_link_hover_color").value);
+      "&theme[secondary_link_hover_color]=" + escape(document.getElementById("theme_secondary_link_hover_color").value) +
+      "&theme[highlight_color]=" + escape(document.getElementById("theme_highlight_color").value) +
+      "&theme[highlight_url]=" + escape(document.getElementById("theme_highlight_url").value) +
+      "&theme[highlight_font_color]=" + escape(document.getElementById("theme_highlight_font_color").value) +
+      "&theme[highlight_link_color]=" + escape(document.getElementById("theme_highlight_link_color").value) +
+      "&theme[highlight_link_hover_color]=" + escape(document.getElementById("theme_highlight_link_hover_color").value);
   }
 
   function updatePreview() {
@@ -36,43 +41,64 @@
 <%= f.text_field :body_url %>
 
 <hr />
-  
-<%= f.color_field :base_color, :onchange => "updatePreview()" %>
 
-<%= f.text_field :base_url %>
+<table class="full-width">
+  <tr>
+    <td>
+      <%= f.color_field :base_color, :onchange => "updatePreview()" %>
 
-<%= f.color_field :base_font_color, :onchange => "updatePreview()" %>
+      <%= f.text_field :base_url %>
 
-<%= f.color_field :base_link_color, :onchange => "updatePreview()" %>
+      <%= f.color_field :base_font_color, :onchange => "updatePreview()" %>
 
-<%= f.color_field :base_link_hover_color, :onchange => "updatePreview()" %>
+      <%= f.color_field :base_link_color, :onchange => "updatePreview()" %>
+
+      <%= f.color_field :base_link_hover_color, :onchange => "updatePreview()" %>
+    </td>
+    <td>
+      <%= f.color_field :primary_color, :onchange => "updatePreview()" %>
+
+      <%= f.text_field :primary_url %>
+
+      <%= f.color_field :primary_font_color, :onchange => "updatePreview()" %>
+
+      <%= f.color_field :primary_link_color, :onchange => "updatePreview()" %>
+
+      <%= f.color_field :primary_link_hover_color, :onchange => "updatePreview()" %>
+    </td>
+  </tr>
+</table>
 
 <hr />
 
-<%= f.color_field :primary_color, :onchange => "updatePreview()" %>
+<table class="full-width">
+  <tr>
+    <td>
+      <%= f.color_field :secondary_color, :onchange => "updatePreview()" %>
 
-<%= f.text_field :primary_url %>
+      <%= f.text_field :secondary_url %>
 
-<%= f.color_field :primary_font_color, :onchange => "updatePreview()" %>
+      <%= f.color_field :secondary_font_color, :onchange => "updatePreview()" %>
 
-<%= f.color_field :primary_link_color, :onchange => "updatePreview()" %>
+      <%= f.color_field :secondary_link_color, :onchange => "updatePreview()" %>
 
-<%= f.color_field :primary_link_hover_color, :onchange => "updatePreview()" %>
+      <%= f.color_field :secondary_link_hover_color, :onchange => "updatePreview()" %>
+    </td>
+    <td>
+      <%= f.color_field :highlight_color, :onchange => "updatePreview()" %>
 
-<hr />
+      <%= f.text_field :highlight_url %>
 
-<%= f.color_field :secondary_color, :onchange => "updatePreview()" %>
+      <%= f.color_field :highlight_font_color, :onchange => "updatePreview()" %>
 
-<%= f.text_field :secondary_url %>
+      <%= f.color_field :highlight_link_color, :onchange => "updatePreview()" %>
 
-<%= f.color_field :secondary_font_color, :onchange => "updatePreview()" %>
-
-<%= f.color_field :secondary_link_color, :onchange => "updatePreview()" %>
-
-<%= f.color_field :secondary_link_hover_color, :onchange => "updatePreview()" %>
-
+      <%= f.color_field :highlight_link_hover_color, :onchange => "updatePreview()" %>
+    </td>
+  </tr>
+</table>
 <hr />
 
 <%= render_heading(t(:preview)) %>
 
-<iframe id="theme-preview" src="<%= preview_themes_path(:theme_id => @theme.id || current_theme.id) %>" width="860" height="350" scrolling="no" style="margin-left: auto; margin-right: auto"></iframe>
+<p align="center"><iframe id="theme-preview" src="<%= preview_themes_path(:theme_id => @theme.id || current_theme.id) %>" width="860" height="350" scrolling="no"></iframe></p>
