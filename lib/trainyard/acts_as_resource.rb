@@ -40,7 +40,9 @@ module Trainyard
           after_create :create_default_permissions
           
           def create_default_permissions
-            Permission.create(:group_id => self.group.id, :action_id => Action.edit.id, :role_id => Role.editor.id, :resource => self)
+            unless self.group.nil?
+              Permission.create(:group_id => self.group.id, :action_id => Action.edit.id, :role_id => Role.editor.id, :resource => self)
+            end
           end
         end
         
