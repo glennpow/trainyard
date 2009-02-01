@@ -3,29 +3,55 @@
 <%= render_heading(t(:roles_for_user, :scope => [ :authentication, :roles ], :user => @user.name) + (@group ? " (#{@group.name})" : "")) %>
 
 <%= render_field(t(:roles_assigned, :scope => [ :authentication, :roles ]), nil) %>
-<ul class="show-field-list">
-  <% @user.roles(@group).each do |role| %>
-    <li>
-      <%= role.name %>
-      <% if @group %>
-        <%= icon_link_to(:delete, t(:remove), group_user_role_path(:id => role.id, :group_id => @group.id, :user_id => @user.id), :method => :delete) %>
-      <% else %>
-        <%= icon_link_to(:delete, t(:remove), user_role_path(:id => role.id, :user_id => @user.id), :method => :delete) %>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
+<% if @assigned_roles.any? %>
+  <table class="show-field-values" align="center">
+    <% @assigned_roles.each do |role| %>
+      <tr>
+        <td>
+          <div class="show-field-list">
+            <span class="label"><%= role.name %></span>
+          </div>
+        </td>
+        <td>
+          <% if @group %>
+            <%= icon_link_to(:delete, t(:remove), group_user_role_path(:id => role.id, :group_id => @group.id, :user_id => @user.id), :method => :delete) %>
+          <% else %>
+            <%= icon_link_to(:delete, t(:remove), user_role_path(:id => role.id, :user_id => @user.id), :method => :delete) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <div class="show-field-values" align="center">
+    <%=t :none %>
+  </div>
+<% end %>
+
+<hr />
 
 <%= render_field(t(:roles_available, :scope => [ :authentication, :roles ]), nil) %>
-<ul class="show-field-list">
-  <% (@all_roles - @user.roles(@group)).each do |role| %>
-    <li>
-      <%= role.name %>
-      <% if @group %>
-        <%= icon_link_to(:add, t(:add), group_user_role_path(:id => role.id, :group_id => @group.id, :user_id => @user.id), :method => :put) %>
-      <% else %>
-        <%= icon_link_to(:add, t(:add), user_role_path(:id => role.id, :user_id => @user.id), :method => :put) %>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
+<% if @available_roles.any? %>
+  <table class="show-field-values" align="center">
+    <% @available_roles.each do |role| %>
+      <tr>
+        <td>
+          <div class="show-field-list">
+            <span class="label"><%= role.name %></span>
+          </div>
+        </td>
+        <td>
+          <% if @group %>
+            <%= icon_link_to(:add, t(:add), group_user_role_path(:id => role.id, :group_id => @group.id, :user_id => @user.id), :method => :put) %>
+          <% else %>
+            <%= icon_link_to(:add, t(:add), user_role_path(:id => role.id, :user_id => @user.id), :method => :put) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <div class="show-field-values" align="center">
+    <%=t :none %>
+  </div>
+<% end %>

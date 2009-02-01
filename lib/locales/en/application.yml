@@ -34,6 +34,7 @@ en:
   name: Name
   new_object: New {{object}}
   "no": "No"
+  none: None
   object_deleted: "{{object}} deleted."
   object_not_created: There was a problem creating {{object}}.
   object_not_updated: There was a problem updating {{object}}.

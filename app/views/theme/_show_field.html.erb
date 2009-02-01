@@ -20,11 +20,13 @@
 </p>
 
 <% if values %>
-  <ul class="show-field-list">
-    <% values.each do |value| %>
-      <li>
-        <%= value %>
-      </li>
-    <% end %>
-  </ul>
+  <div class="show-field-values" align="center">
+    <ul class="show-field-list">
+      <% values.each do |value| %>
+        <li>
+          <%= value %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
