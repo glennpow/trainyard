@@ -321,38 +321,33 @@ ul.tabbernav li {
 }
 
 ul.tabbernav li a {
+  background: <%= theme.secondary_background %>;
   padding: 3px 0.5em;
   margin-left: 3px;
   border: 1px solid <%= theme.primary_color %>;
   border-bottom: none;
-  background: <%= theme.secondary_color %>;
   text-decoration: none;
 }
 
 ul.tabbernav li a:link {
-  color: #fff;
+  color: <%= theme.secondary_link_color %>;
 }
 
 ul.tabbernav li a:visited {
-  color: #667;
+  color: <%= theme.secondary_link_color %>;
 }
 
 ul.tabbernav li a:hover {
-  color: #000;
-  background: <%= theme.secondary_color %>;
-  border-color: <%= theme.primary_color %>;
+  color: <%= theme.secondary_link_hover_color %>;
 }
 
 ul.tabbernav li.tabberactive a {
   color: <%= theme.primary_color %>;
   background: <%= theme.base_background %>;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid <%= theme.base_color %>;
 }
 
 ul.tabbernav li.tabberactive a:hover {
-  color: #000;
-  background: white;
-  border-bottom: 1px solid white;
 }
 
 .tabberlive .tabbertab {
