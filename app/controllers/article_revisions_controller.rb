@@ -1,5 +1,5 @@
 class ArticleRevisionsController < ApplicationController
-  make_resourceful(:actions => [ :show ]) do
+  make_resource_controller(:actions => [ :show ]) do
     belongs_to :article
   end
   

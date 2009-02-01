@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  make_resourceful do
+  make_resource_controller do
     belongs_to :group
   end
   

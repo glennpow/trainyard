@@ -8,10 +8,11 @@ require File.dirname(__FILE__) + '/trainyard/acts_as_author'
 require File.dirname(__FILE__) + '/trainyard/has_many_articles'
 require File.dirname(__FILE__) + '/trainyard/has_one_theme'
 require File.dirname(__FILE__) + '/trainyard/authentication_system'
-require File.dirname(__FILE__) + '/trainyard/content_form_builder'
+require File.dirname(__FILE__) + '/trainyard/resource_system'
 require File.dirname(__FILE__) + '/trainyard/content_system'
 require File.dirname(__FILE__) + '/trainyard/locale_system'
 require File.dirname(__FILE__) + '/trainyard/theme_system'
+require File.dirname(__FILE__) + '/trainyard/content_form_builder'
 
 ActiveRecord::Base.observers << :message_observer << :post_observer << :invite_observer
 

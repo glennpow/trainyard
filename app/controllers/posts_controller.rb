@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  make_resourceful do
+  make_resource_controller do
     belongs_to :topic
     
     member_actions :edit_guru_points, :update_guru_points

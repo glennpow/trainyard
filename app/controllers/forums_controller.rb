@@ -1,5 +1,5 @@
 class ForumsController < ApplicationController
-  make_resourceful do
+  make_resource_controller do
     member_actions :move_down, :move_up
     
     before :show do

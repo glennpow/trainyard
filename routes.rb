@@ -14,6 +14,12 @@ change_password '/change_password', :controller => 'users', :action => 'edit_pas
 update_locale '/update_locale/', :controller => 'users', :action => 'update_locale'
 resource :account, :controller => 'users'
 resources :users, :member => { :enable => :put }, :has_many => [ :groups, :posts, :watchings ]
+user_roles '/users/:user_id/roles', :controller => 'roles', :action => 'index'
+user_role '/users/:user_id/roles/:id', :controller => 'roles', :action => 'update', :conditions => { :method => :put }
+connect '/users/:user_id/roles/:id', :controller => 'roles', :action => 'destroy', :conditions => { :method => :delete }
+group_user_roles '/groups/:group_id/users/:user_id/roles', :controller => 'roles', :action => 'index'
+group_user_role '/groups/:group_id/users/:user_id/roles/:id', :controller => 'roles', :action => 'update', :conditions => { :method => :put }
+connect '/groups/:group_id/users/:user_id/roles/:id', :controller => 'roles', :action => 'destroy', :conditions => { :method => :delete }
 
 resources :addresses, :collection => { :update_regions => :get }
 

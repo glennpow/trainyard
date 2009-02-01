@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  make_resourceful(:actions => [ :show, :new, :create, :destroy ]) do
+  make_resource_controller(:actions => [ :show, :new, :create, :destroy ]) do
     before :show do
       @message.update_attribute(:read, true) if !@message.read && @message.to_user == current_user
     end

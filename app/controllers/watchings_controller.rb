@@ -1,5 +1,5 @@
 class WatchingsController < ApplicationController
-  make_resourceful(:actions => [ :create, :destroy ]) do
+  make_resource_controller(:actions => [ :create, :destroy ]) do
     belongs_to :user, :resource
     
     before :create do

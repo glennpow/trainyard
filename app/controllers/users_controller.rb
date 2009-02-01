@@ -19,8 +19,7 @@ class UsersController < ApplicationController
       else
         options[:default_sort] = :name
         options[:headers] = [
-          { :name => t(:name), :sort => :name, :order => 'users.name' },
-          t(:primary_email, :scope => [ :authentication ])
+          { :name => t(:name), :sort => :name, :order => 'users.name' }
         ]
       end
       options[:search] = true

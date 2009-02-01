@@ -6,7 +6,7 @@
   <%= render_heading(tp(:user, :scope => [ :authentication ])) %>
 <% end %>
 
-<% if is_moderator_of?(@group) %>
+<% if @group && is_moderator_of?(@group) %>
   <%= render_actions([ icon_link_to(:add_large, t(:invite_to_group, :scope => [ :authentication, :invites, :new ], :group => @group.name), new_group_invite_path(@group)) ]) %>
 <% end %>
 

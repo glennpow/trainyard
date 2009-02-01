@@ -156,13 +156,12 @@ en:
         failure_no_user: Could not find a user with that email address.
         success: A password reset link has been sent to your email address.
     roles:
-      admin: Administrator
+      administrator: Administrator
       editor: Editor
       user: User
-      index:
-        roles_assigned: Roles assigned
-        roles_available: Roles available
-        roles_for_user: Roles for {{user}}
+      roles_assigned: Roles assigned
+      roles_available: Roles available
+      roles_for_user: Roles for {{user}}
     sessions:
       new:
         failure_disabled: Your account has been disabled.

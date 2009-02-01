@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  make_resourceful do
+  make_resource_controller do
     belongs_to :resource
     
     member_actions :erase

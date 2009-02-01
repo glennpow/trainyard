@@ -3,28 +3,35 @@
     indexer,
     user,
     [
-      h(user.login),
+      link_to_resource(user, :label_method => :login),
       link_to_resource(user),
       h(user.email),
       user.groups.any? ? user.groups.length : '',
       user.active? ? t(:enabled) : t(:disabled),
     ],
     :actions => [
-      { :allow => [
-        icon_link_to(:edit, tp(:edit_object, :object => t(:role, :scope => [ :authentication ])), user_roles_path(user))
-      ] },
+      icon_link_to(:edit, tp(:edit_object, :object => t(:role, :scope => [ :authentication ])), user_roles_path(user)),
       { :if => user != current_user && user.active?, :allow => [
         icon_link_to(:delete, t(:disable), user, :confirm => t(:are_you_sure), :method => :delete)
       ] },
       { :if => user != current_user && !user.active?, :allow => [
         icon_link_to(:add, t(:enable), enable_user_path(user), :method => :put)
       ] } ]) %>
+<% elsif is_moderator_of?(@group) %>
+  <%= render_row(
+    indexer,
+    user,
+    [
+      link_to_resource(user)
+    ],
+    :actions => [
+      icon_link_to(:edit, tp(:edit_object, :object => t(:role, :scope => [ :authentication ])), group_user_roles_path(@group, user))
+    ]) %>
 <% else %>
   <%= render_row(
     indexer,
     user,
     [
-      link_to_resource(user),
-      h(user.email)
+      link_to_resource(user)
     ]) %>
 <% end %>

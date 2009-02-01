@@ -1,13 +1,31 @@
 <% title tp(:role, :scope => [ :authentication ]) %>
 
-<%= render_heading(t(:roles_for_user, :scope => [ :authentication, :roles, :index ], :user => @user.login.upcase)) %>
+<%= render_heading(t(:roles_for_user, :scope => [ :authentication, :roles ], :user => @user.name) + (@group ? " (#{@group.name})" : "")) %>
 
-<%= render_field(t(:roles_assigned, :scope => [ :authentication, :roles, :index ]), nil) %>
+<%= render_field(t(:roles_assigned, :scope => [ :authentication, :roles ]), nil) %>
 <ul class="show-field-list">
-  <%= render :partial => 'item', :collection => @user.roles, :as => :role, :locals => { :user => @user } %> 
+  <% @user.roles(@group).each do |role| %>
+    <li>
+      <%= role.name %>
+      <% if @group %>
+        <%= icon_link_to(:delete, t(:remove), group_user_role_path(:id => role.id, :group_id => @group.id, :user_id => @user.id), :method => :delete) %>
+      <% else %>
+        <%= icon_link_to(:delete, t(:remove), user_role_path(:id => role.id, :user_id => @user.id), :method => :delete) %>
+      <% end %>
+    </li>
+  <% end %>
 </ul>
 
-<%= render_field(t(:roles_available, :scope => [ :authentication, :roles, :index ]), nil) %>
+<%= render_field(t(:roles_available, :scope => [ :authentication, :roles ]), nil) %>
 <ul class="show-field-list">
-  <%= render :partial => 'item', :collection => (@all_roles - @user.roles), :as => :role, :locals => { :user => @user } %> 
+  <% (@all_roles - @user.roles(@group)).each do |role| %>
+    <li>
+      <%= role.name %>
+      <% if @group %>
+        <%= icon_link_to(:add, t(:add), group_user_role_path(:id => role.id, :group_id => @group.id, :user_id => @user.id), :method => :put) %>
+      <% else %>
+        <%= icon_link_to(:add, t(:add), user_role_path(:id => role.id, :user_id => @user.id), :method => :put) %>
+      <% end %>
+    </li>
+  <% end %>
 </ul>
