@@ -42,7 +42,7 @@ module Trainyard
           child_articles = self.send(articles_name)
           while child_articles.any?
             all_articles += child_articles
-            child_articles = child_articles.map { |article| article.child_articles }.flatten
+            child_articles = child_articles.map { |article| article.send(articles_name) }.flatten
           end
           all_articles
         end
