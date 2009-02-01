@@ -149,7 +149,7 @@ module Trainyard
     end
   
     def fields_for(record_or_name_or_array, *args, &block)
-      # XXX - this is to solve mass-assign updating of collections...
+      # FIXME - this is to solve mass-assign updating of collections...  (fix when Rails handles this properly)
       #if options.has_key?(:index)
       #  index = "[#{options[:index]}]"
       #elsif defined?(@auto_index)

@@ -36,7 +36,7 @@ module Trainyard
           end
         end
 
-        # TODO - this method is a bit messy
+        # FIXME - this method is a bit messy
         define_method :all_articles do
           all_articles = []
           child_articles = self.send(articles_name)
