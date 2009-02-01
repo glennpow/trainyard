@@ -4,7 +4,7 @@
     user,
     [
       h(user.login),
-      h(user.name),
+      link_to_resource(user),
       h(user.email),
       user.groups.any? ? user.groups.length : '',
       user.active? ? t(:enabled) : t(:disabled),
@@ -24,7 +24,7 @@
     indexer,
     user,
     [
-      h(user.name),
+      link_to_resource(user),
       h(user.email)
     ]) %>
 <% end %>

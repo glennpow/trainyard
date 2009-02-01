@@ -20,10 +20,6 @@ class Group < ActiveRecord::Base
     self.moderators.first
   end
   
-  def parent_group_name
-    self.parent_group.name unless self.parent_group.nil?
-  end
-  
   def has_child?(group)
     self.child_groups.each do |child_group|
       return true if child_group == group

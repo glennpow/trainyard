@@ -2,8 +2,8 @@
   indexer,
   group,
   [
-    h(group.name),
-    h(group.parent_group_name),
+    link_to_resource(group),
+    link_to_resource(group.parent_group),
     group.child_groups.any? ? group.child_groups.length : '',
     link_to_user(group.moderator),
     group.users.any? ? group.users.length : '',

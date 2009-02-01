@@ -3,7 +3,7 @@
     indexer,
     theme,
     [
-      h(theme.name),
+      link_to_resource(theme),
       (@themeable.theme_id == theme.id) ? icon(:check) : ""
     ],
     :actions => [
@@ -15,7 +15,7 @@
     indexer,
     theme,
     [
-      h(theme.name),
+      link_to_resource(theme),
       (current_theme.id == theme.id) ? icon(:check) : ""
     ],
     :actions => [

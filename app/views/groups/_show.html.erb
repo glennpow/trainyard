@@ -4,7 +4,7 @@
 <%= render_field(t(:moderator, :scope => [ :authentication ]), link_to_user(group.moderator)) %>
 
 <% if group.parent_group %>
-  <%= render_field(t(:parent_group, :scope => [ :authentication ]), h(group.parent_group_name)) %>
+  <%= render_field(t(:parent_group, :scope => [ :authentication ]), link_to_resource(group.parent_group)) %>
 <% end %>
 
 <% if group.child_groups.any? %>

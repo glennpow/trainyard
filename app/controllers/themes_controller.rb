@@ -40,6 +40,7 @@ class ThemesController < ApplicationController
       else
         flash[:error] = t(:object_not_updated, :object => t(:theme, :scope => [ :themes ]))
       end
+      redirect_to themes_path
     else
       if @themeable.update_attribute(:theme, @theme)
         flash[:notice] = t(:object_updated, :object => resourceful_name)

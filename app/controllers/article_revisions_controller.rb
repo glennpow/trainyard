@@ -16,6 +16,7 @@ class ArticleRevisionsController < ApplicationController
       options[:headers] = [
         { :name => t(:title, :scope => [ :content ]), :sort => :name },
         { :name => t(:author, :scope => [ :content ]), :include => :user, :sort => :user, :order => "#{User.table_name}.name" },
+        { :name => t(:revision, :scope => [ :content ]), :sort => :revision },
         { :name => t(:date, :scope => [ :datetimes ]), :sort => :updated_at },
       ]
       options[:search] = true

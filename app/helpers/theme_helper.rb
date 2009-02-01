@@ -139,12 +139,4 @@ module ThemeHelper
     }
     render :partial => 'theme/user_card', :locals => locals
   end
-  
-  
-  private
-  
-  def actions_for(actions)
-    # TODO - get rid of Hash variation
-    (actions || []).flatten.map { |action| action.is_a?(Hash) ? ((!action.has_key?(:if) || action[:if]) ? action[:allow] : nil) : action }.flatten.compact
-  end
 end

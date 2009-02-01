@@ -259,14 +259,14 @@ en:
       personal: Personal
   content:
     article: Article
-    article_for_object:
+    articles_for_object:
       one: Article for {{object}}
       other: Articles for {{object}}
     author: Author
     blog: Blog
     by_author: By {{author}}
     comment: Comment
-    comment_for_object:
+    comments_for_object:
       one: Comment for {{object}}
       other: Comments for {{object}}
     community: Community
@@ -307,10 +307,13 @@ en:
       zero: No Reviews Yet
       one: 1 Review
       other: "{{count}} Reviews"
-    review_of_object:
+    reviews_of_object:
       one: Review of {{object}}
       other: Reviews of {{object}}
     revision: Revision
+    revisions_for_object:
+      one: Revision for {{object}}
+      other: Revisions for {{object}}
     send_message: Send Message
     sent: Sent
     subject: Subject

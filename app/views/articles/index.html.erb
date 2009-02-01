@@ -1,7 +1,7 @@
 <% title tp(:article, :scope => [ :content ]) %>
 
 <% if @resource %>
-  <%= render_heading(t(:article_for_object, :scope => [ :content ], :count => @indexer.collection.total_entries, :object => @resource.name)) %>
+  <%= render_heading(t(:articles_for_object, :scope => [ :content ], :count => @indexer.collection.total_entries, :object => @resource.name)) %>
 <% else %>
   <%= render_heading(tp(:article, :scope => [ :content ])) %>
 <% end %>

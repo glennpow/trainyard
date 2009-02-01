@@ -1,9 +1,0 @@
-<% title t(:create_object, :object => t(:article, :scope => [ :content ])) %>
-
-<%= render_heading(t(:article_for_object, :scope => [ :content ], :count => 1, :object => @article.resource.name)) %>
-
-<% form_for(:article, :url => objects_path) do |f| %>
-  <%= render :partial => 'edit', :locals => { :f => f, :article => @article } %>
-
-  <%= f.submit t(:create) %>
-<% end %>

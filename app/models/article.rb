@@ -23,6 +23,8 @@ class Article < ActiveRecord::Base
   
   searches_on :name, :body
   
+  alias_method :author, :user
+  
   def group_with_resource
     group_without_resource || self.resource.group
   end

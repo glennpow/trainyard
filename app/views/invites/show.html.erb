@@ -1,8 +1,8 @@
 <% title t(:invite, :scope => [ :authentication ]) %>
 
-<%= render_field(t(:group, :scope => [ :authentication ]), h(invite.group.name)) %>
+<%= render_field(t(:group, :scope => [ :authentication ]), link_to_resource(invite.group)) %>
 
-<%= render_field(t(:inviter, :scope => [ :authentication ]), h(invite.inviter.name)) %>
+<%= render_field(t(:inviter, :scope => [ :authentication ]), link_to_resource(invite.inviter)) %>
 
 <%= render_field(t(:email, :scope => [ :contacts ]), h(invite.email)) %>
 

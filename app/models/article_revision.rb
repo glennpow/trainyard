@@ -10,6 +10,8 @@ class ArticleRevision < ActiveRecord::Base
   
   self.non_revisioned_columns = [ :id, :article_id, :revision, :created_at ]
   
+  alias_method :author, :user
+  
   def group
     self.article.group
   end

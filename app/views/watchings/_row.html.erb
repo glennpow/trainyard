@@ -2,7 +2,7 @@
   indexer,
   watching,
   [
-    @user ? link_to_resource(watching.resource) : h(watching.user.name),
+    @user ? link_to_resource(watching.resource) : link_to_resource(watching.user),
     watching.created_at.to_s(:long),
   ],
   :url => nil,

@@ -1,15 +1,5 @@
-<% title tp(:article, :scope => [ :content ]) %>
+<% title tp(:revision, :scope => [ :content ]) %>
 
-<% if @resource %>
-  <%= render_heading(t(:article_for_object, :scope => [ :content ], :count => @indexer.collection.total_entries, :object => @resource.name)) %>
-<% else %>
-  <%= render_heading(tp(:article, :scope => [ :content ])) %>
-<% end %>
-
-<% if @resource && is_editor_of?(@resource) %>
-  <%= render_actions([ icon_link_to(:add_large, t(:create_object, :object => t(:article, :scope => [ :content ])), new_object_path) ]) %>
-
-  <% @indexer.footers = link_to(t(:create_object, :object => t(:article, :scope => [ :content ])), new_object_path) %>
-<% end %>
+<%= render_heading(t(:revisions_for_object, :scope => [ :content ], :count => @indexer.collection.total_entries, :object => link_to_resource(@article))) %>
 
 <%= render_indexer(@indexer) %>

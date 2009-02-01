@@ -1,24 +1,13 @@
-<% title h(@article.name) %>
+<% title t(:revision, :scope => [ :content ]) %>
 
-<%= render_heading(h(@article.name)) %>
+<%= render_heading(t(:revisions_for_object, :scope => [ :content ], :count => 1, :object => link_to_resource(@article_revision.article))) %>
 
-<%= render_field(content_tag(:span, @article.created_at.to_s(:long), :class => 'timestamp')) %>
+<%= render_field(content_tag(:span, @article_revision.created_at.to_s(:long), :class => 'timestamp')) %>
 
-<% if is_reviewable?(@article) %>
-  <%= render_field(render_rating(@article)) %>
-<% end %>
+<%= render_field(tp(:author, :scope => [ :content ]), @article_revision.author.map { |user| user.name }.to_sentence) %>
 
-<% if @article.medias.any? %>
-  <div class="medias">
-    <%= render :partial => 'medias/show', :collection => @article.medias, :as => :media %>
-  </div>
-<% end %>
+<%= render_field(t(:revision, :scope => [ :content ]), @article_revision.revision) %>
 
-<%= render_article(@article) %>
+<%= render_article(@article_revision) %>
 
-<%= render_comments(@article) %>
-
-<%= render_reviews(@article) %>
-
-<% page_actions << link_to_resource(@article.resource) %>
-<% page_actions << icon_link_to(:edit, t(:edit_object, :object => t(:article, :scope => [ :content ])), edit_object_path) if is_editor_of?(@article) %>
+<% page_actions << link_to_resource(@article_resource.article) %>
