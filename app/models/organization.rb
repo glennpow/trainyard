@@ -6,6 +6,7 @@ class Organization < ActiveRecord::Base
 
   has_attached_file :image, Configuration.default_image_options
   has_many_articles
+  has_one_theme
   
   validates_presence_of :name, :description, :group
   validates_uniqueness_of :name, :case_sensitive => false

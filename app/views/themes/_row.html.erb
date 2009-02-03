@@ -4,7 +4,7 @@
     theme,
     [
       link_to_resource(theme),
-      (@themeable.theme_id == theme.id) ? icon(:check) : ""
+      (@themeable.theme.id == theme.id) ? icon(:check) : ""
     ],
     :actions => [
       { :if => is_editor_of?(@themeable) && (@themeable.theme != theme), :allow => [

@@ -2,7 +2,7 @@ class ThemesController < ApplicationController
   make_resource_controller do
     belongs_to :themeable
     
-    member_actions :apply, :stylesheet
+    member_actions :stylesheet
     
     before :new do
       (@theme.attribute_names - [ 'name' ]).each { |attr| @theme.send("#{attr}=", current_theme.send(attr)) }
@@ -32,23 +32,15 @@ class ThemesController < ApplicationController
   end
   
   def apply
-    if @themeable.nil?
-      themeable_theme = ThemeablesTheme.first(:conditions => { :themeable_type => nil, :themeable_id => nil }) || ThemeablesTheme.new
-      themeable_theme.theme = @theme
-      if themeable_theme.save
-        flash[:notice] = t(:object_updated, :object => t(:theme, :scope => [ :themes ]))
-      else
-        flash[:error] = t(:object_not_updated, :object => t(:theme, :scope => [ :themes ]))
-      end
-      redirect_to themes_path
+    attributes = { :themeable_type => @themeable ? @themeable.class.to_s : nil, :themeable_id => @themeable ? @themeable.id : nil }
+    themeable_theme = ThemeablesTheme.first(:conditions => attributes) || ThemeablesTheme.new(attributes)
+    themeable_theme.theme_id = params[:id]
+    if themeable_theme.save
+      flash[:notice] = t(:object_updated, :object => resourceful_name)
     else
-      if @themeable.update_attribute(:theme, @theme)
-        flash[:notice] = t(:object_updated, :object => resourceful_name)
-      else
-        flash[:error] = t(:object_not_updated, :object => resourceful_name)
-      end
-      redirect_to polymorphic_path([ @themeable, Theme.new ])
+      flash[:error] = t(:object_not_updated, :object => resourceful_name)
     end
+    redirect_to @themeable ? polymorphic_path([ @themeable, Theme.new ]) : themes_path
   end
   
   def preview

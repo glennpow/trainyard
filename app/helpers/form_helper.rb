@@ -18,7 +18,7 @@ module FormHelper
       :required => options[:required] || false,
       :error => nil
     }
-    content = render :partial => 'theme/field', :locals => locals
+    content = render :partial => 'layout/field', :locals => locals
     block_called_from_erb?(block) ? concat(content) : content
   end
   

@@ -12,8 +12,10 @@ forgot_password '/forgot_password', :controller => 'users', :action => 'forgot_p
 reset_password '/reset_password/:id', :controller => 'users', :action => 'reset_password'
 change_password '/change_password', :controller => 'users', :action => 'edit_password'
 update_locale '/update_locale/', :controller => 'users', :action => 'update_locale'
-resources :organizations, :member => { :set_current => :get }
-resources :users, :member => { :enable => :put }, :has_many => [ :groups, :posts, :watchings ]
+resources :organizations, :member => { :set_current => :get }, :has_many => [ :themes, :users ]
+resources :users, :member => { :enable => :put, :confirm => :get, :update_reset_password => :post },
+                  :collection => { :activate => :get, :request_reset_password => :post },
+                  :has_many => [ :groups, :posts, :watchings ]
 user_roles '/users/:user_id/roles', :controller => 'roles', :action => 'index'
 user_role '/users/:user_id/roles/:id', :controller => 'roles', :action => 'update', :conditions => { :method => :put }
 connect '/users/:user_id/roles/:id', :controller => 'roles', :action => 'destroy', :conditions => { :method => :delete }

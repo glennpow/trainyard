@@ -11,7 +11,7 @@ module ThemeHelper
   def render_flash
     returning('') do |content|
       flash.each do |key, value|
-        content << render(:partial => 'theme/flash', :locals => { :type => key, :message => value })
+        content << render(:partial => 'layout/flash', :locals => { :type => key, :message => value })
       end
     end
   end
@@ -38,7 +38,7 @@ module ThemeHelper
       :label_align => options.delete(:label_align) || :right,
       :options => options.reverse_merge({ :alt => name, :title => name })
     }
-    render :partial => 'theme/image_label', :locals => locals
+    render :partial => 'layout/image_label', :locals => locals
   end
   
   def icon_link_to(icon_name, name, options = {}, html_options = {})
@@ -85,7 +85,7 @@ module ThemeHelper
       :label => label,
       :actions => actions_for(options[:actions])
     }
-    render :partial => 'theme/heading', :locals => locals
+    render :partial => 'layout/heading', :locals => locals
   end
   
   def render_field(*args)
@@ -98,7 +98,7 @@ module ThemeHelper
       :label => label,
       :actions => actions_for(options[:actions])
     }
-    render :partial => 'theme/show_field', :locals => locals
+    render :partial => 'layout/show_field', :locals => locals
   end
   
   def render_list(values, options = {})
@@ -137,6 +137,6 @@ module ThemeHelper
       :user => user,
       :image_style => options[:image_style] || :thumb
     }
-    render :partial => 'theme/user_card', :locals => locals
+    render :partial => 'layout/user_card', :locals => locals
   end
 end

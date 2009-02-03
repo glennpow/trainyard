@@ -1,7 +1,41 @@
 class UsersController < ApplicationController
-  before_filter :load_objects, :only => [ :index, :show, :destroy, :enable ]
+  make_resource_controller(:actions => [ :show, :new, :create, :edit, :update ]) do
+    belongs_to :group, :organization
+    
+    member_actions :destroy, :enable
+
+    before :new do
+      @user_groups = if Configuration.default_user_group_name
+        [ Group.find_by_name(Configuration.default_user_group_name, :select => 'id, name') ]
+      else
+        []
+      end
+    end
+    
+    after :create do
+      Membership.create(:user_id => @user, :role_id => Role.user.id, :group_id => params[:user_group_id]) if params[:user_group_id]
+      @user.confirm! unless Configuration.email_activation
+    end
+    
+    response_for :create do |format|
+      format.html { redirect_to login_path }
+    end
+    
+    before :edit do
+      @user = current_user
+    end
+  
+    before :update do
+      @user = current_user
+    end
+    
+    response_for :update do |format|
+      format.html { redirect_to :action => 'show', :id => current_user }
+    end
+  end
+  
   before_filter :load_user_using_perishable_token, :only => [ :confirm, :reset_password, :update_reset_password ]
-  before_filter :not_logged_in_required, :only => [ :new, :create, :activate, :forgot_password, :request_reset_password, :reset_password, :update_reset_password ]
+  before_filter :not_logged_in_required, :only => [ :new, :create, :confirm, :forgot_password, :request_reset_password, :reset_password, :update_reset_password ]
   before_filter :login_required, :only => [ :edit, :edit_password, :update, :update_password ]
   before_filter :check_administrator_role, :only => [ :destroy, :enable ]
   
@@ -24,43 +58,13 @@ class UsersController < ApplicationController
       end
       options[:search] = true
     
+      if @organization
+        @group = @organization.group
+      end
       if @group
         options[:include] = :memberships
         options[:conditions] = [ "#{Membership.table_name}.group_id = ?", @group.id ]
       end
-    end
-  end
-  
-  def show
-    @user ||= current_user
-    
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @user }
-    end
-  end
-
-  def new
-    @user = User.new
-    @user_groups = if Configuration.default_user_group_name
-      [ Group.find_by_name(Configuration.default_user_group_name, :select => 'id, name') ]
-    else
-      []
-    end
-  end
-
-  def create
-    @user = User.new(params[:user])
-    
-    if @user.save
-      Membership.create(:user_id => @user, :role_id => Role.user.id, :group_id => params[:user_group_id]) if params[:user_group_id]
-      
-      flash[:notice] = t(:success, :scope => [ :authentication, :users, :new ])
-      @user.confirm! unless Configuration.email_activation
-      redirect_to login_path
-    else
-      flash[:error] = t(:failure, :scope => [ :authentication, :users, :new ])
-      render :action => 'new'
     end
   end
   
@@ -75,22 +79,6 @@ class UsersController < ApplicationController
     else 
       flash[:error] = t(:failure_already_activated, :scope => [ :authentication, :users, :confirm ])
       redirect_to login_path
-    end
-  end
-
-  def edit
-    @user = current_user
-  end
-  
-  def update
-    @user = current_user
-    
-    if @user.update_attributes(params[:user])
-      flash[:notice] = t(:object_updated, :object => t(:account, :scope => [ :authentication ]))
-      redirect_to :action => 'show', :id => current_user
-    else
-      flash[:error] = t(:object_not_updated, :object => t(:account, :scope => [ :authentication ]))
-      render :action => 'edit'
     end
   end
 
@@ -195,11 +183,6 @@ class UsersController < ApplicationController
   
   
   private
-  
-  def load_objects
-    @group = Group.find_by_id(params[:group_id]) if params[:group_id]
-    @user = User.find(params[:id]) if params[:id]
-  end
 
   def load_user_using_perishable_token
     @user = User.find_using_perishable_token(params[:id])

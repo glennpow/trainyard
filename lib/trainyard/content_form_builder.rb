@@ -37,7 +37,7 @@ module Trainyard
         :required => options[:required] || false,
         :error => error_message(field, options[:error])
       }
-      content = @template.render :partial => 'theme/field', :locals => locals
+      content = @template.render :partial => 'layout/field', :locals => locals
       is_erb ? @template.concat(content) : content
     end
   
@@ -47,7 +47,7 @@ module Trainyard
           super(field, options.merge({ :rows => 8 }))
         end)
         if options[:preview]
-          @template.concat(@template.render(:partial => 'theme/text_area_preview_area', :locals => { :text_area_id => "#{object_name}_#{field}" }))
+          @template.concat(@template.render(:partial => 'layout/text_area_preview_area', :locals => { :text_area_id => "#{object_name}_#{field}" }))
         end
       end
     end
@@ -57,7 +57,7 @@ module Trainyard
         :error => error_message(field, options)
       }
       @template.capture do
-        @template.render :partial => 'theme/field_error', :locals => locals
+        @template.render :partial => 'layout/field_error', :locals => locals
       end
     end
 
@@ -114,7 +114,7 @@ module Trainyard
       render_options[:partial] ||= "#{names}/edit"
       render_options[:locals] ||= {}
       render_options[:locals][name.to_sym] = object
-      render_options[:layout] = 'theme/item' if object.is_a?(Array)
+      render_options[:layout] = 'layout/item' if object.is_a?(Array)
 
       @template.content_tag(:div, :class => "form-section #{div_class}") do
         returning('') do |content|
@@ -246,7 +246,7 @@ module Trainyard
       }
       labeled_field(name, options) do
         @template.capture do
-          @template.render :partial => 'theme/rating_select', :locals => locals
+          @template.render :partial => 'layout/rating_select', :locals => locals
         end
       end
     end

@@ -3,7 +3,7 @@ class TrainyardController < ApplicationController
     @text = params[:text]
     
     respond_to do |format|
-      format.html { render :template => 'theme/text_area_preview', :layout => false }
+      format.html { render :template => 'layout/text_area_preview', :layout => false }
     end
   end
 end

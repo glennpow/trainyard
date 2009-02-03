@@ -4,6 +4,6 @@ module LocaleHelper
       :default_locale => current_locale,
       :locales => Locale.find_by_localized_name.map { |locale| [ locale.localized_name, locale.id ] }
     }
-    render :partial => 'theme/session_locale_select', :locals => locals
+    render :partial => 'layout/session_locale_select', :locals => locals
   end
 end

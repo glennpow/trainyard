@@ -153,7 +153,7 @@ module ContentHelper
     end
     
     capture do
-      render :partial => 'theme/rating', :locals => locals
+      render :partial => 'layout/rating', :locals => locals
     end
   end
   

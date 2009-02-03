@@ -7,7 +7,7 @@
   </div>
   <div class="input <%= input_class %>">
     <%= input %>
-    <%= render :partial => 'theme/field_error', :locals => { :error => error } %>
+    <%= render :partial => 'layout/field_error', :locals => { :error => error } %>
   </div>
   <% unless hint.blank? %>
     <div class="hint <%= hint_class %>">
