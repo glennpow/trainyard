@@ -4,11 +4,6 @@ class ArticlesController < ApplicationController
     
     member_actions :erase
     
-    before :show do
-      load_comments(@article)
-      load_reviews(@article)
-    end
-    
     before :new do
       @article.group = @resource.group
       @article.user = current_user

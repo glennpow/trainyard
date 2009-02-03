@@ -1,0 +1,44 @@
+<% title t(:locate, :scope => [ :contacts ]) %>
+
+<% if logged_in? %>
+  <script type="text/javascript">
+    function set_user_address(value) {
+      if (value) {
+        Form.Element.disable('address_street_1')
+        $('address_street_1').value = '<%= current_user.address.street_1 %>'
+        Form.Element.disable('address_street_2')
+        $('address_street_2').value = '<%= current_user.address.street_2 %>'
+        Form.Element.disable('address_city')
+        $('address_city').value = '<%= current_user.address.city %>'
+        Form.Element.disable('address_postal_code')
+        $('address_postal_code').value = '<%= current_user.address.postal_code %>'
+        Form.Element.disable('address_country_id')
+        $('address_country_id').value = '<%= current_user.address.country_id %>'
+        Form.Element.disable('region-select')
+        $('region-select').value = '<%= current_user.address.region_id %>'
+      } else {
+        Form.Element.enable('address_street_1')
+        Form.Element.enable('address_street_2')
+        Form.Element.enable('address_city')
+        Form.Element.enable('address_postal_code')
+        Form.Element.enable('address_country_id')
+        Form.Element.enable('region-select')
+      }
+    }
+
+    Event.observe(window, 'load', function() {
+      set_user_address(true);
+    });
+  </script>
+<% end %>
+
+<% form_for :address, :url => results_vendors_path, :html => { :method => :get } do |f| -%>
+  <% if logged_in? %>
+    <%= check_box_tag(:user_address, "1", true, :onchange => "set_user_address(this.checked)") %>
+    <%=t :use_saved_address, :scope => [ :marketplace ] %>
+  <% end %>
+
+  <%= render :partial => 'addresses/edit', :locals => { :f => f, :address => @address } %>
+
+  <%= f.submit t(:search) %>
+<% end %>

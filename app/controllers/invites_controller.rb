@@ -35,7 +35,7 @@ class InvitesController < ApplicationController
     unless @invite
       logger.error "Invalid Invite Code given."
       flash[:error] = t(:failure_invalid_code, :scope => [ :authentication, :invites, :invitation ])
-      redirect_to intro_path
+      redirect_to root_path
       return
     end
     @user = User.find_by_email(@invite.email)
@@ -43,7 +43,7 @@ class InvitesController < ApplicationController
       if @user != current_user
         logger.error "Invalid User replying to Invite."
         flash[:error] = t(:failure_invalid_user, :scope => [ :authentication, :invites, :invitation ])
-        redirect_to intro_path
+        redirect_to root_path
         return
       end
     else

@@ -21,7 +21,7 @@ module Trainyard
     def not_logged_in_required
       if current_user
         store_location
-        redirect_to account_url
+        redirect_to :back
         return false
       end
     end
@@ -61,12 +61,12 @@ module Trainyard
       check_condition(is_moderator_of?(resource))
     end
 
-    def is_member_of?(resource)
-      logged_in? && current_user.is_member_of?(resource)
+    def is_member_of?(resource, with_child_groups = false)
+      logged_in? && current_user.is_member_of?(resource, with_child_groups)
     end
     
-    def check_member(resource)
-      check_condition(is_member_of?(resource))
+    def check_member(resource, with_child_groups = false)
+      check_condition(is_member_of?(resource, with_child_groups))
     end
     
     def has_permission?(action, resource)
@@ -91,6 +91,24 @@ module Trainyard
     
     def check_viewer(resource)
       check_condition(is_viewer_of?(resource))
+    end
+
+    def current_organization
+      return @current_organization if defined?(@current_organization)
+      current_organization=(session[:current_organization_id] ? Organization.find(session[:current_organization_id]) : nil)
+    end
+
+    def current_organization=(organization)
+      @current_organization = organization
+      session[:current_organization_id] = @current_organization ? @current_organization.id : nil
+    end
+    
+    def current_organization_of(organizable_klass)
+      if self.current_organization && organizable_klass.count(:conditions => { :organization_id => self.current_organization }) > 0
+        return self.current_organization
+      else
+        return nil
+      end
     end
 
     def store_location
@@ -157,9 +175,9 @@ module Trainyard
 
     def self.included(base)
       base.send :filter_parameter_logging, :password, :password_confirmation if base.respond_to? :filter_parameter_logging
-      base.send :helper_method, :current_user_session, :current_user, :logged_in?,
-        :has_role?, :has_administrator_role?, :is_moderator_of?, :is_member_of?,
-        :has_permission?, :is_editor_of?, :is_viewer_of? if base.respond_to? :helper_method
+      base.send :helper_method, :current_user_session, :current_user, :logged_in?, :has_role?, :has_administrator_role?,
+        :is_moderator_of?, :is_member_of?, :has_permission?, :is_editor_of?, :is_viewer_of?,
+        :current_organization, :current_organization_of if base.respond_to? :helper_method
     end
   end
 end

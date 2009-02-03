@@ -1,7 +1,7 @@
 class CreateContact < ActiveRecord::Migration
   def self.up
     create_table :addresses do |t|
-      t.references :contact, :null => false
+      t.references :resource, :polymorphic => true, :null => false
       t.string :street_1, :null => false
       t.string :street_2
       t.string :city, :null => false
@@ -11,18 +11,6 @@ class CreateContact < ActiveRecord::Migration
       t.references :address_type
       t.float :latitude
       t.float :longitude
-      t.timestamps
-    end
-
-    create_table :contacts do |t|
-      t.string :first_name
-      t.string :middle_name
-      t.string :last_name
-      t.references :prefix
-      t.references :suffix
-      t.references :gender
-      t.date :birthdate
-      t.references :resource, :polymorphic => true
       t.timestamps
     end
     
@@ -36,17 +24,29 @@ class CreateContact < ActiveRecord::Migration
     end
 
     create_table :emails do |t|
+      t.references :resource, :polymorphic => true, :null => false
       t.string :email_address, :null => false
       t.references :email_type
-      t.references :resource, :polymorphic => true
+      t.timestamps
+    end
+
+    create_table :personas do |t|
+      t.references :user, :null => false
+      t.string :first_name
+      t.string :middle_name
+      t.string :last_name
+      t.references :prefix
+      t.references :suffix
+      t.references :gender
+      t.date :birthdate
       t.timestamps
     end
     
     create_table :phones do |t|
+      t.references :resource, :polymorphic => true, :null => false
       t.string :number, :null => false
       t.string :extension
       t.references :phone_type
-      t.references :resource, :polymorphic => true
       t.timestamps
     end
 
@@ -59,18 +59,18 @@ class CreateContact < ActiveRecord::Migration
     end
     
     create_table :urls do |t|
+      t.references :resource, :polymorphic => true, :null => false
       t.string :url_address, :null => false
       t.references :url_type
-      t.references :resource, :polymorphic => true
       t.timestamps
     end
   end
 
   def self.down
     drop_table :addresses
-    drop_table :contacts
     drop_table :countries
     drop_table :emails
+    drop_table :personas
     drop_table :phones
     drop_table :regions
     drop_table :urls

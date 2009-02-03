@@ -46,6 +46,7 @@ en:
   reply: Reply
   required: Required
   resource: Resource
+  results: Results
   save: Save
   search: Search
   search_results_for_query: Search results for '{{query}}'
@@ -87,6 +88,7 @@ en:
     moderator: Moderator
     new_password: New Password
     old_password: Old Password
+    organization: Organization
     parent_group: Parent Group
     password: Password
     permission_denied: You don't have permission to complete that action.
@@ -104,8 +106,11 @@ en:
     child_group: Child Group
     actions:
       add_article: Add Article
+      add_organization: Add Organization
       edit: Edit
       view: View
+    groups:
+      failure_invalid_moderator: No moderator could be set for this group.
     invites:
       invitation:
         create_user: Please create an account using the email which received this invitation.  Then login to accept the invite.
@@ -132,6 +137,9 @@ en:
         moderator_invite_accepted_by: "{{user}} has accepted the invite to moderate {{group}}.  You are no longer the moderator."
         moderator_invite_denied_by: "{{user}} has denied the invite to moderate {{group}}."
         failure_invalid_code: Sorry, that is an invalid invite code. (Perhaps this invite has been revoked)
+    organizations:
+      current: Current Organization
+      set_current: Set as Current Organization
     passwords:
       edit:
         constraints: Passwords must be between 4 and 40 characters
@@ -207,6 +215,7 @@ en:
     gender: Gender
     invalid_address: Invalid Address
     last_name: Last Name
+    locate: Locate
     middle_name: Middle Name
     phone: Phone Number
     prefix: Prefix
@@ -214,8 +223,9 @@ en:
     select_a_country_first: Select a country first
     suffix: Suffix
     url: Web Site
-    visible_contact: Visible Contact Information
-    visible_contact_hint: Whether or not your full name and address are publicly viewable
+    personal_details: Personal Details
+    public_contact: Public Contact Information
+    public_contact_hint: Whether or not your full name and address are publicly viewable
     addresses: 
       city: City
       distance: Distance
@@ -326,6 +336,7 @@ en:
       other: Users Watching {{object}}
     video: Video
     watch: Watch
+    watched_object: Watched {{object}}
     watching: Watching
     wiki: Wiki
     view_comments:

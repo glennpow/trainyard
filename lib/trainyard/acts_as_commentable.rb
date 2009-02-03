@@ -7,10 +7,10 @@ module Trainyard
     module MacroMethods
       def acts_as_commentable(*args)
         options = args.extract_options!
-        attribute_name = args.first || :comments
+        comments_name = args.first || :comments
         
         class_eval do
-          has_many attribute_name, options.reverse_merge(:as => :resource, :class_name => 'Comment', :order => 'created_at ASC', :dependent => :destroy)
+          has_many comments_name, options.reverse_merge(:as => :resource, :class_name => 'Comment', :order => 'created_at ASC', :dependent => :destroy)
         end
       end
     end

@@ -29,6 +29,8 @@
   </tr>
 </table>
 
+<hr />
+
 <%= render_heading(t(:settings)) %>
 
 <table class="form-table">
@@ -37,17 +39,25 @@
       <%= f.yes_no_select :mailer_alerts, :label => { :name => t(:mailer_alerts, :scope => [ :content ]) },
         :hint => t(:mailer_alerts_hint, :scope => [ :content ]) %>
     </td>
-    <% if Configuration.users_contact %>
+    <% if Configuration.contactable_users %>
       <td>
-        <%= f.yes_no_select :visible_contact, :label => { :name => t(:visible_contact, :scope => [ :contacts ]) },
-          :hint => t(:visible_contact_hint, :scope => [ :contacts ]) %>
+        <%= f.yes_no_select :public_contact, :label => { :name => t(:public_contact, :scope => [ :contacts ]) },
+          :hint => t(:public_contact_hint, :scope => [ :contacts ]) %>
       </td>
     <% end %>
   </tr>
 </table>
 
-<% unless user.contact.nil? %>
-  <%= render_heading(t(:contact, :scope => [ :contacts ])) %>
-  
-  <%= f.form_for :contact, :render => { :partial => 'contacts/edit', :locals => { :hide_extras => true } } %>
+<% unless user.persona.nil? %>
+  <hr />
+
+  <%= render_heading(t(:personal_details, :scope => [ :contacts ])) %>
+
+  <%= f.form_for :persona, :render => { :partial => 'personas/edit' } %>
+<% end %>
+
+<% if Configuration.contactable_users %>
+  <hr />
+
+  <%= f.contact_form %>
 <% end %>

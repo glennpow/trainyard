@@ -32,8 +32,10 @@
     :actions => [ { :if => user.groups.any?, :allow => link_to(t(:view), user_groups_path(user)) } ]) %>
 <% end %>
 
-<% unless user.contact.blank? || !user.visible_contact %>
-  <%= render_heading(t(:contact, :scope => [ :contacts ])) %>
-  
-  <%= render :partial => 'contacts/show', :locals => { :contact => user.contact } %>
+<% unless user.persona.blank? || !user.public_contact %>
+  <%= render_heading(t(:personal_details, :scope => [ :contacts ])) %>
+
+  <%= render :partial => 'personas/show', :locals => { :persona => user.persona } %>
 <% end %>
+
+<%= render_contact(user) %>

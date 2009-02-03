@@ -1,0 +1,9 @@
+<% title t(:edit_object, :object => t(:organization, :scope => [ :authentication ])) %>
+
+<%= render_heading t(:edit_object, :object => t(:organization, :scope => [ :authentication ])) %>
+
+<% form_for :organization, :url => object_path, :html => { :method => :put, :multipart => true } do |f| %>
+  <%= render :partial => 'edit', :locals => { :f => f, :organization => @organization } %>
+
+  <%= f.submit t(:save) %>
+<% end %>

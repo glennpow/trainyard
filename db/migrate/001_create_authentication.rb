@@ -26,6 +26,17 @@ class CreateAuthentication < ActiveRecord::Migration
     add_index :memberships, [ :group_id, :user_id ]
     add_index :memberships, [ :group_id, :role_id, :user_id ], :unique => true
     
+    create_table :organizations do |t|
+      t.references :group, :null => false
+      t.string :name, :null => false
+      t.text :description
+      t.string :image_file_name
+      t.string :image_content_type
+      t.integer :image_file_size
+      t.datetime :image_updated_at
+      t.timestamps
+    end
+
     create_table :permissions do |t|
       t.references :resource, :polymorphic => true, :null => false
       t.references :action, :null => false
@@ -55,7 +66,7 @@ class CreateAuthentication < ActiveRecord::Migration
       t.integer :posts_count, :default => 0
       t.integer :guru_points, :default => 0
       t.boolean :mailer_alerts, :default => true
-      t.boolean :visible_contact, :default => false
+      t.boolean :public_contact, :default => false
       t.timestamps
     end
     
@@ -69,6 +80,7 @@ class CreateAuthentication < ActiveRecord::Migration
     drop_table :groups
     drop_table :invites
     drop_table :memberships
+    drop_table :organizations
     drop_table :permissions
     drop_table :users
   end

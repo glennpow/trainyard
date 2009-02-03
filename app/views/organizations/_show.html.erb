@@ -1,0 +1,28 @@
+<%= render_field(image_tag(organization.image.url)) %>
+
+<%= render_heading(h(organization.name),
+  :actions => [ is_moderator_of?(organization) ? icon_link_to(:edit, t(:edit), edit_organization_path(organization)) : nil ]) %>
+
+<%= render_field(t(:rating, :scope => [ :content ]), render_rating(organization)) %>
+
+<%= render_field(tp(:review, :scope => [ :content ]), organization.reviews.length,
+  :actions => [ organization.reviews.any? ? link_to(t(:view), organization_reviews_path(organization)) : nil ]) %>
+
+<% unless organization.description.blank? %>
+  <%= render_formatted(h(organization.description)) %>
+<% end %>
+
+<%= render_contact(organization) %>
+
+<% if is_editor_of?(organization) %>
+  <%= render_field(tp(:article, :scope => [ :content ]), organization.articles.length,
+    :actions => [ link_to(t(:view), organization_articles_path(organization)) ]) %>
+<% end %>
+
+<% for_all_by_locale(organization.articles) do |article| %>
+  <%= render_article(article) %>
+<% end %>
+
+<%= render_comments(organization) %>
+
+<%= render_reviews(organization) %>

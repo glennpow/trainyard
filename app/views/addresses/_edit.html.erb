@@ -21,7 +21,7 @@
         { :onchange => "#{ remote_function(:url  => { :controller => 'addresses', :action => "update_regions" }, :with => "'select_id=region-select&text_id=region-text-input&country_id=' + value") }" }) %>
     </td>
     <td>
-      <% regions = address.country ? address.country.regions : [] %>
+      <% regions = address && address.country ? address.country.regions : [] %>
       <%= f.collection_select(:region_id, regions, :id, :name, { :prompt => t(:select_a_country_first, :scope => [ :contacts ]), :required => true }, { :id => 'region-select' }) %>
     </td>
   </tr>

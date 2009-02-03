@@ -1,0 +1,27 @@
+<% unless persona.first_name.blank? %>
+  <%= render_field(t(:first_name, :scope => [ :contacts ]), h(persona.first_name)) %>
+<% end %>
+
+<% unless persona.middle_name.blank? %>
+  <%= render_field(t(:middle_name, :scope => [ :contacts ]), h(persona.middle_name)) %>
+<% end %>
+
+<% unless persona.last_name.blank? %>
+  <%= render_field(t(:last_name, :scope => [ :contacts ]), h(persona.last_name)) %>
+<% end %>
+
+<% if persona.prefix %>
+  <%= render_field(t(:prefix, :scope => [ :contacts ]), e(persona.prefix)) %>
+<% end %>
+
+<% if persona.suffix %>
+  <%= render_field(t(:suffix, :scope => [ :contacts ]), e(persona.suffix)) %>
+<% end %>
+
+<% if persona.gender %>
+  <%= render_field(t(:gender, :scope => [ :contacts ]), e(persona.gender)) %>
+<% end %>
+
+<% if persona.birthdate %>
+  <%= render_field(t(:birthdate, :scope => [ :contacts ]), persona.birthdate.to_s(:long)) %>
+<% end %>

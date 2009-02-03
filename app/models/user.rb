@@ -1,13 +1,17 @@
 class User < ActiveRecord::Base
   acts_as_authentic
-  acts_as_author
-  acts_as_contactable
+  acts_as_contactable if Configuration.contactable_users
 
+  has_one :persona, :dependent => :destroy
   has_many :memberships, :dependent => :destroy
   has_many :groups, :through => :memberships, :order => 'name ASC'
   has_many :moderated_groups, :through => :memberships, :source => :group, :conditions => { "#{Membership.table_name}.role_id" => Role.administrator.id }
   has_many :permissions, :through => :groups
   has_attached_file :image, Configuration.default_image_options
+  belongs_to :locale
+  has_many :messages, :foreign_key => :to_user_id, :order => 'created_at DESC'
+  has_many :sent_messages, :class_name => 'Message', :foreign_key => :from_user_id, :order => 'created_at DESC'
+  has_many :posts, :order => 'created_at DESC'
   has_many :watchings, :dependent => :destroy
 
   validates_attachment_size :image, Configuration.default_image_size_options
@@ -20,7 +24,7 @@ class User < ActiveRecord::Base
   
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :name, :email, :password, :password_confirmation, :time_zone, :image
+  attr_accessible :login, :name, :email, :password, :password_confirmation, :time_zone, :image, :locale_id
 
   def confirm!
     self.update_attribute(:confirmed, true)
@@ -93,16 +97,20 @@ class User < ActiveRecord::Base
     return permitted?(Action.view, resource)
   end
 
-  def groups_of(klass)
-    klass.respond_to?(:find_by_group_id) ? self.groups.map { |group| klass.find_by_group_id(group.id) }.compact : []
+  def membered(*args)
+    ([ args ].flatten).map do |klass|
+      klass.all(:include => { :group => :memberships }, :conditions => { "#{Membership.table_name}.user_id" => self })
+    end.flatten.compact
   end
 
-  def moderated_groups_of(klass)
-    klass.respond_to?(:find_by_group_id) ? self.moderated_groups.map { |group| klass.find_by_group_id(group.id) }.compact : []
+  def moderated(*args)
+    ([ args ].flatten).map do |klass|
+      klass.all(:include => { :group => :memberships }, :conditions => { "#{Membership.table_name}.user_id" => self, "#{Membership.table_name}.role_id" => Role.administrator.id })
+    end.flatten.compact
   end
   
   def identities
-    self.has_administrator_role? ? [ I18n.t(:admin, :scope => [ :authentication, :roles ]) ] : []
+    self.has_administrator_role? ? [ I18n.t(:administrator, :scope => [ :authentication, :roles ]) ] : []
   end
   
   def watched(klass = nil)

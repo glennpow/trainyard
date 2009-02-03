@@ -12,11 +12,11 @@ class Address < ActiveRecord::Base
     end
   end
   
-  belongs_to :contact
+  belongs_to :resource, :polymorphic => true
   belongs_to :region
   belongs_to :country
   
-  validates_presence_of :contact, :street_1, :city, :postal_code, :region, :country
+  validates_presence_of :resource, :street_1, :city, :postal_code, :region, :country
   
   attr_accessor :distance
   

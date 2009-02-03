@@ -12,11 +12,11 @@ common: &common
     :default_style: normal
   default_image_size_options:
     :less_than: 307200
-  users_contact: true
+  contactable_users: true
   users_locale: true
   default_user_config:
     mailer_alerts: true
-    visible_contact: false
+    public_contact: false
   local_article_pages: false
 
 development:

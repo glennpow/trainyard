@@ -7,7 +7,7 @@ class Group < ActiveRecord::Base
   has_many :permissions, :dependent => :destroy
   has_many :invites, :dependent => :destroy
   
-  validates_presence_of :name, :moderator
+  validates_presence_of :name
   validates_uniqueness_of :name, :case_sensitive => false
   
   searches_on :name

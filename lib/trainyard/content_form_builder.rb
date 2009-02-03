@@ -195,6 +195,18 @@ module Trainyard
         page.insert_html :bottom, update.to_sym, content
       end
     end
+    
+    def contact_form(options = {})
+      @template.capture do
+        @template.concat(self.form_for(:address, :header => @template.t(:address, :scope => [ :contacts ]))) unless options[:address] == false
+        @template.concat("<hr />")
+        @template.concat(self.form_for(:emails, :header => @template.tp(:email, :scope => [ :contacts ]))) unless options[:emails] == false
+        @template.concat("<hr />")
+        @template.concat(self.form_for(:phones, :header => @template.tp(:phone, :scope => [ :contacts ]))) unless options[:phones] == false
+        @template.concat("<hr />")
+        @template.concat(self.form_for(:urls, :header => @template.tp(:url, :scope => [ :contacts ]))) unless options[:urls] == false
+      end
+    end
  
     def yes_no_select(name, options = {}, html_options = {})
       select(name, [ [ I18n.t(:yes), true ], [ I18n.t(:no), false ] ], options, html_options)

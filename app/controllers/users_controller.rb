@@ -42,10 +42,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    (@user.contact = Contact.new).address = Address.new if Configuration.users_contact
-    @user_groups = if params[:user_group_ids]
-      params[:user_group_ids].map { |id| Group.find(id, :select => 'id, name') }
-    elsif Configuration.default_user_group_name
+    @user_groups = if Configuration.default_user_group_name
       [ Group.find_by_name(Configuration.default_user_group_name, :select => 'id, name') ]
     else
       []
@@ -83,11 +80,6 @@ class UsersController < ApplicationController
 
   def edit
     @user = current_user
-    if Configuration.users_contact
-      @user.contact ||= Contact.new
-      @user.contact.address ||= Address.new
-      @user.contact.address.errors.clear
-    end
   end
   
   def update

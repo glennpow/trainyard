@@ -1,0 +1,29 @@
+<table class="form-table">
+  <tr>
+    <td>
+      <%= f.text_field :first_name %>
+    </td>
+    <td>
+      <%= f.text_field :middle_name %>
+    </td>
+    <td>
+      <%= f.text_field :last_name %>
+    </td>
+  <tr>
+</table>
+<table class="form-table">
+  </tr>
+    <td>
+      <%= enumeration_select(f, :prefix, { :include_blank => true }) %>
+    </td>
+    <td>
+      <%= enumeration_select(f, :suffix, { :include_blank => true }) %>
+    </td>
+    <td>
+      <%= enumeration_select(f, :gender, { :include_blank => true }) %>
+    </td>
+    <td colspan="2">
+      <%= f.date_select :birthdate, :start_year => 1900, :order => [ :day, :month, :year ], :include_blank => true %>
+    </td>
+  </tr>
+</table>
