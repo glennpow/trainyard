@@ -13,4 +13,10 @@ class Organization < ActiveRecord::Base
   validates_attachment_size :image, Configuration.default_image_size_options
   
   searches_on :name, :description
+  
+  def organizables(*args)
+    ([ args ].flatten).map do |klass|
+      klass.find_all_by_organization_id(self.id)
+    end.flatten
+  end
 end

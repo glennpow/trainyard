@@ -100,13 +100,13 @@ class User < ActiveRecord::Base
   def membered(*args)
     ([ args ].flatten).map do |klass|
       klass.all(:include => { :group => :memberships }, :conditions => { "#{Membership.table_name}.user_id" => self })
-    end.flatten.compact
+    end.flatten
   end
 
   def moderated(*args)
     ([ args ].flatten).map do |klass|
       klass.all(:include => { :group => :memberships }, :conditions => { "#{Membership.table_name}.user_id" => self, "#{Membership.table_name}.role_id" => Role.administrator.id })
-    end.flatten.compact
+    end.flatten
   end
   
   def identities
