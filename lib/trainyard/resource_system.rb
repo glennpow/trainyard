@@ -18,7 +18,8 @@ module Trainyard
           end
     
           after :create_fails do
-            flash[:error] = t(:object_not_created, :object => resourceful_name)
+            flash[:error] = "<p class='error-heading'>#{t(:object_not_created, :object => resourceful_name)}</p>" +
+              @template.render_list(current_object.errors.full_messages)
             logger.warn("Failed to create #{resourceful_name}: #{current_object.errors.full_messages.to_sentence}")
           end
 
@@ -27,7 +28,8 @@ module Trainyard
           end
 
           after :update_fails do
-            flash[:error] = t(:object_not_updated, :object => resourceful_name)
+            flash[:error] = "<p class='error-heading'>#{t(:object_not_updated, :object => resourceful_name)}</p>" +
+              @template.render_list(current_object.errors.full_messages)
             logger.warn("Failed to update #{resourceful_name}: #{current_object.errors.full_messages.to_sentence}")
           end
 
@@ -46,7 +48,7 @@ module Trainyard
     end
 
     def resourceful_name
-      "Resource"
+      t(:resource)
     end
   
     def save_all(*resources)

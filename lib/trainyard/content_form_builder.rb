@@ -1,10 +1,38 @@
 module Trainyard
   class ContentFormBuilder < ActionView::Helpers::FormBuilder
+    attr_accessor :object_class, :object_array
+    
     def initialize(object_name, object, template, options, proc)
       object ||= template.instance_variable_get("@#{object_name}") unless object_name =~ /[\[\]]/
       super
+      @object_class = @object ? @object.class : options[:object_class]
+      @object_array = @object ? @object.is_a?(Array) : (options[:object_array] || false)
+    end
+
+  
+    private
+
+    def nested_attributes_association?(association_name)
+      @object_class.instance_methods.include?("#{association_name}_attributes=")
     end
   
+    def fields_for_with_nested_attributes(association_name, args, block)
+      options = args.extract_options!
+      args << options
+      
+      if @object
+        super(association_name, args, block)
+      else
+        unless options[:object_array]
+          name = "#{object_name}[#{association_name}_attributes]"
+          @template.fields_for(name, *args, &block)
+        end
+      end
+    end
+    
+    
+    public
+
     helpers = field_helpers +
       %w(date_select datetime_select time_select collection_select) +
       %w(collection_select select country_select time_zone_select) -
@@ -47,7 +75,8 @@ module Trainyard
           super(field, options.merge({ :rows => 8 }))
         end)
         if options[:preview]
-          @template.concat(@template.render(:partial => 'layout/text_area_preview_area', :locals => { :text_area_id => "#{object_name}_#{field}" }))
+          label = (options[:label] || {})[:name] || field.to_s.humanize
+          @template.concat(@template.render(:partial => 'layout/text_area_preview_area', :locals => { :text_area_id => "#{object_name}_#{field}", :label => label }))
         end
       end
     end
@@ -75,18 +104,24 @@ module Trainyard
     end
 
     def form_for(record_or_name_or_array, *args)
-      options = args.detect { |argument| argument.is_a?(Hash) }
-      if options.nil?
-        options = {}
-        args << options
-      end
+      options = args.extract_options!
+      args << options
 
       case record_or_name_or_array
       when String, Symbol
         name = record_or_name_or_array.to_s
-        object = (args.first unless args.first.is_a?(Hash)) || self.object.send(record_or_name_or_array)
-        klass = self.object.class.reflect_on_association(name.to_sym).klass
-        if object.is_a?(Array)
+
+        object = (args.first unless args.first.is_a?(Hash)) || (self.object ? self.object.send(record_or_name_or_array) : nil)
+        #klass = self.object.class.reflect_on_association(name.to_sym).klass
+        if object
+          klass = object.class
+          is_array = object.is_a?(Array)
+        else
+          reflection = @object_class.reflect_on_association(name.to_sym)
+          klass = reflection.klass
+          object = [] if is_array = (reflection.macro == :has_many)
+        end
+        if is_array
           names = name
           name = names.singularize
           div_class = "#{names}-form"
@@ -96,7 +131,8 @@ module Trainyard
         end
       else
         object = record_or_name_or_array
-        if object.is_a?(Array)
+        klass = object.class
+        if is_array = object.is_a?(Array)
           name = ActionController::RecordIdentifier::singular_class_name(object.last)
           names = name.pluralize
           div_class = "#{names}-form"
@@ -105,90 +141,54 @@ module Trainyard
           names = name.pluralize
           div_class = "#{name}-form"
         end
-        klass = object.class
       end
+      
+      heading = options.delete(:heading)
     
-      header = options.delete(:header)
-    
+      options[:object_class] = klass
+      options[:object_array] = is_array
+      
       render_options = options.delete(:render) || {}
       render_options[:partial] ||= "#{names}/edit"
       render_options[:locals] ||= {}
       render_options[:locals][name.to_sym] = object
-      render_options[:layout] = 'layout/item' if object.is_a?(Array)
-
-      @template.content_tag(:div, :class => "form-section #{div_class}") do
-        returning('') do |content|
-          if header
-            content << @template.render_heading(header, :actions => [ {
-              :if => object.is_a?(Array),
-              :allow => create_link(klass, render_options.deep_dup, :name => name, :names => names, :label => @template.icon_label(:add, @template.t(:add)))
-              } ])
-          end
-          if object.is_a?(Array)
-            options[:index] = ''
-            content << @template.content_tag(:div, :id => "#{names}") do
-              returning('') do |div_content|
-                object.each do |element|
-                  fields_for(names, element, *args) do |f|
-                    render_options[:locals][name.to_sym] = element
-                    render_options[:locals][:f] = f
-                    div_content << @template.render(render_options.deep_dup)
-                  end
-                end
-              end
-            end
-            content << create_link(klass, render_options.deep_dup, :name => name, :names => names) unless header
-          else
-            fields_for(name, object, *args) do |f|
-              render_options[:locals][:f] = f
-              content << @template.render(render_options.deep_dup)
-            end
-          end
+      render_options[:layout] = 'layout/item' if is_array
+    
+      @template.concat("<div class='form-section #{div_class}'>")
+      if heading
+        @template.concat("<hr />")
+        @template.concat(@template.render_heading(heading, :actions => [ is_array ?
+          create_link(klass, render_options.deep_dup, :name => name, :names => names, :label => @template.icon_label(:add, @template.t(:add))) : nil ]))
+      end
+      if is_array
+        @template.concat("<div id='#{names}'>")
+        fields_for(record_or_name_or_array, *args) do |f|
+          render_options[:locals][:f] = f
+          @template.concat(@template.render(render_options.deep_dup))
+        end
+        @template.concat("</div>")
+        @template.concat(create_link(klass, render_options.deep_dup, :name => name, :names => names)) unless heading
+      else
+        fields_for(record_or_name_or_array, *args) do |f|
+          render_options[:locals][:f] = f
+          @template.concat(@template.render(render_options.deep_dup))
         end
       end
-    end
-  
-    def fields_for(record_or_name_or_array, *args, &block)
-      # FIXME - this is to solve mass-assign updating of collections...  (fix when Rails handles this properly)
-      #if options.has_key?(:index)
-      #  index = "[#{options[:index]}]"
-      #elsif defined?(@auto_index)
-      #  self.object_name = @object_name.to_s.sub(/\[\]$/,"")
-      #  index = "[#{@auto_index}]"
-      #else
-        index = ""
-      #end
-
-      case record_or_name_or_array
-      when String, Symbol
-        object = (args.first unless args.first.is_a?(Hash)) || self.object.send(record_or_name_or_array)
-        name = "#{object_name}#{index}[#{record_or_name_or_array}]"
-        args.unshift(object) unless args.include?(object)
-      when Array
-        object = record_or_name_or_array.last
-        name = "#{object_name}#{index}[#{ActionController::RecordIdentifier.singular_class_name(object)}]"
-        args.unshift(object)
-      else
-        object = record_or_name_or_array
-        name = "#{object_name}#{index}[#{ActionController::RecordIdentifier.singular_class_name(object)}]"
-        args.unshift(object)
-      end
-      @template.fields_for(name, *args, &block)
+      @template.concat("</div>")
     end
    
     def create_link(record_class, render_options, options = {})
-      element = record_class.new
       name = options[:name] || ActionController::RecordIdentifier.singular_class_name(record)
       names = options[:names] || name.pluralize
       update = options[:update] || names
       label = options[:label] || I18n.t(:add_object, :object => name.capitalize)
       args = options[:args] || []
     
-      content = ''
-      fields_for("#{names}[]", element, *args) do |f|
-        render_options[:locals][name.to_sym] = element
-        render_options[:locals][:f] = f
-        content << @template.render(render_options.deep_dup)
+      content = @template.capture do
+        @template.fields_for("#{object_name}[#{names}_attributes][#{new_child_id}]", *args) do |f|
+          render_options[:locals][:f] = f
+          @template.concat @template.render(render_options.deep_dup)
+        end
       end
     
       @template.link_to_function label do |page|
@@ -197,15 +197,10 @@ module Trainyard
     end
     
     def contact_form(options = {})
-      @template.capture do
-        @template.concat(self.form_for(:address, :header => @template.t(:address, :scope => [ :contacts ]))) unless options[:address] == false
-        @template.concat("<hr />")
-        @template.concat(self.form_for(:emails, :header => @template.tp(:email, :scope => [ :contacts ]))) unless options[:emails] == false
-        @template.concat("<hr />")
-        @template.concat(self.form_for(:phones, :header => @template.tp(:phone, :scope => [ :contacts ]))) unless options[:phones] == false
-        @template.concat("<hr />")
-        @template.concat(self.form_for(:urls, :header => @template.tp(:url, :scope => [ :contacts ]))) unless options[:urls] == false
-      end
+      form_for(:address, :heading => @template.t(:address, :scope => [ :contacts ])) unless options[:address] == false
+      form_for(:emails, :heading => @template.tp(:email, :scope => [ :contacts ])) unless options[:emails] == false
+      form_for(:phones, :heading => @template.tp(:phone, :scope => [ :contacts ])) unless options[:phones] == false
+      form_for(:urls, :heading => @template.tp(:url, :scope => [ :contacts ])) unless options[:urls] == false
     end
  
     def yes_no_select(name, options = {}, html_options = {})

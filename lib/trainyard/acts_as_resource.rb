@@ -25,7 +25,7 @@ module Trainyard
               belongs_to :group, group_options.reverse_merge(:class_name => 'Group')
 
               if group_options[:dependent] == :destroy
-                has_accessible :group
+                accepts_nested_attributes_for :group, :allow_destroy => true
 
                 attr_writer :moderator
   
@@ -39,16 +39,15 @@ module Trainyard
                   @parent_group ||= self.group.parent_group
                 end
     
-                before_create :create_dependent_group
+                before_validation_on_create :create_dependent_group
+                after_create :assign_dependent_group_moderator
 
   
                 private
   
                 def create_dependent_group
                   if self.moderator
-                    if self.group = Group.create(:name => self.name, :parent_group => self.parent_group)
-                      self.moderator.assign_role!(Role.administrator, self.group)
-                      self.moderator.assign_role!(Role.editor, self.group)
+                    if self.group = Group.new(:name => self.name, :parent_group => self.parent_group)
                       true
                     else
                       errors.add(:group, self.group.errors.full_messages.to_sentence) 
@@ -58,6 +57,11 @@ module Trainyard
                     errors.add(:moderator, t(:failure_invalid_moderator, :scope => [ :authentication, :groups ]))
                     false
                   end
+                end
+                
+                def assign_dependent_group_moderator
+                  self.moderator.assign_role!(Role.administrator, self.group)
+                  self.moderator.assign_role!(Role.editor, self.group)
                 end
               end
             end

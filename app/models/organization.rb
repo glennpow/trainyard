@@ -3,6 +3,7 @@ class Organization < ActiveRecord::Base
   acts_as_contactable
   acts_as_commentable
   acts_as_reviewable
+  acts_as_mappable :through => :address
 
   has_attached_file :image, Configuration.default_image_options
   has_many_articles

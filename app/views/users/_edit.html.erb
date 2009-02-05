@@ -18,7 +18,7 @@
     <td>
       <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
     </td>
-    <% if user.image? %>
+    <% if user.try(:image?) %>
       <td>
         <div class="form-element"><%= image_tag(user.image.url(:thumb)) %></div>
       </td>
@@ -48,16 +48,8 @@
   </tr>
 </table>
 
-<% unless user.persona.nil? %>
-  <hr />
-
-  <%= render_heading(t(:personal_details, :scope => [ :contacts ])) %>
-
-  <%= f.form_for :persona, :render => { :partial => 'personas/edit' } %>
-<% end %>
+<% f.form_for :persona, :heading => t(:personal_details, :scope => [ :contacts ]) %>
 
 <% if Configuration.contactable_users %>
-  <hr />
-
-  <%= f.contact_form %>
+  <% f.contact_form %>
 <% end %>

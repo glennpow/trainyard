@@ -153,7 +153,7 @@ en:
       forgot:
         confirm_email: What is the email address used to create your account?
         email_body: |
-          {{login}}, A request to reset your password has been made.
+          {{name}}, A request to reset your password has been made.
           If you did not make this request, simply ignore this email.
           If you did make this request just click the link below:
             
@@ -179,7 +179,7 @@ en:
     users:
       confirm:
         email_body: |
-          {{login}}, your account has been confirmed.
+          {{name}}, your account has been confirmed.
           To visit the site, follow the link below:
             
             {{url}}
@@ -216,6 +216,7 @@ en:
     invalid_address: Invalid Address
     last_name: Last Name
     locate: Locate
+    locate_object: Locate {{object}}
     middle_name: Middle Name
     phone: Phone Number
     prefix: Prefix
@@ -237,6 +238,7 @@ en:
       region: State / Province
       street: Street
       street_2: "Apt / Room #"
+      use_saved_address: Use your saved address?
     address_types: 
       po_box: P.O. Box
       billing: Billing

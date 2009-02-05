@@ -12,9 +12,10 @@ module Trainyard
         class_eval do
           belongs_to organization_name, options.reverse_merge(:class_name => 'Organization')
           
-          validates_presence_of organization_name
+          # FIXME - This doesn't work currently for nested model saving
+          #validates_presence_of organization_name
 
-          has_accessible organization_name
+          accepts_nested_attributes_for organization_name
         end
       end
     end

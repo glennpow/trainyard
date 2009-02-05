@@ -14,10 +14,8 @@
 
 <%= render_contact(organization) %>
 
-<% if is_editor_of?(organization) %>
-  <%= render_field(tp(:article, :scope => [ :content ]), organization.articles.length,
-    :actions => [ link_to(t(:view), organization_articles_path(organization)) ]) %>
-<% end %>
+<%= render_heading(tp(:article, :scope => [ :content ]), :actions =>
+  is_editor_of?(organization) ? link_to(t(:view), organization_articles_path(organization)) : nil) %>
 
 <% for_all_by_locale(organization.articles) do |article| %>
   <%= render_article(article) %>

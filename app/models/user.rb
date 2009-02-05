@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   acts_as_contactable if Configuration.contactable_users
 
   has_one :persona, :dependent => :destroy
+  accepts_nested_attributes_for :persona, :allow_destroy => true
   has_many :memberships, :dependent => :destroy
   has_many :groups, :through => :memberships, :order => 'name ASC'
   has_many :moderated_groups, :through => :memberships, :source => :group, :conditions => { "#{Membership.table_name}.role_id" => Role.administrator.id }
@@ -23,8 +24,8 @@ class User < ActiveRecord::Base
   before_save :check_name
   
   # prevents a user from submitting a crafted form that bypasses activation
-  # anything else you want your user to change should be added here.
-  attr_accessible :login, :name, :email, :password, :password_confirmation, :time_zone, :image, :locale_id
+  # anything else you don't want your user to change should be added here.
+  attr_protected :crypted_password, :password_salt, :persistence_token, :perishable_token, :current_login_at, :confirmed, :active, :posts_count, :guru_points
 
   def confirm!
     self.update_attribute(:confirmed, true)
@@ -69,7 +70,7 @@ class User < ActiveRecord::Base
   end
   
   def assign_role!(role, group = nil)
-    Membership.create(:user_id => self.id, :role_id => role.id, :group_id => group) unless self.has_role?(role, group)
+    Membership.create(:user_id => self.id, :role_id => role.id, :group => group) unless self.has_role?(role, group)
   end
   
   def is_moderator_of?(resource)

@@ -1,13 +1,9 @@
 class Address < ActiveRecord::Base
   if defined?(Geokit)
-    acts_as_mappable :lat_column_name => :latitude, :lng_column_name => :longitude
+    #acts_as_mappable :lat_column_name => :latitude, :lng_column_name => :longitude
 
     before_update do |record|
-      geo = Geokit::Geocoders::MultiGeocoder.geocode(self.full_address)
-      if geo.success
-        self.latitude = geo.lat
-        self.longitude = geo.lng
-      end
+      record.locate
       true
     end
   end
@@ -16,7 +12,9 @@ class Address < ActiveRecord::Base
   belongs_to :region
   belongs_to :country
   
-  validates_presence_of :resource, :street_1, :city, :postal_code, :region, :country
+  # FIXME - This doesn't work currently for nested model saving
+  #validates_presence_of :resource
+  validates_presence_of :street_1, :city, :postal_code, :region, :country
   
   attr_accessor :distance
   
@@ -38,7 +36,7 @@ class Address < ActiveRecord::Base
   
   def locate
     if defined?(Geokit)
-      geo = self.geocode(self.full_address)
+      geo = Geokit::Geocoders::MultiGeocoder.geocode(self.full_address)
       if geo.success
         self.latitude = geo.lat
         self.longitude = geo.lng

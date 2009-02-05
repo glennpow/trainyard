@@ -87,6 +87,14 @@ ul {
   border: 1px solid #f00;
 }
 
+.flash.error .error-heading {
+  font-weight: bold;
+}
+
+.flash.error li {
+  margin-left: 20px;
+}
+
 .small {
   font-size: smaller;
 }
@@ -220,7 +228,7 @@ table.item-table td {
 }
 
 .formatted {
-  text-align: left;
+  text-align: center;
 }
 
 .image-label-link {

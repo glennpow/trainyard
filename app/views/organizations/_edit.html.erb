@@ -1,6 +1,6 @@
 <%= f.text_field :name, :required => true %>
 
-<% if organization.image? %>
+<% if organization.try(:image?) %>
   <%= render_field(image_tag(vendor.image.url)) %>
 <% end %>
 
@@ -8,4 +8,4 @@
 
 <%= f.text_area :description, :required => true, :preview => true, :hint => link_to_textile_hint %>
 
-<%= f.contact_form %>
+<% f.contact_form %>

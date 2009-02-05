@@ -4,7 +4,9 @@
 
 <%= render_field(t(:group, :scope => [ :authentication ]), link_to_resource(page.group)) %>
 
-<% if is_editor_of?(page) %>
-  <%= render_field(tp(:article, :scope => [ :content ]), page.articles.length,
-    :actions => [ { :allow => link_to(t(:view), page_articles_path(page)) } ]) %>
+<%= render_heading(tp(:article, :scope => [ :content ]), :actions =>
+  is_editor_of?(page) ? link_to(t(:view), page_articles_path(page)) : nil) %>
+
+<% for_all_by_locale(page.articles) do |article| %>
+  <%= render_article(article) %>
 <% end %>

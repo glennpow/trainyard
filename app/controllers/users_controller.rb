@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     end
     
     after :create do
-      Membership.create(:user_id => @user, :role_id => Role.user.id, :group_id => params[:user_group_id]) if params[:user_group_id]
+      Membership.create(:user => @user, :role_id => Role.user.id, :group_id => params[:user_group_id]) if params[:user_group_id]
       @user.confirm! unless Configuration.email_activation
     end
     
@@ -32,6 +32,10 @@ class UsersController < ApplicationController
     response_for :update do |format|
       format.html { redirect_to :action => 'show', :id => current_user }
     end
+  end
+  
+  def resourceful_name
+    t(:user, :scope => [ :authentication ])
   end
   
   before_filter :load_user_using_perishable_token, :only => [ :confirm, :reset_password, :update_reset_password ]

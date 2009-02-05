@@ -16,9 +16,7 @@ module Trainyard
           class_eval do
             has_one address_name, address_options.reverse_merge(:as => :resource, :class_name => 'Address', :dependent => :destroy)
 
-            has_accessible address_name
-
-            attr_accessible address_name
+            accepts_nested_attributes_for address_name, :allow_destroy => true
           end
         end
         
@@ -30,9 +28,7 @@ module Trainyard
           class_eval do
             has_many emails_name, emails_options.reverse_merge(:as => :resource, :class_name => 'Email', :dependent => :destroy)
 
-            has_accessible emails_name
-
-            attr_accessible emails_name
+            accepts_nested_attributes_for emails_name, :allow_destroy => true
           end
         end
         
@@ -44,9 +40,7 @@ module Trainyard
           class_eval do
             has_many phones_name, phones_options.reverse_merge(:as => :resource, :class_name => 'Phone', :dependent => :destroy)
 
-            has_accessible phones_name
-
-            attr_accessible phones_name
+            accepts_nested_attributes_for phones_name, :allow_destroy => true
           end
         end
         
@@ -58,9 +52,7 @@ module Trainyard
           class_eval do
             has_many urls_name, urls_options.reverse_merge(:as => :resource, :class_name => 'Url', :dependent => :destroy)
 
-            has_accessible urls_name
-
-            attr_accessible urls_name
+            accepts_nested_attributes_for urls_name, :allow_destroy => true
           end
         end
       end

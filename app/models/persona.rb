@@ -4,7 +4,8 @@ class Persona < ActiveRecord::Base
   has_enumeration :suffix
   has_enumeration :gender
   
-  validates_presence_of :user
+  # FIXME - This doesn't work currently for nested model saving
+  #validates_presence_of :user
 
   searches_on :first_name, :middle_name, :last_name
   

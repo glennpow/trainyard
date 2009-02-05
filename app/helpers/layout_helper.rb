@@ -1,4 +1,4 @@
-module ThemeHelper
+module LayoutHelper
   def merge_classes(*args)
     args.join(' ')
   end
@@ -103,7 +103,7 @@ module ThemeHelper
   
   def render_list(values, options = {})
     list_type = options.delete(:ordered) ? :ol : :ul
-    content_tag list_type, options do
+    content_tag(list_type, options) do
       values.map { |value| content_tag :li, value, :class => (value == values.first ? 'first' : nil) }
     end
   end

@@ -3,7 +3,7 @@
 <%= render_heading(t(:create_object, :object => t(:user, :scope => [ :authentication ]))) %>
 
 <% form_for :user, :url => users_path, :html => { :multipart => true } do |f| -%>
-  <%= render :partial => 'new', :locals => { :f => f, :user => @user, :user_groups => @user_groups } %>
+  <%= render :partial => 'new', :locals => { :f => f, :user => @user } %>
 
   <%= f.submit t(:join, :scope => [ :authentication ]) %>
 <% end -%>

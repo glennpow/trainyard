@@ -1,16 +1,19 @@
 class AddressesController < ApplicationController
+  before_filter :check_resource_type, :only => [ :locate, :locate_results ]
   before_filter :check_address, :only => [ :locate_results ]
 
   def update_regions
-    select_id = params[:select_id]
-    country = Country.find(params[:country_id])
-    regions = country.regions
-
     render :update do |page|
-      if regions.any?
-        page.replace_html select_id, :partial => 'regions', :locals => { :regions => regions }
-      else
-        page.replace_html select_id, ""
+      unless params[:select_id].blank? || params[:country_id].blank?
+        select_id = params[:select_id]
+        country = Country.find(params[:country_id])
+        regions = country.regions
+
+        if regions.any?
+          page.replace_html select_id, :partial => 'regions', :locals => { :regions => regions }
+        else
+          page.replace_html select_id, ""
+        end
       end
     end
   end
@@ -25,24 +28,27 @@ class AddressesController < ApplicationController
   end
   
   def locate_results
-    respond_with_indexer(Address) do |options|
-      options[:per_page] ||= 10
-      options[:as] = :organization
-      options[:row] = 'organizations/results_row'
+    resource_name = ActionController::RecordIdentifier::singular_class_name(@resource_type)
+    resource_names = ActionController::RecordIdentifier::plural_class_name(@resource_type)
     
+    respond_with_indexer(Address) do |options|
+      options[:as] = resource_name
+      options[:row] = "#{resource_names}/row"
+
       options[:origin] = [ @latitude.to_f, @longitude.to_f ]
       options[:order] = 'distance ASC'
       options[:within] = params[:within] if params[:within]
-      options[:conditions] = [ "#{Address.table_name}.resource_type = ?", 'Organization' ]
-      options[:post_process] = Proc.new do |collection|
-        collection.map! { |address| address.resource }
-#        collection.each { |resource| resource.address.distance = resource.address.distance_to(options[:origin]) }
-      end
+      options[:conditions] = [ "#{Address.table_name}.resource_type = ?", @resource_type ]
+      options[:post_process] = Proc.new { |collection| collection.map!(&:resource) }
     end
   end
   
   
   private
+  
+  def check_resource_type
+    check_condition(@resource_type = params[:resource_type])
+  end
   
   def check_address
     @latitude = nil
