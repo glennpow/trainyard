@@ -344,6 +344,10 @@ table.profile-table td {
   min-height: 84px;
 }
 
+.listed-table {
+  border-spacing: 5px;
+}
+
 .listed-image {
   margin-right: 5px;
   float: left;

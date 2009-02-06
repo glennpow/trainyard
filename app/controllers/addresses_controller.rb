@@ -28,16 +28,15 @@ class AddressesController < ApplicationController
   end
   
   def locate_results
-    resource_name = ActionController::RecordIdentifier::singular_class_name(@resource_type)
-    resource_names = ActionController::RecordIdentifier::plural_class_name(@resource_type)
-    
     respond_with_indexer(Address) do |options|
-      options[:as] = resource_name
-      options[:row] = "#{resource_names}/row"
+      options[:per_page] ||= 10
+      options[:as] = :resource
+      options[:row] = "addresses/locate_row"
+      options[:no_table] = true
 
       options[:origin] = [ @latitude.to_f, @longitude.to_f ]
-      options[:order] = 'distance ASC'
-      options[:within] = params[:within] if params[:within]
+      options[:order] = "#{Address.distance_column_name} ASC"
+      options[:within] = params[:within]
       options[:conditions] = [ "#{Address.table_name}.resource_type = ?", @resource_type ]
       options[:post_process] = Proc.new { |collection| collection.map!(&:resource) }
     end

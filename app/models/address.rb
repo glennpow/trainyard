@@ -1,6 +1,6 @@
 class Address < ActiveRecord::Base
   if defined?(Geokit)
-    #acts_as_mappable :lat_column_name => :latitude, :lng_column_name => :longitude
+    acts_as_mappable :lat_column_name => :latitude, :lng_column_name => :longitude
 
     before_update do |record|
       record.locate

@@ -1,0 +1,18 @@
+<div class="locate listed">
+  <table class="listed-table full-width">
+    <tr>
+      <td class="column-top listed-descriptor">
+        <% if resource.respond_to?(:image) %>
+          <%= image_link_to(resource.image.url(:thumb), resource.name, resource, :hide_label => true) %>
+        <% end %>
+        <p class="listed-info"><%= link_to_resource(resource) %></p>
+      </td>
+  
+      <td class="column-top">
+        <%= render_field(t(:address, :scope => [ :contacts ]), resource.address.full_address) %>
+
+        <%= render_field(t(:distance, :scope => [ :contacts, :addresses ]), resource.address.distance) %>
+      </td>
+    </tr>
+  </table>
+</div>
