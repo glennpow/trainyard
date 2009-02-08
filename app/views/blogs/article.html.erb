@@ -17,17 +17,15 @@
         <%= render_article(@article) %>
 
         <% if is_commentable?(@article) %>
-          <%= render_heading(link_to(tp(:comment, :scope => [ :content ]), article_comments_path(@article)), :actions => [
-            { :allow => link_to(t(:post_comment, :scope => [ :content ]), new_article_comment_path(@article)) }
-            ]) %>
+          <%= render_heading(link_to(tp(:comment, :scope => [ :content ]), article_comments_path(@article)),
+            :actions => link_to(t(:post_comment, :scope => [ :content ]), new_article_comment_path(@article))) %>
 
           <%= render_indexer(@comments_indexer) %>
         <% end %>
 
         <% if is_reviewable?(@article) %>
-          <%= render_heading(link_to(tp(:review, :scope => [ :content ]), article_reviews_path(@article)), :actions => [
-            { :if => !logged_in? || may_review?(@article), :allow => link_to(t(:post_review, :scope => [ :content ]), new_article_review_path(@article)) }
-            ]) %>
+          <%= render_heading(link_to(tp(:review, :scope => [ :content ]), article_reviews_path(@article)), :actions =>
+            (!logged_in? || may_review?(@article)) ? link_to(t(:post_review, :scope => [ :content ]), new_article_review_path(@article)) : nil) %>
 
           <%= render_indexer(@reviews_indexer) %>
         <% end %>

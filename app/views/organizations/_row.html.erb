@@ -5,8 +5,7 @@
     link_to_resource(organization),
     organization.moderators.map { |moderator| link_to_user(moderator) }.to_sentence,
   ],
-  :actions => [
-    { :if => is_moderator_of?(organization), :allow => [
-      icon_link_to(:edit, t(:edit), edit_object_path(organization)),
-      icon_link_to(:delete, t(:delete), organization, :confirm => t(:are_you_sure), :method => :delete)
-    ] } ]) %>
+  :actions => is_moderator_of?(organization) ? [
+    icon_link_to(:edit, t(:edit), edit_object_path(organization)),
+    icon_link_to(:delete, t(:delete), organization, :confirm => t(:are_you_sure), :method => :delete)
+  ] : nil) %>

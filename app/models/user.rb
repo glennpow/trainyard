@@ -1,10 +1,11 @@
 class User < ActiveRecord::Base
   acts_as_authentic
   acts_as_contactable if Configuration.contactable_users
+  acts_as_organizer
 
   has_one :persona, :dependent => :destroy
   accepts_nested_attributes_for :persona, :allow_destroy => true
-  has_many :memberships, :dependent => :destroy
+  has_many :memberships, :order => 'group_id ASC', :dependent => :destroy
   has_many :groups, :through => :memberships, :order => 'name ASC'
   has_many :moderated_groups, :through => :memberships, :source => :group, :conditions => { "#{Membership.table_name}.role_id" => Role.administrator.id }
   has_many :permissions, :through => :groups
@@ -108,10 +109,6 @@ class User < ActiveRecord::Base
     ([ args ].flatten).map do |klass|
       klass.all(:include => { :group => :memberships }, :conditions => { "#{Membership.table_name}.user_id" => self, "#{Membership.table_name}.role_id" => Role.administrator.id })
     end.flatten
-  end
-  
-  def identities
-    self.has_administrator_role? ? [ I18n.t(:administrator, :scope => [ :authentication, :roles ]) ] : []
   end
   
   def watched(klass = nil)

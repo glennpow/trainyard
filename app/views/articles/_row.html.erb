@@ -8,8 +8,7 @@
     article.updated_at.to_s(:long),
     h(article.locale_name),
   ],
-  :actions => [
-    { :if => is_editor_of?(article), :allow => [
-      icon_link_to(:edit, t(:edit), edit_object_path(article)),
-      icon_link_to(:delete, t(:delete), article, :confirm => t(:are_you_sure), :method => :delete)
-    ] } ]) %>
+  :actions => is_editor_of?(article) ? [
+    icon_link_to(:edit, t(:edit), edit_object_path(article)),
+    icon_link_to(:delete, t(:delete), article, :confirm => t(:are_you_sure), :method => :delete)
+  ] : nil) %>

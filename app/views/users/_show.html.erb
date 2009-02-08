@@ -2,10 +2,6 @@
 
 <%= render_heading(h(user.name)) %>
 
-<% unless (identities = user.identities.to_sentence).blank? %>
-  <%= render_field(identities) %>
-<% end %>
-
 <% if has_administrator_role? %>
   <%= render_field(t(:login, :scope => [ :authentication ]), h(user.login)) %>
 <% end %>
@@ -24,13 +20,18 @@
   <%= render_heading(t(:administer_object, :scope => [ :authentication ], :object => h(user.name))) %>
 
   <%= render_field(t(:status), user.active? ? t(:enabled) : t(:disabled),
-    :actions => [ { :if => (user != current_user), :allow => (user.active? ?
+    :actions => user != current_user ? [ user.active? ?
       link_to(t(:disable), user, :confirm => t(:are_you_sure), :method => :delete) :
-      link_to(t(:enable), enable_user_path(user), :method => :put) ) } ]) %>
+      link_to(t(:enable), enable_user_path(user), :method => :put) ] : nil) %>
 
   <%= render_field(tp(:group, :scope => [ :authentication ]), user.groups.map { |group| link_to_resource(group) },
-    :actions => [ { :if => user.groups.any?, :allow => link_to(t(:view), user_groups_path(user)) } ]) %>
+    :actions => user.groups.any? ? link_to(t(:view), user_groups_path(user)) : nil) %>
 <% end %>
+
+<%= render_field(tp(:group, :scope => [ :authentication ]),
+  user.memberships.map { |membership| membership.group.nil? ?
+    "#{Configuration.application_name} (#{membership.role.name})" :
+    "#{link_to_resource(membership.group)} (#{membership.role.name})" }) %>
 
 <% unless user.persona.blank? || !user.public_contact %>
   <%= render_heading(t(:personal_details, :scope => [ :contacts ])) %>

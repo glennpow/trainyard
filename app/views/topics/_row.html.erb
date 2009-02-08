@@ -7,8 +7,7 @@
     topic.hits,
     topic.replied_at.to_s(:short)
   ],
-  :actions => [
-    { :if => has_administrator_role?, :allow => [
-      icon_link_to(:edit, t(:edit), edit_topic_path(topic)),
-      icon_link_to(:delete, t(:delete), topic, :confirm => t(:are_you_sure), :method => :delete)
-    ] } ]) %>
+  :actions => has_administrator_role? ? [
+    icon_link_to(:edit, t(:edit), edit_topic_path(topic)),
+    icon_link_to(:delete, t(:delete), topic, :confirm => t(:are_you_sure), :method => :delete)
+  ] : nil) %>

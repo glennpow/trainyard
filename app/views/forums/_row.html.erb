@@ -7,11 +7,11 @@
     forum.posts_count,
   ],
   :actions => [
-    { :if => is_moderator_of?(forum), :allow => [
+    is_moderator_of?(forum) ? [
       icon_link_to(:edit, t(:edit), edit_object_path(forum)),
       icon_link_to(:delete, t(:delete), forum, :confirm => t(:are_you_sure), :method => :delete)
-    ] },
-    { :if => has_administrator_role?, :allow => [
+    ] : nil,
+    has_administrator_role? ? [
       icon_link_to(:move_up, t(:move_up, :scope => [ :content ]), move_up_forum_path(forum), :method => :post),
       icon_link_to(:move_down, t(:move_down, :scope => [ :content ]), move_down_forum_path(forum), :method => :post),
-    ] } ]) %>
+    ] : nil ]) %>

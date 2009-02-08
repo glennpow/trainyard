@@ -6,8 +6,7 @@
     h(page.permalink),
     link_to_resource(page.group),
   ],
-  :actions => [
-    { :if => is_editor_of?(page), :allow => [
-      icon_link_to(:edit, t(:edit), edit_object_path(page)),
-      icon_link_to(:delete, t(:delete), page, :confirm => t(:are_you_sure), :method => :delete)
-    ] } ]) %>
+  :actions => is_editor_of?(page) ? [
+    icon_link_to(:edit, t(:edit), edit_object_path(page)),
+    icon_link_to(:delete, t(:delete), page, :confirm => t(:are_you_sure), :method => :delete)
+  ] : nil) %>

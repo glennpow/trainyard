@@ -11,12 +11,11 @@
     ],
     :actions => [
       icon_link_to(:edit, tp(:edit_object, :object => t(:role, :scope => [ :authentication ])), user_roles_path(user)),
-      { :if => user != current_user && user.active?, :allow => [
-        icon_link_to(:delete, t(:disable), user, :confirm => t(:are_you_sure), :method => :delete)
-      ] },
-      { :if => user != current_user && !user.active?, :allow => [
-        icon_link_to(:add, t(:enable), enable_user_path(user), :method => :put)
-      ] } ]) %>
+      (user != current_user && user.active?) ?
+        icon_link_to(:delete, t(:disable), user, :confirm => t(:are_you_sure), :method => :delete) : nil,
+      (user != current_user && !user.active?) ?
+        icon_link_to(:add, t(:enable), enable_user_path(user), :method => :put) : nil
+    ]) %>
 <% elsif is_moderator_of?(@group) %>
   <%= render_row(
     indexer,
@@ -24,9 +23,9 @@
     [
       link_to_resource(user)
     ],
-    :actions => [
+    :actions =>
       icon_link_to(:edit, tp(:edit_object, :object => t(:role, :scope => [ :authentication ])), group_user_roles_path(@group, user))
-    ]) %>
+    ) %>
 <% else %>
   <%= render_row(
     indexer,

@@ -36,15 +36,17 @@ class PostsController < ApplicationController
   
   def index
     respond_with_indexer do |options|
-      options[:order] = 'posts.created_at ASC'
+      options[:order] = "#{Post.table_name}.created_at ASC"
       options[:search_include] = [ :user ]
       options[:search] = { :context => @topic ? t(:in_object, :object => @topic.name) : t(:in_all_object, :object => tp(:topic, :scope => [ :content ])) }
     
       if params[:topic_id]
-        options[:conditions] = [ 'posts.topic_id = ?', params[:topic_id] ]
+        options[:conditions] = [ "#{Post.table_name}.topic_id = ?", params[:topic_id] ]
       elsif params[:forum_id]
         options[:include] = :topic
-        options[:conditions] = [ 'topics.forum_id = ?', params[:forum_id] ]
+        options[:conditions] = [ "#{Topic.table_name}.forum_id = ?", params[:forum_id] ]
+      elsif params[:user_id]
+        options[:conditions] = [ "#{Post.table_name}.user_id = ?", params[:user_id] ]
       end
     end
   end

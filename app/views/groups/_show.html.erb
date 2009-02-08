@@ -1,5 +1,5 @@
 <%= render_heading(h(group.name),
-  :actions => [ { :if => has_administrator_role?, :allow => icon_link_to(:edit, t(:edit), edit_group_path(group)) } ]) %>
+  :actions => has_administrator_role? ? icon_link_to(:edit, t(:edit), edit_group_path(group)) : nil) %>
 
 <%= render_field(t(:moderator, :scope => [ :authentication ]), link_to_user(group.moderator)) %>
 
@@ -12,4 +12,4 @@
 <% end %>
 
 <%= render_field(tp(:member, :scope => [ :authentication ]), group.users.length,
-  :actions => [ { :if => group.users.any?, :allow => link_to(t(:view), group_users_path(group)) } ]) %>
+  :actions => group.users.any? ? link_to(t(:view), group_users_path(group)) : nil) %>

@@ -6,7 +6,6 @@
     h(invite.email),
     h(invite.created_at),
   ],
-  :actions => [
-    { :if => is_moderator_of?(invite), :allow => [
-      icon_link_to(:delete, t(:delete), invite, :confirm => t(:are_you_sure), :method => :delete)
-    ] } ]) %>
+  :actions => is_moderator_of?(invite) ?
+    icon_link_to(:delete, t(:delete), invite, :confirm => t(:are_you_sure), :method => :delete) : nil
+  ) %>

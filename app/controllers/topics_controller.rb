@@ -38,7 +38,7 @@ class TopicsController < ApplicationController
   
   def index
     respond_with_indexer do |options|
-      options[:order] = 'topics.sticky DESC, topics.replied_at DESC'
+      options[:order] = "#{Topic.table_name}.sticky DESC, #{Topic.table_name}.replied_at DESC"
       options[:include] = :user
       options[:headers] = [
         t(:topic, :scope => [ :content ]),
@@ -50,7 +50,7 @@ class TopicsController < ApplicationController
       options[:search] = { :context => @forum ? t(:in_object, :object => @forum.name) : t(:in_all_object, :object => tp(:forum, :scope => [ :content ])) }
         
       if params[:forum_id]
-        options[:conditions] = [ 'topics.forum_id = ?', params[:forum_id] ]
+        options[:conditions] = [ "#{Topic.table_name}.forum_id = ?", params[:forum_id] ]
       end
     end
   end
