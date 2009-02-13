@@ -19,8 +19,8 @@ class Permission < ActiveRecord::Base
       return true if Permission.count(:conditions => [
         "#{Permission.table_name}.action_id = ? AND #{Permission.table_name}.resource_id = ? AND #{Permission.table_name}.resource_type = ?",
         action.id, resource.id, resource.class.to_s ]) == 0
-    
-      Membership.count(:include => { :group => :permissions }, :conditions => [
+
+      Permission.count(:include => { :group => :memberships }, :conditions => [
         "#{Membership.table_name}.user_id = ? AND (#{Permission.table_name}.role_id = ? OR #{Membership.table_name}.role_id = ? OR #{Membership.table_name}.role_id = #{Permission.table_name}.role_id) AND #{Permission.table_name}.action_id = ? AND #{Permission.table_name}.resource_id = ? AND #{Permission.table_name}.resource_type = ?",
         user, nil, Role.administrator.id, action.id, resource.id, resource.class.to_s ]) > 0
     end
