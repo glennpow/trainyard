@@ -103,9 +103,7 @@ module LayoutHelper
   
   def render_list(values, options = {})
     list_type = options.delete(:ordered) ? :ol : :ul
-    content_tag(list_type, options) do
-      values.map { |value| content_tag :li, value, :class => (value == values.first ? 'first' : nil) }.join
-    end
+    content_tag(list_type, values.map { |value| content_tag :li, value, :class => (value == values.first ? 'first' : nil) }.join, options)
   end
   
   def render_bar_list(values, options = {})
