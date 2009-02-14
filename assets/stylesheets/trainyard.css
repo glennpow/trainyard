@@ -211,20 +211,8 @@ table.item-table td {
   margin: 5px 0px;
 }
 
-.panel {
-  padding: 15px;
-  margin: 15px 0px;
-}
-
-.panel .label {
-  padding: 6px;
-  font-size: larger;
-  font-weight: bold;
-}
-
-.panel ul.actions {
-  list-style: disc inside;
-  padding: 15px;
+.sort-handle {
+  cursor: move;
 }
 
 .formatted {

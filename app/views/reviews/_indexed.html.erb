@@ -13,7 +13,7 @@
         <%= link_to(truncate(auto_format(review.body), :length => 100), review_path(review)) %>
 
         <% if is_editor_of?(review) %>
-          <%= icon_link_to(:edit, t(:edit), edit_review_path(review)) %>
+          <%= render_actions([ icon_link_to(:edit, t(:edit), edit_review_path(review)) ]) %>
         <% end %>
       </td>
     </tr>

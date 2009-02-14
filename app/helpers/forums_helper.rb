@@ -2,15 +2,6 @@ module ForumsHelper
   def may_edit_guru_points?(post)
     logged_in? && post.may_edit_guru_points?(current_user)
   end
-
-  def forum_descriptor(forum)
-    content_tag(:div, :class => 'forum-descriptor') do
-      returning('') do |content|
-        content << content_tag(:p, link_to_resource(forum), :class => 'forum-name')
-        content << content_tag(:p, h(forum.description), :class => 'forum-description')
-      end
-    end
-  end
   
   def forum_breadcrumbs(forum)
     render_bar_list([

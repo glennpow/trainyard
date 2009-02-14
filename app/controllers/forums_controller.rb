@@ -30,29 +30,16 @@ class ForumsController < ApplicationController
   def index
     respond_with_indexer do |options|
       options[:order] = 'position ASC'
-      options[:headers] = [
-        t(:forum, :scope => [ :content ]),
-        tp(:topic, :scope => [ :content ]),
-        tp(:post, :scope => [ :content ]),
-      ]
+      options[:no_table] = true
       options[:search] = { :url => { :controller => 'topics' } }
     end
   end
   
-  def move_down
-    @forum.move_lower
-    
-    respond_to do |format|
-      format.html { redirect_to :back }
+  def sort
+    params[:indexer_forum_form].each_with_index do |id, index|
+      Forum.update_all([ 'position = ?', index + 1 ], [ 'id = ?', id ])
     end
-  end
-  
-  def move_up
-    @forum.move_higher
-    
-    respond_to do |format|
-      format.html { redirect_to :back }
-    end
+    render :nothing => true
   end
   
   def search

@@ -29,7 +29,7 @@ resources :articles, :member => { :erase => :put }, :has_many => [ :articles, :a
 blog_article '/blogs/:id/articles/:article_id', :controller => 'blogs', :action => 'article'
 resources :blogs, :member => { :contents => :get }, :has_many => [ :articles ]
 resources :comments
-resources :forums, :member => { :move_up => :post, :move_down => :post }, :has_many => [ :topics ]
+resources :forums, :collection => { :sort => :post }, :has_many => [ :topics ]
 resources :medias
 new_message_to_user '/messages/new/:to_user_id', :controller => 'messages', :action => 'new'
 resources :messages

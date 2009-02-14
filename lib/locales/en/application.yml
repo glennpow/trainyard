@@ -300,8 +300,6 @@ en:
     messages_info:
       one: "{{count}} Message ({{unread}} new)"
       other: "{{count}} Messages ({{unread}} new)"
-    move_down: Move Down
-    move_up: Move Up
     new_post_for_topic: "New post for forum topic: {{topic}}"
     page: Page
     permalink: Permalink
@@ -314,6 +312,7 @@ en:
     rating: Rating
     received: Received
     regarding_topic: "Re: {{topic}}"
+    reorder: Reorder
     review: Review
     reviews:
       zero: No Reviews Yet

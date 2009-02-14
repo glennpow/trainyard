@@ -7,3 +7,7 @@
 <% end %>
 
 <%= render_indexer(@indexer) %>
+
+<% if has_administrator_role? %>
+  <%= sortable_element('indexer_forum_form', :url => sort_forums_path, :tag => 'div', :handle => 'sort-handle') %>
+<% end %>
