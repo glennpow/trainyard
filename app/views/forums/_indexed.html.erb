@@ -2,15 +2,15 @@
   <table class="listed-table full-width">
     <tr>
       <% if has_administrator_role? %>
-        <td rowspan="2">
+        <td rowspan="2" class="align-top align-left">
           <span class="sort-handle"><%= icon_label(:grab, t(:reorder, :scope => [ :content ])) %></span>
         </td>
       <% end %>
-      <td class="column-top listed-descriptor forum-descriptor">
+      <td class="align-top listed-descriptor forum-descriptor">
         <p class="forum-name"><%= link_to_resource(forum) %></p>
         <p class="forum-description"><%= h(forum.description) %></p>
       </td>
-      <td class="column-top align-right">
+      <td class="align-top align-right">
         <p class="forum-topics"><span class="strong"><%= tp(:topic, :scope => [ :content ]) %></span>: <%= forum.topics_count %></p>
         <p class="forum-posts"><span class="strong"><%= tp(:post, :scope => [ :content ]) %></span>: <%= forum.posts_count %></p>
       </td>

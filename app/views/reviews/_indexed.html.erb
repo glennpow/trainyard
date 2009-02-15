@@ -1,13 +1,13 @@
 <div class="review listed">
   <table class="listed-table full-width">
     <tr>
-      <td class="column-top listed-descriptor">
+      <td class="align-top listed-descriptor">
         <%= image_link_to_user(review.user, :image_style => :thumb) %>
         <p class="listed-info"><%= link_to_user(review.user) %></p>
         <p class="listed-info"><%= review.created_at.to_s(:short) %></p>
       </td>
   
-      <td class="column-top align-left">
+      <td class="align-top align-left">
         <%= render_rating(review) %>
 
         <%= link_to(truncate(auto_format(review.body), :length => 100), review_path(review)) %>

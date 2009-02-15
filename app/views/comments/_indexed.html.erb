@@ -1,7 +1,7 @@
 <div class="comment listed">
   <table class="listed-table full-width">
     <tr>
-      <td class="column-top listed-descriptor">
+      <td class="align-top listed-descriptor">
         <% if comment.user %>
           <%= image_link_to_user(comment.user, :image_style => :thumb) %>
         <% else %>
@@ -11,7 +11,7 @@
         <p class="listed-info"><%= comment.created_at.to_s(:short) %></p>
       </td>
   
-      <td class="column-top">
+      <td class="align-top">
         <%= render_formatted(comment.body) %>
 
         <% if is_editor_of?(comment) %>

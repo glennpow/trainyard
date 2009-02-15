@@ -107,8 +107,24 @@ ul {
   content: "« ";
 }
 
+.align-top {
+  vertical-align: top;
+}
+
+.align-vertical-center {
+  vertical-align: middle;
+}
+
+.align-bottom {
+  vertical-align: bottom;
+}
+
 .align-left {
   text-align: left;
+}
+
+.align-horizontal-center {
+  text-align: center;
 }
 
 .align-right {
@@ -209,10 +225,6 @@ table.item-table td {
 
 .form-element {
   margin: 5px 0px;
-}
-
-.sort-handle {
-  cursor: move;
 }
 
 .formatted {
