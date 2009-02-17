@@ -2,23 +2,23 @@ class Theme < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
   
-  def body_background
-    @body_background ||= "#{self.body_color}#{self.body_url.blank? ? '' : ' url(\'' + self.body_url + '\') repeat'}"
+  def body_color_background
+    @body_color_background ||= "#{self.body_color} #{self.body_background}"
   end
   
-  def base_background
-    @base_background ||= "#{self.base_color}#{self.base_url.blank? ? '' : ' url(' + self.base_url + ') repeat'}"
+  def base_color_background
+    @base_color_background ||= "#{self.base_color} #{self.base_background}"
   end
   
-  def primary_background
-    @primary_background ||= "#{self.primary_color}#{self.primary_url.blank? ? '' : ' url(' + self.primary_url + ') repeat'}"
+  def primary_color_background
+    @primary_color_background ||= "#{self.primary_color} #{self.primary_background}"
   end
   
-  def secondary_background
-    @secondary_background ||= "#{self.secondary_color}#{self.secondary_url.blank? ? '' : ' url(' + self.secondary_url + ') repeat'}"
+  def secondary_color_background
+    @secondary_color_background ||= "#{self.secondary_color} #{self.secondary_background}"
   end
   
-  def highlight_background
-    @highlight_background ||= "#{self.highlight_color}#{self.highlight_url.blank? ? '' : ' url(' + self.highlight_url + ') repeat'}"
+  def highlight_color_background
+    @highlight_color_background ||= "#{self.highlight_color} #{self.highlight_background}"
   end
 end

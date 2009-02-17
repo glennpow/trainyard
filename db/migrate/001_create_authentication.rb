@@ -15,7 +15,7 @@ class CreateAuthentication < ActiveRecord::Migration
     end
     
     add_index :invites, :group_id
-    add_index :invites, :inviter_code
+    add_index :invites, :invite_code
 
     create_table :memberships do |t|
       t.references :group

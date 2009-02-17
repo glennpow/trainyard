@@ -64,12 +64,12 @@ class CreateContent < ActiveRecord::Migration
     end
     
     add_index :forums, :group_id
-    add_index :forums, :parent_forum
+    add_index :forums, :parent_forum_id
 
     create_table :languages do |t|
       t.string :code, :null => false
     end
-    add_index :language, :code
+    add_index :languages, :code
     
     create_table :locales do |t|
       t.references :language, :null => false
@@ -145,24 +145,24 @@ class CreateContent < ActiveRecord::Migration
     create_table :themes do |t|
       t.string :name, :null => false
       t.string :body_color
-      t.string :body_url
+      t.string :body_background
       t.string :base_color
-      t.string :base_url
+      t.string :base_background
       t.string :base_font_color
       t.string :base_link_color
       t.string :base_link_hover_color
       t.string :primary_color
-      t.string :primary_url
+      t.string :primary_background
       t.string :primary_font_color
       t.string :primary_link_color
       t.string :primary_link_hover_color
       t.string :secondary_color
-      t.string :secondary_url
+      t.string :secondary_background
       t.string :secondary_font_color
       t.string :secondary_link_color
       t.string :secondary_link_hover_color
       t.string :highlight_color
-      t.string :highlight_url
+      t.string :highlight_background
       t.string :highlight_font_color
       t.string :highlight_link_color
       t.string :highlight_link_hover_color
