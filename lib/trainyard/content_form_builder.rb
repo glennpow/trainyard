@@ -185,6 +185,8 @@ module Trainyard
       args = options[:args] || []
     
       content = @template.capture do
+        # FIXME - When update Rails you can use this line...
+        #@template.fields_for("#{object_name}[#{names}_attributes][]", *args) do |f|
         @template.fields_for("#{object_name}[#{names}_attributes][#{new_child_id}]", *args) do |f|
           render_options[:locals][:f] = f
           @template.concat @template.render(render_options.deep_dup)

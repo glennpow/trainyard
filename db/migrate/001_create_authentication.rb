@@ -13,6 +13,9 @@ class CreateAuthentication < ActiveRecord::Migration
       t.string :invite_code, :limit => 40
       t.timestamps
     end
+    
+    add_index :invites, :group_id
+    add_index :invites, :inviter_code
 
     create_table :memberships do |t|
       t.references :group
@@ -21,10 +24,9 @@ class CreateAuthentication < ActiveRecord::Migration
       t.timestamps
     end
     
-    add_index :memberships, :group_id
     add_index :memberships, :user_id
     add_index :memberships, [ :group_id, :user_id ]
-    add_index :memberships, [ :group_id, :role_id, :user_id ], :unique => true
+    add_index :memberships, [ :group_id, :user_id, :role_id ], :unique => true
     
     create_table :organizations do |t|
       t.references :group, :null => false
@@ -36,6 +38,8 @@ class CreateAuthentication < ActiveRecord::Migration
       t.datetime :image_updated_at
       t.timestamps
     end
+    
+    add_index :organizations, :group_id
 
     create_table :permissions do |t|
       t.references :resource, :polymorphic => true, :null => false

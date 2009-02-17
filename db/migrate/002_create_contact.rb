@@ -14,6 +14,8 @@ class CreateContact < ActiveRecord::Migration
       t.timestamps
     end
     
+    add_index :addresses, [ :resource_type, :resource_id ]
+    
     create_table :countries do |t|
       t.string :name, :null => false
       t.string :official_name
@@ -22,6 +24,10 @@ class CreateContact < ActiveRecord::Migration
       t.integer :numeric_3_code
       t.timestamps
     end
+    
+    add_index :countries, :alpha_2_code
+    add_index :countries, :alpha_3_code
+    add_index :countries, :numeric_3_code
 
     create_table :emails do |t|
       t.references :resource, :polymorphic => true, :null => false
@@ -29,6 +35,8 @@ class CreateContact < ActiveRecord::Migration
       t.references :email_type
       t.timestamps
     end
+    
+    add_index :emails, [ :resource_type, :resource_id ]
 
     create_table :personas do |t|
       t.references :user, :null => false
@@ -42,6 +50,8 @@ class CreateContact < ActiveRecord::Migration
       t.timestamps
     end
     
+    add_index :personas, :user_id
+    
     create_table :phones do |t|
       t.references :resource, :polymorphic => true, :null => false
       t.string :number, :null => false
@@ -49,6 +59,8 @@ class CreateContact < ActiveRecord::Migration
       t.references :phone_type
       t.timestamps
     end
+    
+    add_index :phones, [ :resource_type, :resource_id ]
 
     create_table :regions do |t|
       t.references :country, :null => false
@@ -58,12 +70,18 @@ class CreateContact < ActiveRecord::Migration
       t.timestamps
     end
     
+    add_index :regions, :country_id
+    add_index :regions, :alpha_code
+    add_index :regions, :numeric_code
+    
     create_table :urls do |t|
       t.references :resource, :polymorphic => true, :null => false
       t.string :url_address, :null => false
       t.references :url_type
       t.timestamps
     end
+    
+    add_index :urls, [ :resource_type, :resource_id ]
   end
 
   def self.down

@@ -15,7 +15,11 @@ class CreateContent < ActiveRecord::Migration
       t.integer :revision, :default => 1
       t.timestamps
     end
-      
+          
+    add_index :articles, [ :resource_type, :resource_id, :locale_id ]
+    add_index :articles, :group_id
+    add_index :articles, :user_id
+
     create_table :article_revisions do |t|
       t.references :article, :null => false
       t.references :user, :null => false
@@ -25,12 +29,17 @@ class CreateContent < ActiveRecord::Migration
       t.integer :revision
       t.datetime :created_at
     end
+    
+    add_index :article_revisions, :article_id
+    add_index :article_revisions, :user_id
 
     create_table :blogs do |t|
       t.references :group
       t.string :name, :null => false
       t.timestamps
     end
+    
+    add_index :blogs, :group_id
     
     create_table :comments do |t|
       t.references :resource, :polymorphic => true
@@ -40,25 +49,34 @@ class CreateContent < ActiveRecord::Migration
       t.timestamps
     end
     
+    add_index :comments, [ :resource_type, :resource_id ]
+    add_index :comments, :user_id
+    
     create_table :forums do |t|
       t.references :group
+      t.references :parent_forum
       t.string :name, :null => false
       t.text :description
       t.integer :topics_count, :default => 0
       t.integer :posts_count, :default => 0
       t.integer :position
-      t.references :parent_forum
       t.timestamps
     end
+    
+    add_index :forums, :group_id
+    add_index :forums, :parent_forum
 
     create_table :languages do |t|
       t.string :code, :null => false
     end
+    add_index :language, :code
     
     create_table :locales do |t|
       t.references :language, :null => false
       t.references :country, :null => false
     end
+    
+    add_index :locales, [ :language_id, :country_id ]
         
     create_table :medias do |t|
       t.references :resource, :polymorphic => true, :null => false
@@ -78,6 +96,8 @@ class CreateContent < ActiveRecord::Migration
       t.timestamps
     end
     
+    add_index :medias, [ :resource_type, :resource_id ]
+    
     create_table :messages do |t|
       t.references :from_user, :null => false
       t.references :to_user, :null => false
@@ -87,12 +107,18 @@ class CreateContent < ActiveRecord::Migration
       t.timestamps
     end
 
+    add_index :messages, :from_user_id
+    add_index :messages, :to_user_id
+
     create_table :pages do |t|
       t.references :group
       t.string :name, :null => false
       t.string :permalink, :null => false
       t.timestamps
     end
+
+    add_index :pages, :group_id
+    add_index :pages, :permalink
 
     create_table :posts do |t|
       t.references :user, :null => false
@@ -102,8 +128,8 @@ class CreateContent < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :posts, [ :topic_id ]
-    add_index :posts, [ :user_id ]
+    add_index :posts, :topic_id
+    add_index :posts, :user_id
 
     create_table :reviews do |t|
       t.references :resource, :polymorphic => true
@@ -112,6 +138,9 @@ class CreateContent < ActiveRecord::Migration
       t.integer :rating
       t.timestamps
     end
+    
+    add_index :reviews, [ :resource_type, :resource_id ]
+    add_index :reviews, :user_id
     
     create_table :themes do |t|
       t.string :name, :null => false
@@ -140,6 +169,8 @@ class CreateContent < ActiveRecord::Migration
       t.timestamps
     end
     
+    add_index :themes, :name
+
     create_table :themeables_themes do |t|
       t.references :themeable, :polymorphic => true
       t.references :theme, :null => false
@@ -159,8 +190,8 @@ class CreateContent < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :topics, [ :forum_id ]
-    add_index :topics, [ :user_id ]
+    add_index :topics, :forum_id
+    add_index :topics, :user_id
     
     create_table :watchings do |t|
       t.references :resource, :polymorphic => true, :null => false
@@ -176,6 +207,8 @@ class CreateContent < ActiveRecord::Migration
       t.string :name, :null => false
       t.timestamps
     end
+
+    add_index :wikis, :group_id
   end
 
   def self.down
