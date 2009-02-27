@@ -103,9 +103,9 @@ module Trainyard
       session[:current_organization_id] = @current_organization ? @current_organization.id : nil
     end
     
-    def current_organization_of(organizable_klass)
-      if self.current_organization && organizable_klass.count(:conditions => { :organization_id => self.current_organization }) > 0
-        return self.current_organization
+    def current_organizable(organizable_klass)
+      if self.current_organization
+        return organizable_klass.first(:conditions => { :organization_id => self.current_organization })
       else
         return nil
       end
@@ -177,7 +177,7 @@ module Trainyard
       base.send :filter_parameter_logging, :password, :password_confirmation if base.respond_to? :filter_parameter_logging
       base.send :helper_method, :current_user_session, :current_user, :logged_in?, :has_role?, :has_administrator_role?,
         :is_moderator_of?, :is_member_of?, :has_permission?, :is_editor_of?, :is_viewer_of?,
-        :current_organization, :current_organization_of if base.respond_to? :helper_method
+        :current_organization, :current_organizable if base.respond_to? :helper_method
     end
   end
 end

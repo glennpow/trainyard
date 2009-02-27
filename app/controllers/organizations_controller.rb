@@ -41,7 +41,8 @@ class OrganizationsController < ApplicationController
     self.current_organization = @organization
     
     respond_to do |format|
-      format.html { redirect_to :back }
+      format.html { redirect_to params[:redirect] || :back }
+      format.xml  { head :ok }
     end
   end
   
