@@ -20,7 +20,7 @@ common: &common
 development:
   <<: *common
   sites:
-    - :domain: "www.rubyonrails.org"
+    - :domain: "rubyonrails.org"
       :name: 'Ruby on Rails'
       :email: mail@rubyonrails.org
       :email_host: rubyonrails.org
@@ -33,7 +33,7 @@ development:
 test:
   <<: *common
   sites:
-    - :domain: "www.rubyonrails.org"
+    - :domain: "rubyonrails.org"
       :name: 'Ruby on Rails'
       :email: mail@rubyonrails.org
       :email_host: rubyonrails.org
@@ -46,7 +46,7 @@ test:
 production:
   <<: *common
   sites:
-    - :domain: "www.rubyonrails.org"
+    - :domain: "rubyonrails.org"
       :name: 'Ruby on Rails'
       :email: mail@rubyonrails.org
       :email_host: rubyonrails.org
