@@ -9,6 +9,6 @@ module PortletHelper
     width = options[:width] || 900
     height = options[:height] || 600
     
-    "<iframe src='http://#{site_domain}/portlet/#{portal.class.to_s.underscore}/#{portal.id}' width='#{width}' height='#{height}'></iframe>"
+    "<iframe src='http://#{referer_domain}/portlet/#{portal.class.to_s.underscore}/#{portal.id}' width='#{width}' height='#{height}'></iframe>"
   end
 end
