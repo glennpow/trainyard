@@ -6,7 +6,7 @@
 
 <% if has_administrator_role? %>
   <% unless current_theme.id == @theme.id %>
-    <%= render_field(t(:apply_to_object, :scope => [ :themes ], :link => icon_link_to(:edit, t(:apply, :scope => [ :themes ]), apply_theme_path(@theme), :method => :post), :object => Configuration.application_name)) %>
+    <%= render_field(t(:apply_to_object, :scope => [ :themes ], :link => icon_link_to(:edit, t(:apply, :scope => [ :themes ]), apply_theme_path(@theme), :method => :post), :object => site_name)) %>
   <% end %>
 <% elsif is_editor_of?(@themeable) %>
   <% unless @themeable.theme_id == @theme.id %>

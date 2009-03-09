@@ -1,11 +1,9 @@
 common: &common
   default_locale: en-US
-  application_name: "Ruby on Rails"
-  application_mail: mail
   default_image_options:
     :styles:
-      :thumb: 80x80#
-      :normal: 200x200>
+      :thumb: "80x80#"
+      :normal: "200x200>"
     :url: "/system/:class/:attachment/:id/:style_:basename.:extension"
     :default_url: "/images/default/:class/:attachment/missing_:style.png"
     :path: ":rails_root/public/system/:class/:attachment/:id/:style_:basename.:extension"
@@ -18,18 +16,38 @@ common: &common
     mailer_alerts: true
     public_contact: false
   local_article_pages: false
-
+ 
 development:
   <<: *common
-  application_domain: localhost:3000
+  sites:
+    - :domain: "www.rubyonrails.org"
+      :name: 'Ruby on Rails'
+      :email: mail@rubyonrails.org
+      :email_host: rubyonrails.org
+    - :domain: "localhost"
+      :name: 'Ruby on Rails (localhost)'
+      :email: mail@rubyonrails.org
+      :email_host: localhost
   email_activation: false
 
 test:
   <<: *common
-  application_domain: localhost:3000
+  sites:
+    - :domain: "www.rubyonrails.org"
+      :name: 'Ruby on Rails'
+      :email: mail@rubyonrails.org
+      :email_host: rubyonrails.org
+    - :domain: "localhost"
+      :name: 'Ruby on Rails (localhost)'
+      :email: mail@rubyonrails.org
+      :email_host: localhost
   email_activation: false
 
 production:
   <<: *common
-  application_domain: application-domain.com
-  email_activation: true
+  sites:
+    - :domain: "www.rubyonrails.org"
+      :name: 'Ruby on Rails'
+      :email: mail@rubyonrails.org
+      :email_host: rubyonrails.org
+  email_activation: true 

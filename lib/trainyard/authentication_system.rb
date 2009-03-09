@@ -150,14 +150,9 @@ module Trainyard
     def permission_denied
       respond_to do |format|
         format.html do
-          domain_name = "http://#{Configuration.application_domain}"
-          http_referer = session[:refer_to]
-          if http_referer.nil?
-            store_referer
-            http_referer = (session[:refer_to] || domain_name)
-          end
+          http_referer = session[:refer_to] || store_referer
           flash[:error] = t(:permission_denied, :scope => [ :authentication ])
-          if http_referer[0..(domain_name.length - 1)] != domain_name  
+          if Configuration.sites.detect { |site| site['domain'] == request.domain }
             session[:refer_to] = nil
             redirect_to root_path
           else

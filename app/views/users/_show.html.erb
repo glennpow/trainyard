@@ -30,7 +30,7 @@
 
 <%= render_field(tp(:group, :scope => [ :authentication ]),
   user.memberships.map { |membership| membership.group.nil? ?
-    "#{Configuration.application_name} (#{membership.role.name})" :
+    "#{site_name} (#{membership.role.name})" :
     "#{link_to_resource(membership.group)} (#{membership.role.name})" }) %>
 
 <% unless user.persona.blank? || !user.public_contact %>
