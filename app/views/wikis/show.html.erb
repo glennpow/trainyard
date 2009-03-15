@@ -2,7 +2,7 @@
 
 <%= render_heading(h(@wiki.name)) %>
 
-<% if @wiki && is_editor_of?(@wiki) %>
+<% if is_editor_of?(@wiki) %>
   <%= render_actions([ icon_link_to(:add_large, t(:create_object, :object => t(:article, :scope => [ :content ])), new_wiki_article_path(@wiki)) ]) %>
 
   <% @articles_indexer.footers = link_to(t(:create_object, :object => t(:article, :scope => [ :content ])), new_wiki_article_path(@wiki)) %>

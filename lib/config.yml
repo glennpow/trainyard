@@ -1,4 +1,5 @@
 common: &common
+  default_path: /
   default_locale: en-US
   default_image_options:
     :styles:

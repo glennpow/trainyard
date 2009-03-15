@@ -9,8 +9,9 @@ class InvitesController < ApplicationController
     t(:invite, :scope => [ :authentication ])
   end
 
-  before_filter :login_required, :only => [ :index, :new, :create, :delete, :invitation, :update_invitation ]
-  before_filter :check_moderator_of, :except => [ :index, :new, :create, :delete ]
+  before_filter :login_required, :only => [ :update_invitation ]
+  before_filter :check_invite, :only => [ :invitation, :update_invitation ]
+  before_filter :check_moderator_of_group, :except => [ :index, :new, :create, :delete ]
   
   def current_object
     @current_object ||= if params[:id]
@@ -32,19 +33,14 @@ class InvitesController < ApplicationController
   end
   
   def invitation
-    unless @invite
-      logger.error "Invalid Invite Code given."
-      flash[:error] = t(:failure_invalid_code, :scope => [ :authentication, :invites, :invitation ])
-      redirect_to root_path
-      return
-    end
     @user = User.find_by_email(@invite.email)
-    if logged_in?
-      if @user != current_user
-        logger.error "Invalid User replying to Invite."
-        flash[:error] = t(:failure_invalid_user, :scope => [ :authentication, :invites, :invitation ])
-        redirect_to root_path
-        return
+    if @user
+      if logged_in?
+        if @user != current_user
+          flash[:error] = t(:failure_invalid_user, :scope => [ :authentication, :invites, :invitation ])
+          redirect_to Configuration.default_path
+          return
+        end
       end
     else
       flash[:notice] = t(:create_user, :scope => [ :authentication, :invites, :invitation ])
@@ -53,17 +49,10 @@ class InvitesController < ApplicationController
   end
   
   def update_invitation
-    unless @invite
-      logger.error "Invalid Invite given"
-      flash[:error] = t(:failure_invalid_code, :scope => [ :authentication, :invites, :update_invitation ])
-      redirect_to user_path(current_user)
-      return
-    end
     @user = User.find_by_email(@invite.email)
     if @user != current_user
-      logger.error "Invalid User replying to Invite."
       flash[:error] = t(:failure_invalid_user, :scope => [ :authentication, :invites, :invitation ])
-      redirect_to user_path(current_user)
+      redirect_to Configuration.default_path
       return
     end
     case params[:commit]
@@ -103,7 +92,15 @@ class InvitesController < ApplicationController
   
   private
   
-  def check_moderator_of
-    check_moderator(@group)
+  def check_invite
+    unless @invite
+      flash[:error] = t(:failure_invalid_code, :scope => [ :authentication, :invites, :update_invitation ])
+      redirect_to Configuration.default_path
+      return false
+    end
+  end
+  
+  def check_moderator_of_group
+    check_moderator_of(@group)
   end
 end

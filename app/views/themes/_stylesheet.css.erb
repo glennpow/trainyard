@@ -381,10 +381,20 @@ ul.tabbernav li.tabberactive a:hover {
   border-top: 0;
 }
 
-.hint-mark:before {
-  background: #59e;
-  border: 1px solid #333;
-  color: #fff;
+a.hint-mark {
+  text-decoration: none;
+}
+
+a.hint-mark:before {
+  border: 2px dotted <%= theme.primary_link_color %>;
+  color: <%= theme.primary_link_color %>;
+  content: "?";
+  padding: 0px 4px 0px 4px;
+}
+
+a.hint-mark:hover:before {
+  border: 2px dotted <%= theme.base_link_hover_color %>;
+  color: <%= theme.base_link_hover_color %>;
   content: "?";
   padding: 0px 4px 0px 4px;
 }

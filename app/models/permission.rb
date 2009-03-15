@@ -6,8 +6,8 @@ class Permission < ActiveRecord::Base
   validates_presence_of :resource, :action_id, :group
   
   def self.permitted?(user, action, resource)
-    return true if user.has_administrator_role?
     return false if resource.nil?
+    return true if user.has_administrator_role?
     if resource.respond_to?(:group)
       return false unless group = resource.group
       return true if user.has_administrator_role?(group)

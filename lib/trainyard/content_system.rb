@@ -18,7 +18,7 @@ module Trainyard
     end
     
     def is_commentable?(resource)
-      !resource.respond_to?(:commentable?) || resource.commentable?
+      !resource.nil? && (!resource.respond_to?(:commentable?) || resource.commentable?)
     end
     
     def load_comments(resource)
@@ -35,7 +35,7 @@ module Trainyard
     end
     
     def is_reviewable?(resource)
-      !resource.respond_to?(:reviewable?) || resource.reviewable?
+      !resource.nil? && (!resource.respond_to?(:reviewable?) || resource.reviewable?)
     end
     
     def load_reviews(resource)

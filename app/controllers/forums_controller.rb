@@ -23,9 +23,8 @@ class ForumsController < ApplicationController
     t(:forum, :scope => [ :content ])
   end
 
-  before_filter :login_required, :only => [ :edit, :update, :destroy ]
   before_filter :check_administrator_role, :only => [ :new, :create ]
-  before_filter :check_moderator_of, :only => [ :edit, :update, :destroy ]
+  before_filter :check_moderator_of_forum, :only => [ :edit, :update, :destroy ]
   
   def index
     respond_with_indexer do |options|
@@ -52,7 +51,7 @@ class ForumsController < ApplicationController
   
   private
   
-  def check_moderator_of
-    check_moderator(@forum)
+  def check_moderator_of_forum
+    check_moderator_of(@forum)
   end
 end

@@ -1,6 +1,7 @@
 en:
   about: About
   accept: Accept
+  action: Action
   add: Add
   add_object: Add {{object}}
   all: All
@@ -15,6 +16,7 @@ en:
   description: Description
   disable: Disable
   disabled: Disabled
+  duplicate_object: Duplicate {{object}}
   edit: Edit
   edit_object: Edit {{object}}
   enable: Enable
@@ -41,6 +43,7 @@ en:
   object_created: "{{object}} created."
   object_updated: "{{object}} updated."
   preview: Preview
+  quick_search: Quick Search
   remove: Remove
   remove_object: Remove {{object}}
   reply: Reply
@@ -65,7 +68,8 @@ en:
     date: Date
     time: Time
   authentication: 
-    access_denied: Please log in to access this feature.
+    access_denied_login: Please log in to access this feature.
+    access_denied_logout: Please log out to access this feature.
     account: Account
     administer_object: Administer {{object}}
     change_password: Change Password

@@ -23,8 +23,8 @@ class WikisController < ApplicationController
     t(:wiki, :scope => [ :content ])
   end
 
-  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
-  before_filter :check_editor_of, :only => [ :new, :create, :edit, :update, :destroy ]
+  before_filter :check_editor_of_group, :only => [ :new, :create ]
+  before_filter :check_editor_of_wiki, :only => [ :edit, :update, :destroy ]
   
   def index
     respond_with_indexer do |options|
@@ -42,7 +42,11 @@ class WikisController < ApplicationController
   
   private
   
-  def check_editor_of
-    check_editor(@group || @wiki)
+  def check_editor_of_group
+    check_editor_of(@group)
+  end
+  
+  def check_editor_of_wiki
+    check_editor_of(@wiki)
   end
 end

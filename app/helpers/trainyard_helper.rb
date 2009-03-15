@@ -1,7 +1,7 @@
 module TrainyardHelper
   def trainyard_header(options = {})
     returning('') do |content|
-      content << stylesheet_link_tag('indexer', :plugin => 'indexer')
+      content << indexer_header(options)
       content << stylesheet_link_tag('trainyard', :plugin => 'trainyard')
       case options[:theme]
       when String

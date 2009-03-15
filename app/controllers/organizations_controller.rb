@@ -23,8 +23,8 @@ class OrganizationsController < ApplicationController
   end
 
   before_filter :check_add_organization, :only => [ :new, :create ]
-  before_filter :check_moderator_of, :only => [ :edit, :update, :destroy ]
-  before_filter :check_editor_of, :only => [ :set_current ]
+  before_filter :check_moderator_of_organization, :only => [ :edit, :update, :destroy ]
+  before_filter :check_editor_of_organization, :only => [ :set_current ]
   
   def index
     respond_with_indexer do |options|
@@ -53,11 +53,11 @@ class OrganizationsController < ApplicationController
     check_condition(has_permission?(Action.add_organization, @group))
   end
   
-  def check_moderator_of
-    check_moderator(@organization)
+  def check_moderator_of_organization
+    check_moderator_of(@organization)
   end
   
-  def check_editor_of
-    check_editor(@organization)
+  def check_editor_of_organization
+    check_editor_of(@organization)
   end
 end

@@ -7,8 +7,8 @@ class MediasController < ApplicationController
     t(:media, :scope => [ :content ])
   end
 
-  before_filter :login_required, :only => [ :index, :new, :create, :edit, :update, :destroy ]
-  before_filter :check_editor_of, :only => [ :index, :new, :create, :edit, :update, :destroy ]
+  before_filter :check_editor_of_resource, :only => [ :index, :new, :create ]
+  before_filter :check_editor_of_media, :only => [ :edit, :update, :destroy ]
   
   def index
     respond_with_indexer do |options|
@@ -24,7 +24,11 @@ class MediasController < ApplicationController
   
   private
   
-  def check_editor_of
-    check_editor(@resource || @media)
+  def check_editor_of_resource
+    check_administrator_role || check_editor_of(@resource)
+  end
+  
+  def check_editor_of_media
+    check_editor_of(@media)
   end
 end

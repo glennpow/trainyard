@@ -19,10 +19,9 @@ class ReviewsController < ApplicationController
     t(:review, :scope => [ :content ])
   end
 
-  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
-  before_filter :check_resource, :only => [ :index, :new, :create ]
+  before_filter :check_resource_is_reviewable, :only => [ :index, :new, :create ]
   before_filter :check_may_review, :only => [ :new, :create ]
-  before_filter :check_editor_of, :only => [ :edit, :update, :destroy ]
+  before_filter :check_editor_of_review, :only => [ :edit, :update, :destroy ]
     
   def index
     respond_with_indexer do |options|
@@ -50,15 +49,15 @@ class ReviewsController < ApplicationController
   
   private
   
-  def check_resource
-    check_condition(@resource && is_reviewable?(@resource))
+  def check_resource_is_reviewable
+    check_condition(is_reviewable?(@resource))
   end
  
   def check_may_review
     check_condition(Review.may_review?(@resource, current_user))
   end
  
-  def check_editor_of
-    check_editor(@review)
+  def check_editor_of_review
+    check_editor_of(@review)
   end
 end

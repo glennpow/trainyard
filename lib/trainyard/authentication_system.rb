@@ -21,18 +21,21 @@ module Trainyard
     def not_logged_in_required
       if current_user
         store_location
-        redirect_to :back
+        flash[:error] = t(:access_denied_logout, :scope => [ :authentication ])
+        redirect_to Configuration.default_path
         return false
       end
     end
     
     def check_condition(condition)
-      unless condition
+      if condition
+        return true
+      else
         if logged_in?
-          permission_denied
+          return permission_denied
         else
           store_referer
-          access_denied
+          return access_denied
         end
       end
     end
@@ -57,7 +60,7 @@ module Trainyard
       logged_in? && current_user.is_moderator_of?(resource)
     end
     
-    def check_moderator(resource)
+    def check_moderator_of(resource)
       check_condition(is_moderator_of?(resource))
     end
 
@@ -65,7 +68,7 @@ module Trainyard
       logged_in? && current_user.is_member_of?(resource, with_child_groups)
     end
     
-    def check_member(resource, with_child_groups = false)
+    def check_member_of(resource, with_child_groups = false)
       check_condition(is_member_of?(resource, with_child_groups))
     end
     
@@ -81,7 +84,7 @@ module Trainyard
       logged_in? && current_user.is_editor_of?(resource)
     end
     
-    def check_editor(resource)
+    def check_editor_of(resource)
       check_condition(is_editor_of?(resource))
     end
   
@@ -89,7 +92,7 @@ module Trainyard
       logged_in? && current_user.is_viewer_of?(resource)
     end
     
-    def check_viewer(resource)
+    def check_viewer_of(resource)
       check_condition(is_viewer_of?(resource))
     end
 
@@ -137,7 +140,7 @@ module Trainyard
       respond_to do |format|
         format.html do
           store_location
-          flash[:error] = t(:access_denied, :scope => [ :authentication ])
+          flash[:error] = t(:access_denied_login, :scope => [ :authentication ])
           redirect_to new_user_session_url
         end
         format.any(:json, :xml) do
@@ -154,9 +157,9 @@ module Trainyard
           flash[:error] = t(:permission_denied, :scope => [ :authentication ])
           if Configuration.sites.detect { |site| site['domain'] == request.domain }
             session[:refer_to] = nil
-            redirect_to root_path
+            redirect_to Configuration.default_path
           else
-            redirect_to_referer_or_default root_path
+            redirect_to_referer_or_default Configuration.default_path
           end
         end
         format.xml do

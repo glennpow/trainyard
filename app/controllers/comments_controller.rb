@@ -19,8 +19,8 @@ class CommentsController < ApplicationController
     t(:comment, :scope => [ :content ])
   end
 
-  before_filter :check_resource, :only => [ :index, :new, :create ]
-  before_filter :check_editor_of, :only => [ :edit, :update, :destroy ]
+  before_filter :check_resource_is_commentable, :only => [ :index, :new, :create ]
+  before_filter :check_editor_of_comment, :only => [ :edit, :update, :destroy ]
     
   def index
     respond_with_indexer do |options|
@@ -48,11 +48,11 @@ class CommentsController < ApplicationController
   
   private
   
-  def check_resource
-    check_condition(@resource && is_commentable?(@resource))
+  def check_resource_is_commentable
+    check_condition(is_commentable?(@resource))
   end
  
-  def check_editor_of
-    check_editor(@comment)
+  def check_editor_of_comment
+    check_editor_of(@comment)
   end
 end

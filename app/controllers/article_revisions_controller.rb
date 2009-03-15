@@ -8,7 +8,8 @@ class ArticleRevisionsController < ApplicationController
   end
 
   before_filter :check_article, :only => [ :index ]
-  before_filter :check_editor_of, :only => [ :index, :show ]
+  before_filter :check_editor_of_article, :only => [ :index ]
+  before_filter :check_editor_of_article_revision, :only => [ :show ]
   
   def index
     respond_with_indexer do |options|
@@ -32,7 +33,11 @@ class ArticleRevisionsController < ApplicationController
     check_condition(@article)
   end
   
-  def check_editor_of
-    check_editor(@article || @article_revision)
+  def check_editor_of_article
+    check_editor_of(@article)
+  end
+  
+  def check_editor_of_article_revision
+    check_editor_of(@article_revision)
   end
 end

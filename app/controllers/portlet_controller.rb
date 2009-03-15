@@ -3,7 +3,7 @@ class PortletController < ApplicationController
   
   def portlet
     respond_to do |format|
-      format.html { redirect_to root_path }
+      format.html { redirect_to Configuration.default_path }
       format.js
       format.xml  { head :ok }
     end

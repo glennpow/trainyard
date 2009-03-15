@@ -22,12 +22,11 @@ class ArticlesController < ApplicationController
     t(:article, :scope => [ :content ])
   end
 
-  before_filter :login_required, :only => [ :index, :new, :create, :edit, :update, :destroy, :erase ]
   before_filter :check_administrator_role, :only => [ :destroy ]
-  before_filter :check_viewer_or_administrator, :only => [ :index ]
-  before_filter :check_add_article_for, :only => [ :new, :create ]
-  before_filter :check_editor_of, :only => [ :edit, :update, :erase ]
-  before_filter :check_viewer_of, :only => [ :show ]
+  before_filter :check_viewer_of_resource_or_administrator, :only => [ :index ]
+  before_filter :check_add_article_for_resource, :only => [ :new, :create ]
+  before_filter :check_editor_of_article, :only => [ :edit, :update, :erase ]
+  before_filter :check_viewer_of_article, :only => [ :show ]
   
   def index
     respond_with_indexer do |options|
@@ -61,19 +60,19 @@ class ArticlesController < ApplicationController
   
   private
   
-  def check_viewer_or_administrator
-    @resource ? check_viewer(@resource) : check_administrator_role
+  def check_viewer_of_resource_or_administrator
+    @resource ? check_viewer_of(@resource) : check_administrator_role
   end
   
-  def check_add_article_for
+  def check_add_article_for_resource
     check_permission(Action.add_article, @resource)
   end
   
-  def check_editor_of
-    check_editor(@article)
+  def check_editor_of_article
+    check_editor_of(@article)
   end
   
-  def check_viewer_of
-    check_viewer(@article)
+  def check_viewer_of_article
+    check_viewer_of(@article)
   end
 end

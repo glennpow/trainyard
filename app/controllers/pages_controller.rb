@@ -7,8 +7,8 @@ class PagesController < ApplicationController
     t(:page, :scope => [ :content ])
   end
 
-  before_filter :login_required, :only => [ :index, :show, :new, :create, :edit, :update, :destroy ]
-  before_filter :check_editor_of, :only => [ :index, :show, :new, :create, :edit, :update, :destroy ]
+  before_filter :check_editor_of_group, :only => [ :index, :new, :create ]
+  before_filter :check_editor_of_page, :only => [ :show, :edit, :update, :destroy ]
   
   def index
     respond_with_indexer do |options|
@@ -27,7 +27,11 @@ class PagesController < ApplicationController
   
   private
   
-  def check_editor_of
-    check_editor(@group || @page)
+  def check_editor_of_group
+    check_administrator_role || check_editor_of(@group)
+  end
+  
+  def check_editor_of_page
+    check_editor_of(@page)
   end
 end

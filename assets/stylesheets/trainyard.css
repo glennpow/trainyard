@@ -154,6 +154,10 @@ ul.clean-list li {
   list-style: none;
 }
 
+ul.indexer-row-actions li span.image-label-text {
+  display: none;
+}
+
 .messages {
 }
 

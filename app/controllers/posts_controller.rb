@@ -28,10 +28,10 @@ class PostsController < ApplicationController
     t(:post, :scope => [ :content ])
   end
 
-  before_filter :login_required, :only => [ :new, :create, :edit, :update ]
+  before_filter :login_required, :only => [ :new, :create ]
   before_filter :check_administrator_role, :only => [ :destroy ]
   before_filter :check_topic, :only => [ :new, :create ]
-  before_filter :check_editor_of, :only => [ :edit, :update ]
+  before_filter :check_editor_of_post, :only => [ :edit, :update ]
   before_filter :check_editor_of_guru_points, :only => [ :edit_guru_points, :update_guru_points ]
   
   def index
@@ -71,8 +71,8 @@ class PostsController < ApplicationController
     check_condition(@topic)
   end
   
-  def check_editor_of
-    check_editor(@post)
+  def check_editor_of_post
+    check_editor_of(@post)
   end
   
   def check_editor_of_guru_points

@@ -15,9 +15,9 @@ class WatchingsController < ApplicationController
     t(:watch, :scope => [ :content ])
   end
 
-  before_filter :login_required, :only => [ :index, :create, :destroy ]
-  before_filter :check_index, :only => [ :index ]
-  before_filter :check_editor_of, :only => [ :destroy ]
+  before_filter :login_required, :only => [ :create ]
+  before_filter :check_viewer_of_indexed, :only => [ :index ]
+  before_filter :check_editor_of_watching, :only => [ :destroy ]
   
   def index
     respond_with_indexer do |options|
@@ -43,11 +43,11 @@ class WatchingsController < ApplicationController
   
   private
   
-  def check_index
+  def check_viewer_of_indexed
     @user ? check_condition(@user.id == current_user.id) : check_viewer_of(@resource)
   end
   
-  def check_editor_of
+  def check_editor_of_watching
     check_condition(@watching.user_id == current_user.id)
   end
 end
