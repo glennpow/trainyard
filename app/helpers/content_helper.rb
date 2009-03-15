@@ -45,6 +45,10 @@ module ContentHelper
     content.gsub!(/href=['"][^'"]+['"]/, "href='#'")
     block_called_from_erb?(block) ? concat(content) : content
   end
+  
+  def yes_no(value)
+    t(value ? :yes : :no)
+  end
 
   def link_to_resource(resource, options = {}, html_options = {})
     if resource

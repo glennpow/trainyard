@@ -33,7 +33,7 @@
     "#{site_name} (#{membership.role.name})" :
     "#{link_to_resource(membership.group)} (#{membership.role.name})" }) %>
 
-<% unless user.persona.blank? || !user.public_contact %>
+<% unless user.persona.blank? || !user.public_contact? %>
   <%= render_heading(t(:personal_details, :scope => [ :contacts ])) %>
 
   <%= render :partial => 'personas/show', :locals => { :persona => user.persona } %>
