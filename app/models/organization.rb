@@ -9,7 +9,7 @@ class Organization < ActiveRecord::Base
   has_many_articles
   has_one_theme
   
-  validates_presence_of :name, :description, :group
+  validates_presence_of :name, :group
   validates_uniqueness_of :name, :case_sensitive => false
   validates_attachment_size :image, Configuration.default_image_size_options
   
