@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     end
     
     after :create do
-      Membership.create(:user => @user, :role_id => Role.user.id, :group_id => params[:user_group_id]) if params[:user_group_id]
+      Membership.create(:user => @user, :role => Role[:user], :group_id => params[:user_group_id]) if params[:user_group_id]
       @user.confirm! unless Configuration.email_activation
     end
     

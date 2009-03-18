@@ -60,8 +60,8 @@ module Trainyard
                 end
                 
                 def assign_dependent_group_moderator
-                  self.moderator.assign_role!(Role.administrator, self.group)
-                  self.moderator.assign_role!(Role.editor, self.group)
+                  self.moderator.assign_role!(Role[:administrator], self.group)
+                  self.moderator.assign_role!(Role[:editor], self.group)
                 end
               end
             end
@@ -81,7 +81,7 @@ module Trainyard
           
           def create_default_permissions
             unless self.group.nil?
-              Permission.create(:group_id => self.group.id, :action_id => Action.edit.id, :role_id => Role.editor.id, :resource => self)
+              Permission.create(:group_id => self.group.id, :action => Action.edit, :role => Role[:editor], :resource => self)
             end
           end
         end

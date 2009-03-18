@@ -8,7 +8,7 @@ class CreateContact < ActiveRecord::Migration
       t.references :region, :null => false
       t.string :postal_code, :null => false
       t.references :country, :null => false
-      t.references :address_type
+      t.string :address_type
       t.float :latitude
       t.float :longitude
       t.timestamps
@@ -32,7 +32,7 @@ class CreateContact < ActiveRecord::Migration
     create_table :emails do |t|
       t.references :resource, :polymorphic => true, :null => false
       t.string :email_address, :null => false
-      t.references :email_type
+      t.string :email_type
       t.timestamps
     end
     
@@ -43,9 +43,9 @@ class CreateContact < ActiveRecord::Migration
       t.string :first_name
       t.string :middle_name
       t.string :last_name
-      t.references :prefix
-      t.references :suffix
-      t.references :gender
+      t.string :prefix
+      t.string :suffix
+      t.string :gender
       t.date :birthdate
       t.timestamps
     end
@@ -56,7 +56,7 @@ class CreateContact < ActiveRecord::Migration
       t.references :resource, :polymorphic => true, :null => false
       t.string :number, :null => false
       t.string :extension
-      t.references :phone_type
+      t.string :phone_type
       t.timestamps
     end
     
@@ -77,7 +77,7 @@ class CreateContact < ActiveRecord::Migration
     create_table :urls do |t|
       t.references :resource, :polymorphic => true, :null => false
       t.string :url_address, :null => false
-      t.references :url_type
+      t.string :url_type
       t.timestamps
     end
     

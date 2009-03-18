@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :persona, :allow_destroy => true
   has_many :memberships, :order => 'group_id ASC', :dependent => :destroy
   has_many :groups, :through => :memberships, :order => 'name ASC'
-  has_many :moderated_groups, :through => :memberships, :source => :group, :conditions => { "#{Membership.table_name}.role_id" => Role.administrator.id }
+  has_many :moderated_groups, :through => :memberships, :source => :group, :conditions => { "#{Membership.table_name}.role" => Role[:administrator] }
   has_many :permissions, :through => :groups
   has_attached_file :image, Configuration.default_image_options
   belongs_to :locale
@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   end
 
   def self.administrators
-    @@administrators ||= Membership.all(:include => :user, :conditions => { :group_id => nil, :role_id => Role.administrator.id }).map(&:user)
+    @@administrators ||= Membership.all(:include => :user, :conditions => { :group_id => nil, :role => Role[:administrator] }).map(&:user)
   end
   
   def roles(group = nil)
@@ -59,19 +59,19 @@ class User < ActiveRecord::Base
   end
   
   def has_role?(role, group = nil)
-    Membership.count(:conditions => { :user_id => self.id, :role_id => role.id, :group_id => group }) > 0
+    Membership.count(:conditions => { :user_id => self.id, :role => role, :group_id => group }) > 0
   end
   
   def has_administrator_role?(group = nil)
-    has_role?(Role.administrator, group)
+    has_role?(Role[:administrator], group)
   end
   
   def has_editor_role?(group = nil)
-    has_role?(Role.editor, group)
+    has_role?(Role[:editor], group)
   end
   
   def assign_role!(role, group = nil)
-    Membership.create(:user_id => self.id, :role_id => role.id, :group => group) unless self.has_role?(role, group)
+    Membership.create(:user_id => self.id, :role => role, :group => group) unless self.has_role?(role, group)
   end
   
   def is_moderator_of?(resource)
@@ -107,7 +107,7 @@ class User < ActiveRecord::Base
 
   def moderated(*args)
     ([ args ].flatten).map do |klass|
-      klass.all(:include => { :group => :memberships }, :conditions => { "#{Membership.table_name}.user_id" => self, "#{Membership.table_name}.role_id" => Role.administrator.id })
+      klass.all(:include => { :group => :memberships }, :conditions => { "#{Membership.table_name}.user_id" => self, "#{Membership.table_name}.role" => Role[:administrator] })
     end.flatten
   end
   

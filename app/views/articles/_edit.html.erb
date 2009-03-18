@@ -2,7 +2,7 @@
 
 <%= f.hidden_field(:user_id) %>
 
-<%= f.group_select(:group_id, :memberships => { :user => current_user, :roles => [ Role.administrator, Role.editor ] }) %>
+<%= f.group_select(:group_id, :memberships => { :user => current_user, :roles => [ Role[:administrator], Role[:editor] ] }) %>
 
 <%= f.text_field(:name) %>
 

@@ -162,6 +162,7 @@ ul.indexer-row-actions li span.image-label-text {
 }
 
 .heading {
+  width: 100%;
   padding: 6px;
   text-align: center;
 }

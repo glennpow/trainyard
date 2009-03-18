@@ -3,6 +3,7 @@ class ArticleRevision < ActiveRecord::Base
 
   belongs_to :article
   belongs_to :user
+  has_enumeration :article_type
   
   validates_presence_of :article, :user
   

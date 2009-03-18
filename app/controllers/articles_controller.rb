@@ -23,7 +23,7 @@ class ArticlesController < ApplicationController
   end
 
   before_filter :check_administrator_role, :only => [ :destroy ]
-  before_filter :check_viewer_of_resource_or_administrator, :only => [ :index ]
+  before_filter :check_viewer_of_resource, :only => [ :index ]
   before_filter :check_add_article_for_resource, :only => [ :new, :create ]
   before_filter :check_editor_of_article, :only => [ :edit, :update, :erase ]
   before_filter :check_viewer_of_article, :only => [ :show ]
@@ -60,8 +60,8 @@ class ArticlesController < ApplicationController
   
   private
   
-  def check_viewer_of_resource_or_administrator
-    @resource ? check_viewer_of(@resource) : check_administrator_role
+  def check_viewer_of_resource
+   check_administrator_role || check_viewer_of(@resource)
   end
   
   def check_add_article_for_resource

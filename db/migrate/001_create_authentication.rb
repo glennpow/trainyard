@@ -19,14 +19,14 @@ class CreateAuthentication < ActiveRecord::Migration
 
     create_table :memberships do |t|
       t.references :group
-      t.references :role, :null => false
+      t.string :role, :null => false
       t.references :user, :null => false
       t.timestamps
     end
     
     add_index :memberships, :user_id
     add_index :memberships, [ :group_id, :user_id ]
-    add_index :memberships, [ :group_id, :user_id, :role_id ], :unique => true
+    add_index :memberships, [ :group_id, :user_id, :role ], :unique => true
     
     create_table :organizations do |t|
       t.references :group, :null => false
@@ -43,12 +43,12 @@ class CreateAuthentication < ActiveRecord::Migration
 
     create_table :permissions do |t|
       t.references :resource, :polymorphic => true, :null => false
-      t.references :action, :null => false
+      t.string :action, :null => false
       t.references :group, :null => false
-      t.references :role
+      t.string :role
     end
 
-    add_index :permissions, [ :group_id, :role_id, :action_id, :resource_id, :resource_type ], :name => :index_permission, :unique => true
+    add_index :permissions, [ :group_id, :role, :action, :resource_id, :resource_type ], :name => :index_permission, :unique => true
 
     create_table :users do |t|
       t.string :login, :limit => 40, :null => false

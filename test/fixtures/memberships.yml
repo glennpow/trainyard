@@ -1,8 +1,8 @@
 membership_admin:
-  role_id: <%= Role.administrator.id %>
+  role: administrator
   user: user_admin
 
 membership_demo:
   group: group_preferred
-  role_id: <%= Role.user.id %>
+  role: user
   user: user_demo

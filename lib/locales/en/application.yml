@@ -57,6 +57,7 @@ en:
   settings: Settings
   show: Show
   show_object: Show {{object}}
+  site: Site
   status: Status
   time_zone: Time Zone
   type: Type

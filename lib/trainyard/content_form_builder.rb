@@ -223,10 +223,10 @@ module Trainyard
       order = options.delete(:order) || 'name ASC'
       if memberships_options = options.delete(:memberships)
         user = memberships_options[:user]
-        roles = (memberships_options[:roles] || [ Role.user ]).map(&:id)
+        roles = (memberships_options[:roles] || [ Role[:user] ]).map(&:key)
       end
       groups = if user
-        Group.all(:include => :memberships, :conditions => { "#{Membership.table_name}.user_id" => user, "#{Membership.table_name}.role_id" => roles }, :order => order)
+        Group.all(:include => :memberships, :conditions => { "#{Membership.table_name}.user_id" => user, "#{Membership.table_name}.role" => roles }, :order => order)
       else
         groups = Group.all(:order => order)
       end

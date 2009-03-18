@@ -4,6 +4,7 @@ class Article < ActiveRecord::Base
   acts_as_reviewable
   
   belongs_to :resource, :polymorphic => true
+  has_enumeration :article_type
   belongs_to :user
   has_many_articles
   has_many :article_revisions, :order => 'revision ASC', :dependent => :destroy do

@@ -3,6 +3,7 @@ class CreateContent < ActiveRecord::Migration
     create_table :articles do |t|
       t.references :resource, :polymorphic => true, :null => false
       t.references :group
+      t.string :article_type
       t.references :user, :null => false
       t.string :name, :null => false
       t.text :body, :null => false
@@ -22,6 +23,7 @@ class CreateContent < ActiveRecord::Migration
 
     create_table :article_revisions do |t|
       t.references :article, :null => false
+      t.string :article_type
       t.references :user, :null => false
       t.string :name, :null => false
       t.text :body
@@ -92,7 +94,7 @@ class CreateContent < ActiveRecord::Migration
       t.datetime :thumbnail_updated_at
       t.integer :width
       t.integer :height
-      t.references :content_type
+      t.string :content_type
       t.timestamps
     end
     

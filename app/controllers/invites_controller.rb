@@ -64,7 +64,7 @@ class InvitesController < ApplicationController
       message.body = t(:member_invite_accepted_by, :scope => [ :authentication, :invites, :update_invitation ], :user => current_user.name, :group => @group.name)
       message.save
       
-      if Membership.create(:user_id => current_user, :role_id => Role.user.id, :group_id => @invite.group_id)
+      if Membership.create(:user_id => current_user, :role => Role[:user], :group_id => @invite.group_id)
         flash[:notice] = t(:member_invite_accepted, :scope => [ :authentication, :invites, :update_invitation ], :group => @group.name)
         @invite.destroy
         redirect_to user_groups_path(current_user)

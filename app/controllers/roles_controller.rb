@@ -9,7 +9,7 @@ class RolesController < ApplicationController
  
   def update
     unless @user.has_role?(@role, @group)
-      membership = Membership.new(:user => @user, :group => @group, :role_id => @role.id)
+      membership = Membership.new(:user => @user, :group => @group, :role => @role)
       if membership.save
         flash[:notice] = t(:object_updated, :object => t(:role, :scope => [ :authentication ]))
       else
@@ -21,7 +21,7 @@ class RolesController < ApplicationController
   end
   
   def destroy
-    memberships = Membership.destroy_all(:user_id => @user, :group_id => @group, :role_id => @role.id)
+    memberships = Membership.destroy_all(:user_id => @user, :group_id => @group, :role => @role)
     flash[:notice] = t(:object_updated, :object => t(:role, :scope => [ :authentication ]))
     redirect_to :back
   end

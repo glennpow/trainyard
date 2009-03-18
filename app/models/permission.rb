@@ -1,9 +1,8 @@
 class Permission < ActiveRecord::Base
   belongs_to :resource, :polymorphic => true
   belongs_to :group
-  belongs_to :role
   
-  validates_presence_of :resource, :action_id, :group
+  validates_presence_of :resource, :action, :group
   
   def self.permitted?(user, action, resource)
     return false if resource.nil?
@@ -17,12 +16,12 @@ class Permission < ActiveRecord::Base
     
     Permission.transaction do
       return true if Permission.count(:conditions => [
-        "#{Permission.table_name}.action_id = ? AND #{Permission.table_name}.resource_id = ? AND #{Permission.table_name}.resource_type = ?",
-        action.id, resource.id, resource.class.to_s ]) == 0
+        "#{Permission.table_name}.action = ? AND #{Permission.table_name}.resource_id = ? AND #{Permission.table_name}.resource_type = ?",
+        action, resource.id, resource.class.to_s ]) == 0
 
       Permission.count(:include => { :group => :memberships }, :conditions => [
-        "#{Membership.table_name}.user_id = ? AND (#{Permission.table_name}.role_id = ? OR #{Membership.table_name}.role_id = ? OR #{Membership.table_name}.role_id = #{Permission.table_name}.role_id) AND #{Permission.table_name}.action_id = ? AND #{Permission.table_name}.resource_id = ? AND #{Permission.table_name}.resource_type = ?",
-        user, nil, Role.administrator.id, action.id, resource.id, resource.class.to_s ]) > 0
+        "#{Membership.table_name}.user_id = ? AND (#{Permission.table_name}.role = ? OR #{Membership.table_name}.role = ? OR #{Membership.table_name}.role = #{Permission.table_name}.role) AND #{Permission.table_name}.action = ? AND #{Permission.table_name}.resource_id = ? AND #{Permission.table_name}.resource_type = ?",
+        user, nil, Role[:administrator], action, resource.id, resource.class.to_s ]) > 0
     end
   end
 end
