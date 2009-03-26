@@ -1,10 +1,8 @@
-<% title t(:create_object, :object => t(:post, :scope => [ :content ])) %>
-
-<%= render_heading(h(t(:regarding_topic, :scope => [ :content ], :topic => @topic.name))) %>
+<% title t(:regarding_topic, :scope => [ :content ], :topic => h(@topic.name)) %>
 
 <% form_for :post, :url => objects_path do |f| %>
   <%= render :partial => 'edit', :locals => { :f => f, :post => @post } %>
 
-  <%= f.submit t(:create) %>
+  <%= f.submit_with_cancel(:submit => t(:create)) %>
 <% end %>
 

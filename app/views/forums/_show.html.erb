@@ -3,7 +3,5 @@
 <%= render_heading("#{t(:forum, :scope => [ :content ])}: #{h(forum.name)}") %>
 
 <% unless forum.description.blank? %>
-  <%= render_formatted(forum.description, :class => 'paragraph') %>
+  <%= render_text_area(forum.description) %>
 <% end %>
-
-<%= render_actions([ icon_link_to(:add_large, t(:new_object, :object => t(:topic, :scope => [ :content ])), new_forum_topic_path(forum)) ]) %>

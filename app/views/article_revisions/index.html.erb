@@ -1,5 +1,3 @@
-<% title tp(:revision, :scope => [ :content ]) %>
-
-<%= render_heading(t(:revisions_for_object, :scope => [ :content ], :count => @indexer.collection.total_entries, :object => link_to_resource(@article))) %>
+<% title t(:revisions_for_object, :scope => [ :content ], :count => @indexer.collection.total_entries, :object => link_to_resource(@article)) %>
 
 <%= render_indexer(@indexer) %>

@@ -1,7 +1,5 @@
 <% title h(@media.name) %>
 
-<%= render_heading(h(@media.name)) %>
-
 <%= render_field(t(:group, :scope => [ :authentication ]), link_to_resource(@media.resource)) %>
 
 <%= render_field(t(:date, :scope => [ :datetimes ]), h(@media.created_at)) %>

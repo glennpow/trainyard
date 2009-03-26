@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   make_resource_controller do
-    belongs_to :topic
+    belongs_to :forum, :topic, :user
     
     member_actions :edit_guru_points, :update_guru_points
     
@@ -40,13 +40,13 @@ class PostsController < ApplicationController
       options[:search_include] = [ :user ]
       options[:search] = { :context => @topic ? t(:in_object, :object => @topic.name) : t(:in_all_object, :object => tp(:topic, :scope => [ :content ])) }
     
-      if params[:topic_id]
-        options[:conditions] = [ "#{Post.table_name}.topic_id = ?", params[:topic_id] ]
-      elsif params[:forum_id]
+      if @topic
+        options[:conditions] = [ "#{Post.table_name}.topic_id = ?", @topic ]
+      elsif @forum
         options[:include] = :topic
-        options[:conditions] = [ "#{Topic.table_name}.forum_id = ?", params[:forum_id] ]
-      elsif params[:user_id]
-        options[:conditions] = [ "#{Post.table_name}.user_id = ?", params[:user_id] ]
+        options[:conditions] = [ "#{Topic.table_name}.forum_id = ?", @forum ]
+      elsif @user
+        options[:conditions] = [ "#{Post.table_name}.user_id = ?", @user ]
       end
     end
   end

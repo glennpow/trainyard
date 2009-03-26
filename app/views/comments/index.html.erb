@@ -1,10 +1,11 @@
-<% title tp(:comment, :scope => [ :content ]) %>
-
-<%= render_heading(@resource.nil? ? tp(:comment, :scope => [ :content ]) :
-  t(:comments_for_object, :scope => [ :content ], :count => @indexer.collection.total_entries, :object => link_to_resource(@resource))) %>
-
-<% if may_review?(@resource) %>
-  <% @indexer.footers = link_to(t(:create_object, :object => t(:comment, :scope => [ :content ])), new_object_path) %>
+<% if @resource %>
+  <% title t(:comments_for_object, :scope => [ :content ], :count => @indexer.collection.total_entries, :object => link_to_resource(@resource)) %>
+<% else %>
+  <% title tp(:comment, :scope => [ :content ]) %>
 <% end %>
 
 <%= render_indexer(@indexer) %>
+
+<% if may_review?(@resource) %>
+  <% page_actions << icon_link_to(:add_large, t(:create_object, :object => t(:comment, :scope => [ :content ])), new_object_path) %>
+<% end %>

@@ -1,9 +1,7 @@
-<% title t(:edit_object, :object => t(:review, :scope => [ :content ])) %>
-
-<%= render_heading(t(:reviews_of_object, :scope => [ :content ], :count => 1, :object => @review.resource.name)) %>
+<% title t(:reviews_of_object, :scope => [ :content ], :count => 1, :object => @review.resource.name) %>
 
 <% form_for :review, :url => object_path, :html => { :method => :put } do |f| %>
   <%= render :partial => 'edit', :locals => { :f => f, :review => @review } %>
 
-  <%= f.submit t(:save) %>
+  <%= f.submit_with_cancel(:submit => t(:save)) %>
 <% end %>

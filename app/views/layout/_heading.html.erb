@@ -1,6 +1,6 @@
-<p class="heading">
+<div class="heading">
   <span class="label"><%= label %></span>
-  <% if actions && actions.any? %>
-    <span class="actions"> (<%= actions.join(" | ") %>)</span>
+  <% unless actions.empty? %>
+    <%= render_actions(actions, :class => 'heading-actions') %>
   <% end %>
-</p>
+</div>

@@ -1,13 +1,8 @@
 <% title h(@wiki.name) %>
 
-<%= render_heading(h(@wiki.name)) %>
-
-<% if is_editor_of?(@wiki) %>
-  <%= render_actions([ icon_link_to(:add_large, t(:create_object, :object => t(:article, :scope => [ :content ])), new_wiki_article_path(@wiki)) ]) %>
-
-  <% @articles_indexer.footers = link_to(t(:create_object, :object => t(:article, :scope => [ :content ])), new_wiki_article_path(@wiki)) %>
-<% end %>
-
 <%= render_indexer(@articles_indexer) %>
 
-<% page_actions << icon_link_to(:edit, t(:edit), edit_object_path) if is_editor_of?(@wiki) %>
+<% if is_editor_of?(@wiki) %>
+  <% page_actions << icon_link_to(:edit, t(:edit), edit_object_path) %>
+  <% page_actions << icon_link_to(:add_large, t(:create_object, :object => t(:article, :scope => [ :content ])), new_wiki_article_path(@wiki)) %>
+<% end %>

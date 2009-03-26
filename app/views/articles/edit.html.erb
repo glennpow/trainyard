@@ -1,9 +1,7 @@
-<% title t(:edit_object, :object => t(:article, :scope => [ :content ])) %>
-
-<%= render_heading(t(:articles_for_object, :scope => [ :content ], :count => 1, :object => @article.resource.name)) %>
+<% title t(:articles_for_object, :scope => [ :content ], :count => 1, :object => @article.resource.name) %>
 
 <% form_for :article, :url => object_path, :html => { :method => :put } do |f| %>
   <%= render :partial => 'edit', :locals => { :f => f, :article => @article } %>
 
-  <%= f.submit t(:save) %>
+  <%= f.submit_with_cancel(:submit => t(:save)) %>
 <% end %>

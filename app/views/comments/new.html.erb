@@ -1,9 +1,7 @@
-<% title t(:create_object, :object => t(:comment, :scope => [ :content ])) %>
-
-<%= render_heading(t(:comments_for_object, :scope => [ :content ], :count => 1, :object => @comment.resource.name)) %>
+<% title t(:comments_for_object, :scope => [ :content ], :count => 1, :object => @comment.resource.name) %>
 
 <% form_for :comment, :url => objects_path do |f| %>
   <%= render :partial => 'edit', :locals => { :f => f, :comment => @comment } %>
 
-  <%= f.submit t(:create) %>
+  <%= f.submit_with_cancel(:submit => t(:create)) %>
 <% end %>

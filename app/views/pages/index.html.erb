@@ -1,13 +1,11 @@
-<% title tp(:page, :scope => [ :content ]) %>
-
 <% if @group %>
-  <%= render_heading(t(:object_for_parent, :object => tp(:page, :scope => [ :content ]), :count => @indexer.collection.total_entries, :parent => @group.name)) %>
+  <% title t(:object_for_parent, :object => tp(:page, :scope => [ :content ]), :count => @indexer.collection.total_entries, :parent => @group.name) %>
 <% else %>
-  <%= render_heading(tp(:page, :scope => [ :content ])) %>
-<% end %>
-
-<% if has_administrator_role? %>
-  <% @indexer.footers = link_to(t(:create_object, :object => t(:page, :scope => [ :content ])), new_page_path) %>
+  <% title tp(:page, :scope => [ :content ]) %>
 <% end %>
 
 <%= render_indexer(@indexer) %>
+
+<% if has_administrator_role? %>
+  <% page_actions << icon_link_to(:add_large, t(:create_object, :object => t(:page, :scope => [ :content ])), new_page_path) %>
+<% end %>

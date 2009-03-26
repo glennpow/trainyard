@@ -112,7 +112,8 @@ module ContentHelper
     returning('') do |content|
       if is_commentable?(resource)
         resource_name = ActionController::RecordIdentifier.singular_class_name(resource)
-        content << render_heading(link_to(tp(:comment, :scope => [ :content ]), send(:"#{resource_name}_comments_path", resource)), :actions => [
+        content << render_heading(named_anchor('comments', tp(:comment, :scope => [ :content ])), :actions => [
+          link_to(t(:view_all), send(:"#{resource_name}_comments_path", resource)),
           link_to(t(:post_comment, :scope => [ :content ]), send(:"new_#{resource_name}_comment_path", resource))
         ])
         content << render_indexer(@comments_indexer) if @comments_indexer
@@ -165,7 +166,8 @@ module ContentHelper
     returning('') do |content|
       if is_reviewable?(resource)
         resource_name = ActionController::RecordIdentifier.singular_class_name(resource)
-        content << render_heading(link_to(tp(:review, :scope => [ :content ]), send(:"#{resource_name}_reviews_path", resource)), :actions => [
+        content << render_heading(named_anchor('reviews', tp(:review, :scope => [ :content ])), :actions => [
+          link_to(t(:view_all), send(:"#{resource_name}_reviews_path", resource)),
           may_review?(resource) ? link_to(t(:post_review, :scope => [ :content ]), send(:"new_#{resource_name}_review_path", resource)) : nil
         ])
         content << render_indexer(@reviews_indexer) if @reviews_indexer

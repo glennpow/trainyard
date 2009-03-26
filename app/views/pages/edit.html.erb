@@ -1,9 +1,7 @@
 <% title t(:create_object, :object => t(:page, :scope => [ :content ])) %>
 
-<%= render_heading(t(:create_object, :object => t(:page, :scope => [ :content ]))) %>
-
 <% form_for :page, :url => object_path, :html => { :method => :put } do |f| %>
   <%= render :partial => 'pages/edit', :locals => { :f => f, :page => @page } %>
 
-  <%= f.submit t(:save) %>
+  <%= f.submit_with_cancel(:submit => t(:save)) %>
 <% end %>

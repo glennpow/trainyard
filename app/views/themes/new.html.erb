@@ -1,9 +1,7 @@
 <% title t(:create_object, :object => t(:theme, :scope => [ :themes ])) %>
 
-<%= render_heading(t(:create_object, :object => t(:theme, :scope => [ :themes ]))) %>
-
 <% form_for :theme, :url => objects_path do |f| %>
   <%= render :partial => 'edit', :locals => { :f => f, :theme => @theme } %>
 
-  <%= f.submit t(:create) %>
+  <%= f.submit_with_cancel(:submit => t(:create)) %>
 <% end %>

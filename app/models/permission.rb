@@ -4,24 +4,28 @@ class Permission < ActiveRecord::Base
   
   validates_presence_of :resource, :action, :group
   
-  def self.permitted?(user, action, resource)
-    return false if resource.nil?
-    return true if user.has_administrator_role?
-    if resource.respond_to?(:group)
-      return false unless group = resource.group
-      return true if user.has_administrator_role?(group)
-    else
-      return action == Action.edit && resource.respond_to?(:user) && resource.user == user
-    end
+  class << self
+    extend ActiveSupport::Memoizable
     
-    Permission.transaction do
-      return true if Permission.count(:conditions => [
-        "#{Permission.table_name}.action = ? AND #{Permission.table_name}.resource_id = ? AND #{Permission.table_name}.resource_type = ?",
-        action, resource.id, resource.class.to_s ]) == 0
+    def permitted?(user, action, resource)
+      return false if resource.nil?
+      return true if user.has_administrator_role?
+      if resource.respond_to?(:group)
+        return false unless resource.group
+        return true if user.has_administrator_role?(resource.group)
+      end
+      return true if action == Action.edit && resource.respond_to?(:user) && resource.user == user
 
-      Permission.count(:include => { :group => :memberships }, :conditions => [
-        "#{Membership.table_name}.user_id = ? AND (#{Permission.table_name}.role = ? OR #{Membership.table_name}.role = ? OR #{Membership.table_name}.role = #{Permission.table_name}.role) AND #{Permission.table_name}.action = ? AND #{Permission.table_name}.resource_id = ? AND #{Permission.table_name}.resource_type = ?",
-        user, nil, Role[:administrator], action, resource.id, resource.class.to_s ]) > 0
+      Permission.transaction do
+        return true if Permission.count(:conditions => [
+          "#{Permission.table_name}.action = ? AND #{Permission.table_name}.resource_id = ? AND #{Permission.table_name}.resource_type = ?",
+          action, resource.id, resource.class.to_s ]) == 0
+
+        Permission.count(:include => { :group => :memberships }, :conditions => [
+          "#{Membership.table_name}.user_id = ? AND (#{Permission.table_name}.role = ? OR #{Membership.table_name}.role = ? OR #{Membership.table_name}.role = #{Permission.table_name}.role) AND #{Permission.table_name}.action = ? AND #{Permission.table_name}.resource_id = ? AND #{Permission.table_name}.resource_type = ?",
+          user, nil, Role[:administrator], action, resource.id, resource.class.to_s ]) > 0
+      end
     end
+    memoize :permitted?
   end
 end

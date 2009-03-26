@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  extend ActiveSupport::Memoizable
+  
   acts_as_authentic
   acts_as_contactable if Configuration.contactable_users
   acts_as_organizer
@@ -57,10 +59,12 @@ class User < ActiveRecord::Base
   def roles(group = nil)
     Membership.all(:conditions => { :user_id => self.id, :group_id => group }).map(&:role)
   end
+  memoize :roles
   
   def has_role?(role, group = nil)
     Membership.count(:conditions => { :user_id => self.id, :role => role, :group_id => group }) > 0
   end
+  memoize :has_role?
   
   def has_administrator_role?(group = nil)
     has_role?(Role[:administrator], group)
@@ -80,12 +84,14 @@ class User < ActiveRecord::Base
     return resource.moderators.include?(self) if resource.respond_to?(:moderators)
     return resource.respond_to?(:group) && resource.group && resource.group.has_moderator?(self)
   end
+  memoize :is_moderator_of?
   
   def is_member_of?(resource, with_child_groups = false)
     return true if has_administrator_role?
     return false if resource.nil?
     return resource.respond_to?(:group) && resource.group && resource.group.has_member?(self, with_child_groups)
   end
+  memoize :is_member_of?
     
   def permitted?(action, resource)
     Permission.permitted?(self, action, resource)
@@ -104,20 +110,24 @@ class User < ActiveRecord::Base
       klass.all(:include => { :group => :memberships }, :conditions => { "#{Membership.table_name}.user_id" => self })
     end.flatten
   end
+  memoize :membered
 
   def moderated(*args)
     ([ args ].flatten).map do |klass|
       klass.all(:include => { :group => :memberships }, :conditions => { "#{Membership.table_name}.user_id" => self, "#{Membership.table_name}.role" => Role[:administrator] })
     end.flatten
   end
+  memoize :moderated
   
   def watched(klass = nil)
     self.watchings.all(:conditions => klass ? { :resource_type => klass.to_s } : nil).map(&:resource)
   end
+  memoize :watched
   
   def is_watching?(resource)
     self.watchings.count(:conditions => { :resource_type => resource.class.to_s, :resource_id => resource.id }) > 0
   end
+  memoize :is_watching?
  
   
   protected

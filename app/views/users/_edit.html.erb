@@ -8,28 +8,28 @@
       <%= f.text_field :email, :label => { :name => t(:primary_email, :scope => [ :authentication ]) },
         :required => true, :hint => t(:contact_hint, :scope => [ :site_content ]) %>
     </td>
-    <% if Configuration.users_locale %>
-      <td>
-        <%= f.locale_select(:locale_id, :localized => true) %>
-      </td>
-    <% end %>
   </tr>
   <tr>
     <td>
       <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
     </td>
-    <% if user.try(:image?) %>
-      <td>
+    <td>
+      <% if Configuration.users_locale %>
+        <%= f.locale_select(:locale_id, :localized => true) %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <% if user.try(:image?) %>
         <div class="form-element"><%= image_tag(user.image.url(:thumb)) %></div>
-      </td>
-    <% end %>
+      <% end %>
+    </td>
     <td>
       <%= f.file_field :image %>
     </td>
   </tr>
 </table>
-
-<hr />
 
 <%= render_heading(t(:settings)) %>
 

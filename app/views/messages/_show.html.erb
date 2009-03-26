@@ -6,4 +6,4 @@
 
 <%= render_field(t(message.is_to?(current_user) ? :received : :sent, :scope => [ :content ]), message.created_at.to_s(:short)) %>
 
-<%= render_formatted(message.body, :class => 'paragraph') %>
+<%= render_text_area(message.body) %>

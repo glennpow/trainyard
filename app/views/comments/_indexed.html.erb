@@ -12,7 +12,7 @@
       </td>
   
       <td class="align-top">
-        <%= render_formatted(comment.body) %>
+        <%= render_formatted(comment.body, :truncate => 100) %>
 
         <% if is_editor_of?(comment) %>
           <%= render_actions([ icon_link_to(:edit, t(:edit), edit_comment_path(comment)) ]) %>

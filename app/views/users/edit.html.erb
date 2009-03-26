@@ -1,14 +1,10 @@
 <% title t(:edit_object, :object => t(:account, :scope => [ :authentication ])) %>
 
-<%= render_heading t(:edit_object, :object => t(:account, :scope => [ :authentication ])) %>
-
-<%= render_actions([
-  link_to(t(:show_object, :object => t(:profile, :scope => [ :authentication ])), user_path(@user)),
-  link_to(t(:change_password, :scope => [ :authentication ]), change_password_path)
-], :class => 'page-actions') %>
-
 <% form_for :user, :url => user_url(@user), :html => { :method => :put, :multipart => true } do |f| -%>
   <%= render :partial => 'edit', :locals => { :f => f, :user => @user } %>
 
-  <%= f.submit t(:save) %>
+  <%= f.submit_with_cancel(:submit => t(:save)) %>
 <% end -%>
+
+<% page_actions << link_to(t(:show_object, :object => t(:profile, :scope => [ :authentication ])), user_path(@user)) %>
+<% page_actions << link_to(t(:change_password, :scope => [ :authentication ]), change_password_path) %>

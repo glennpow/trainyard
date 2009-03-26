@@ -3,3 +3,5 @@
 <%= render :partial => 'show', :locals => { :forum => @forum } %>
 
 <%= render_indexer(@topics_indexer) %>
+
+<% page_actions << icon_link_to(:add_large, t(:new_object, :object => t(:topic, :scope => [ :content ])), new_forum_topic_path(forum)) %>

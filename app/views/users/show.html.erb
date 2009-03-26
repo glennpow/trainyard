@@ -1,4 +1,4 @@
-<% title t(:user, :scope => [ :authentication ]) %>
+<% title h(@user.name) %>
 
 <%= render :partial => 'show', :locals => { :user => @user } %>
 

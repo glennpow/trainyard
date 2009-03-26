@@ -2,4 +2,4 @@
 
 <%= render_field(t(:author, :scope => [ :content ]), comment_author(comment)) %>
 
-<%= render_formatted(comment.body, :class => 'paragraph') %>
+<%= render_text_area(comment.body) %>

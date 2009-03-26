@@ -59,10 +59,12 @@ en:
   show_object: Show {{object}}
   site: Site
   status: Status
+  submit: Submit
   time_zone: Time Zone
   type: Type
   unknown: Unknown
   view: View
+  view_all: View All
   view_object: View {{object}}
   "yes": "Yes"
   datetimes:
@@ -311,6 +313,7 @@ en:
     post_comment: Post Comment
     post_reply: Post Reply
     post_review: Post Review
+    posts_for_object: Posts for {{object}}
     preview: Preview
     quoted_from_post: Quoted from {{post}}
     rating: Rating

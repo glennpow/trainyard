@@ -1,4 +1,4 @@
-<% title t(:locate, :scope => [ :contacts ]) %>
+<% title t(:locate_object, :scope => [ :contacts ], :object => @resource_type.humanize.pluralize) %>
 
 <% if logged_in? && current_user.address %>
   <script type="text/javascript">
@@ -32,8 +32,6 @@
   </script>
 <% end %>
 
-<%= render_heading(t(:locate_object, :scope => [ :contacts ], :object => @resource_type.humanize.pluralize)) %>
-
 <% form_for :address, :url => locate_results_addresses_path, :html => { :method => :get } do |f| -%>
   <% if logged_in? && current_user.address %>
     <%= check_box_tag(:user_address, "1", true, :onchange => "set_user_address(this.checked)") %>
@@ -46,5 +44,5 @@
 
   <%= render :partial => 'addresses/edit', :locals => { :f => f, :address => @address } %>
 
-  <%= f.submit t(:search) %>
+  <%= f.submit_with_submit(:submit => t(:search)) %>
 <% end %>

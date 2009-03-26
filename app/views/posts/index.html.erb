@@ -1,9 +1,12 @@
-<% title tp(:post, :scope => [ :content ]) %>
-
 <% if @topic %>
+  <% title h(@topic.name) %>
   <%= render :partial => 'topics/show', :locals => { :topic => @topic } %>
+<% elsif @form %>
+  <% title t(:posts_for_object, :scope => [ :content ], :object => link_to_resource(@form)) %>
+<% elsif @user %>
+  <% title t(:posts_for_object, :scope => [ :content ], :object => link_to_resource(@user)) %>
 <% else %>
-  <%= render_heading(tp(:post, :scope => [ :content ])) %>
+  <% title tp(:post, :scope => [ :content ]) %>
 <% end %>
 
 <%= render_indexer(@indexer) %>

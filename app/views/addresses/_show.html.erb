@@ -2,7 +2,7 @@
   <% head geographer_header %>
 <% end %>
 
-<table class="show-table" align="center">
+<table class="show-table">
   <tr>
     <td>
       <%= render_field(t(:street, :scope => [ :contacts, :addresses ]), h(address.streets.join(", "))) %>

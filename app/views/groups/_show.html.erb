@@ -11,5 +11,6 @@
   <%= render_field(tp(:child_group, :scope => [ :authentication ]), group.child_groups.map(&:name)) %>
 <% end %>
 
-<%= render_field(tp(:member, :scope => [ :authentication ]), group.users.length,
-  :actions => group.users.any? ? link_to(t(:view), group_users_path(group)) : nil) %>
+<%= render_heading(tp(:member, :scope => [ :authentication ]), :actions => link_to(t(:view_all), group_users_path(group))) %>
+
+<%= render_field(group.users(:limit => 10).map { |user| link_to_resource(user) }) %>

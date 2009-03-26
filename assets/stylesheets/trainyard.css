@@ -162,9 +162,8 @@ ul.indexer-row-actions li span.image-label-text {
 }
 
 .heading {
-  width: 100%;
-  padding: 6px 0px;
-  text-align: center;
+  padding: 6px 10px;
+  text-align: left;
 }
 
 .heading .label {
@@ -233,14 +232,14 @@ table.item-table td {
 }
 
 .formatted {
-  text-align: center;
+  text-align: left;
 }
 
 .image-label-link {
   text-decoration: none;
 }
 
-.image-label img {
+.image-label-image {
   vertical-align: middle;
 }
 

@@ -3,13 +3,9 @@
   
   <%= render_separator %>
   
-  <% if is_editor_of?(post) %>
-    <%= icon_link_to(:edit, t(:edit), edit_post_path(post)) %>
-  <% end %>
-  
-  <% if has_administrator_role? %>
-    <%= icon_link_to(:delete, t(:delete), post, :confirm => t(:are_you_sure), :method => :delete) %>
-  <% end %>
-  
-  <%= icon_link_to(:reply, t(:post_reply, :scope => [ :content ]), new_topic_post_path(post.topic, :reply_to_post_id => post.id)) %>
+  <%= render_actions([
+    icon_link_to(:reply, t(:post_reply, :scope => [ :content ]), new_topic_post_path(post.topic, :reply_to_post_id => post.id)),
+    is_editor_of?(post) ? icon_link_to(:edit, t(:edit), edit_post_path(post)) : nil,
+    has_administrator_role? ? icon_link_to(:delete, t(:delete), post, :confirm => t(:are_you_sure), :method => :delete) : nil,
+  ]) %>
 </div>

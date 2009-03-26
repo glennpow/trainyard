@@ -1,6 +1,6 @@
 <%= render_heading(t(:reviews_of_object, :scope => [ :content ], :count => 1, :object => link_to_resource(review.resource))) %>
 
-<table class="profile-table" align="center">
+<table class="profile-table">
   <tr>
     <td>
       <%= render_user_card(review.user, :image_style => :normal) %>
@@ -13,4 +13,4 @@
   </tr>
 </table>
 
-<%= render_formatted(review.body, :class => 'paragraph') %>
+<%= render_text_area(review.body) %>

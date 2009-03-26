@@ -1,13 +1,8 @@
 <% title tp(:forum, :scope => [ :content ]) %>
 
-<%= render_heading(tp(:forum, :scope => [ :content ])) %>
-
-<% if has_administrator_role? %>
-  <% @indexer.footers = link_to(t(:create_object, :object => t(:forum, :scope => [ :content ])), new_forum_path) %>
-<% end %>
-
 <%= render_indexer(@indexer) %>
 
 <% if has_administrator_role? %>
+  <% page_actions << icon_link_to(:add_large, t(:create_object, :object => t(:forum, :scope => [ :content ])), new_forum_path) %>
   <%= sortable_element('indexer_forum_form', :url => sort_forums_path, :tag => 'div', :handle => 'sort-handle') %>
 <% end %>

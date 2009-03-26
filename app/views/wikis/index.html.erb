@@ -1,13 +1,11 @@
-<% title t(:wiki, :scope => [ :content ]) %>
-
 <% if @group %>
-  <%= render_heading(t(:object_for_parent, :object => tp(:wiki, :scope => [ :content ]), :count => @indexer.collection.total_entries, :parent => @group.name)) %>
+  <% title t(:object_for_parent, :object => tp(:wiki, :scope => [ :content ]), :count => @indexer.collection.total_entries, :parent => @group.name) %>
 <% else %>
-  <%= render_heading(tp(:wiki, :scope => [ :content ])) %>
-<% end %>
-
-<% if is_editor_of?(@group) %>
-  <% @indexer.footers = link_to(t(:add_object, :object => t(:wiki, :scope => [ :content ])), new_object_path) %>
+  <% title tp(:wiki, :scope => [ :content ]) %>
 <% end %>
 
 <%= render_indexer(@indexer) %>
+
+<% if is_editor_of?(@group) %>
+  <% page_actions << icon_link_to(:add_large, t(:add_object, :object => t(:wiki, :scope => [ :content ])), new_object_path) %>
+<% end %>

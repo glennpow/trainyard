@@ -1,9 +1,7 @@
 <% title t(:invite_to_group, :scope => [ :authentication, :invites, :new ], :group => @group.name) %>
 
-<%= render_heading(t(:invite_to_group, :scope => [ :authentication, :invites, :new ], :group => @group.name)) %>
-
 <% form_for(:invite, :url => objects_path) do |f| %>
   <%= f.text_field :email, :required => true %>
 
-  <%= f.submit t(:invite, :scope => [ :authentication ]) %>
+  <%= f.submit_with_cancel(:submit => t(:invite, :scope => [ :authentication ])) %>
 <% end %>

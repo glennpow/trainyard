@@ -5,5 +5,3 @@
 <% if topic.guru_points > 0 %>
   <%= render_field(t(:guru_points_available, :scope => [ :content ]), topic.guru_points_available) %>
 <% end %>
-
-<%= render_actions([ icon_link_to(:add_large, t(:post_reply, :scope => [ :content ]), new_topic_post_path(topic)) ]) %>

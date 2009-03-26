@@ -1,31 +1,33 @@
-<%= render_field(image_tag(user.image.url)) %>
+<table class="show-table">
+  <tr>
+    <td>
+      <%= render_field(image_tag(user.image.url)) %>
+    </td>
+    <td>
+      <%= render_field(t(:display_name, :scope => [ :authentication ]), h(user.name)) %>
 
-<%= render_heading(h(user.name)) %>
+      <%= render_field(t(:joined_on, :scope => [ :authentication ]), user.created_at.to_date) %>
+
+      <%= render_field(t(:locale, :scope => [ :content ]), h(user.locale.name)) %>
+  
+      <%= render_field(tp(:post, :scope => [ :content ]), "#{user.posts_count} <span class='actions'>(#{link_to(t(:view), user_posts_path(user))})</span>") %>
+  
+      <%= render_field(tp(:guru_point, :scope => [ :content ]), user.guru_points) %>
+    </td>
+  </tr>
+</table>
 
 <% if has_administrator_role? %>
-  <%= render_field(t(:login, :scope => [ :authentication ]), h(user.login)) %>
-<% end %>
-
-<%= render_field(t(:joined_on, :scope => [ :authentication ]), user.created_at.to_date) %>
-
-<%= render_field(t(:locale, :scope => [ :content ]), h(user.locale.name)) %>
-  
-<%= render_field(tp(:post, :scope => [ :content ]), user.posts_count) %>
-  
-<%= render_field(tp(:guru_point, :scope => [ :content ]), user.guru_points) %>
-
-<% if has_administrator_role? %>
-  <%= render_field(t(:primary_email, :scope => [ :authentication ]), h(user.email)) %>
-  
   <%= render_heading(t(:administer_object, :scope => [ :authentication ], :object => h(user.name))) %>
+
+  <%= render_field(t(:login, :scope => [ :authentication ]), h(user.login)) %>
+
+  <%= render_field(t(:primary_email, :scope => [ :authentication ]), h(user.email)) %>
 
   <%= render_field(t(:status), user.active? ? t(:enabled) : t(:disabled),
     :actions => user != current_user ? [ user.active? ?
       link_to(t(:disable), user, :confirm => t(:are_you_sure), :method => :delete) :
       link_to(t(:enable), enable_user_path(user), :method => :put) ] : nil) %>
-
-  <%= render_field(tp(:group, :scope => [ :authentication ]), user.groups.map { |group| link_to_resource(group) },
-    :actions => user.groups.any? ? link_to(t(:view), user_groups_path(user)) : nil) %>
 <% end %>
 
 <%= render_field(tp(:group, :scope => [ :authentication ]),

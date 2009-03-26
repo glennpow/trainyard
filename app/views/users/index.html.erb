@@ -1,13 +1,11 @@
-<% title tp(:user, :scope => [ :authentication ]) %>
-
 <% if @group %>
-  <%= render_heading(t(:users_in_object, :scope => [ :authentication ], :object => h(@group.name))) %>
+  <% title t(:users_in_object, :scope => [ :authentication ], :object => h(@group.name)) %>
 <% else %>
-  <%= render_heading(tp(:user, :scope => [ :authentication ])) %>
-<% end %>
-
-<% if @group && is_moderator_of?(@group) %>
-  <%= render_actions([ icon_link_to(:add_large, t(:invite_to_group, :scope => [ :authentication, :invites, :new ], :group => @group.name), new_group_invite_path(@group)) ]) %>
+  <% title tp(:user, :scope => [ :authentication ]) %>
 <% end %>
 
 <%= render_indexer(@indexer) %>
+
+<% if @group && is_moderator_of?(@group) %>
+  <% page_actions << icon_link_to(:add_large, t(:invite_to_group, :scope => [ :authentication, :invites, :new ], :group => @group.name), new_group_invite_path(@group)) %>
+<% end %>

@@ -1,9 +1,7 @@
 <% title t(:create_object, :object => t(:organization, :scope => [ :authentication ])) %>
 
-<%= render_heading(t(:create_object, :object => t(:organization, :scope => [ :authentication ]))) %>
-
 <% form_for :organization, :url => objects_path, :html => { :multipart => true } do |f| %>
   <%= render :partial => 'edit', :locals => { :f => f, :organization => @organization } %>
 
-  <%= f.submit t(:create) %>
+  <%= f.submit_with_cancel(:submit => t(:create)) %>
 <% end %>

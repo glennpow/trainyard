@@ -2,7 +2,6 @@
   <% if label %>
     <span class="label">
       <%= label %>
-    </span>
   <% end %>
   <% if actions && actions.any? %>
     <span class="actions">
@@ -11,6 +10,7 @@
   <% end %>
   <% if label %>
     :
+    </span>
   <% end %>
   <% if value %>
     <span class="value">
@@ -20,7 +20,7 @@
 </p>
 
 <% if values %>
-  <div class="show-field-values" align="center">
+  <div class="show-field-values">
     <ul class="show-field-list">
       <% values.each do |value| %>
         <li>

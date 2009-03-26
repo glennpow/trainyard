@@ -1,12 +1,8 @@
 <% title tp(:message, :scope => [ :content ]) %>
 
-<%= render_heading(tp(:message, :scope => [ :content ])) %>
-
-<% content_tag(:div, :class => 'messages-mailboxes') do %>
-  <%= render_actions([
-    link_to_if(@mailbox != :inbox, t(:inbox, :scope => [ :content ]), messages_path(:mailbox => :inbox)),
-    link_to_if(@mailbox != :sent, t(:sent, :scope => [ :content ]), messages_path(:mailbox => :sent)),
-  ], :class => 'page-actions') %>
-<% end %>
+<%= render_actions([
+  link_to_if(@mailbox != :inbox, t(:inbox, :scope => [ :content ]), messages_path(:mailbox => :inbox)),
+  link_to_if(@mailbox != :sent, t(:sent, :scope => [ :content ]), messages_path(:mailbox => :sent)),
+], :class => 'messages-mailboxes') %>
 
 <%= render_indexer(@indexer) %>

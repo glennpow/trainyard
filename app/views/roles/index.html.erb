@@ -1,10 +1,8 @@
-<% title tp(:role, :scope => [ :authentication ]) %>
-
-<%= render_heading(t(:roles_for_user, :scope => [ :authentication, :roles ], :user => @user.name) + (@group ? " (#{@group.name})" : "")) %>
+<% title t(:roles_for_user, :scope => [ :authentication, :roles ], :user => @user.name) + (@group ? " (#{@group.name})" : "") %>
 
 <%= render_field(t(:roles_assigned, :scope => [ :authentication, :roles ]), nil) %>
 <% if @assigned_roles.any? %>
-  <table class="show-field-values" align="center">
+  <table class="show-field-values">
     <% @assigned_roles.each do |role| %>
       <tr>
         <td>
@@ -23,7 +21,7 @@
     <% end %>
   </table>
 <% else %>
-  <div class="show-field-values" align="center">
+  <div class="show-field-values">
     <%=t :none %>
   </div>
 <% end %>
@@ -32,7 +30,7 @@
 
 <%= render_field(t(:roles_available, :scope => [ :authentication, :roles ]), nil) %>
 <% if @available_roles.any? %>
-  <table class="show-field-values" align="center">
+  <table class="show-field-values">
     <% @available_roles.each do |role| %>
       <tr>
         <td>
@@ -51,7 +49,7 @@
     <% end %>
   </table>
 <% else %>
-  <div class="show-field-values" align="center">
+  <div class="show-field-values">
     <%=t :none %>
   </div>
 <% end %>

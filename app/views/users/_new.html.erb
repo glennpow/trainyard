@@ -17,8 +17,13 @@
     <td>
       <%= f.text_field :name, :label => { :name => t(:display_name, :scope => [ :authentication ]) }, :required => true %>
     </td>
+  </tr>
+  <tr>
     <td>
       <%= f.text_field :email, :required => true %>
+    </td>
+    <td>
+      <%= f.file_field :image %>
     </td>
   </tr>
   <tr>
@@ -28,23 +33,18 @@
     <td>
       <%= f.password_field :password_confirmation, :required => true %>
     </td>
-    <% if Configuration.users_locale %>
-      <td>
-        <%= f.locale_select(:locale_id, :localized => true, :required => true) %>
-      </td>
-    <% end %>
   </tr>
   <tr>
     <td>
       <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :required => true %>
     </td>
     <td>
-      <%= f.file_field :image %>
+      <% if Configuration.users_locale %>
+        <%= f.locale_select(:locale_id, :localized => true, :required => true) %>
+      <% end %>
     </td>
   </tr>
 </table>
-
-<hr />
 
 <%= render_heading(t(:settings)) %>
 

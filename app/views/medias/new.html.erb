@@ -3,5 +3,5 @@
 <% form_for(:media, :url => objects_path) do |f| %>
   <%= render :partial => 'edit', :locals => { :f => f, :media => @media } %>
   
-  <%= f.submit t(:create) %>
+  <%= f.submit_with_cancel(:submit => t(:create)) %>
 <% end %>

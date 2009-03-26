@@ -1,13 +1,11 @@
-<% title tp(:blog, :scope => [ :content ]) %>
-
 <% if @group %>
-  <%= render_heading(t(:object_for_parent, :object => tp(:blog, :scope => [ :content ]), :count => @indexer.collection.total_entries, :parent => @group.name)) %>
+  <% title t(:object_for_parent, :object => tp(:blog, :scope => [ :content ]), :count => @indexer.collection.total_entries, :parent => @group.name) %>
 <% else %>
-  <%= render_heading(tp(:blog, :scope => [ :content ])) %>
+  <% title tp(:blog, :scope => [ :content ]) %>
 <% end %>
 
 <% if is_editor_of?(@group) %>
-  <% @indexer.footers = link_to(t(:add_object, :object => t(:blog, :scope => [ :content ])), new_object_path) %>
+  <% page_actions << icon_link_to(:add_large, t(:add_object, :object => t(:blog, :scope => [ :content ])), new_object_path) %>
 <% end %>
 
 <%= render_indexer(@indexer) %>

@@ -40,7 +40,7 @@ module Trainyard
       all_by_locale(records, options).first
     end
   
-    def for_all_by_locale(records, options = {}, &block)
+    def for_each_by_locale(records, options = {}, &block)
       all_by_locale(records, options).each { |record| block.call(record) }
     end
   
@@ -55,7 +55,7 @@ module Trainyard
   
     def self.included(base)
       base.send :helper_method, :tp, :tt, :current_locale, :all_by_locale, :first_by_locale,
-        :for_all_by_locale, :for_first_by_locale if base.respond_to? :helper_method
+        :for_each_by_locale, :for_first_by_locale if base.respond_to? :helper_method
       if base.respond_to? :before_filter
         base.send :before_filter, :set_locale
         base.send :before_filter, :set_time_zone

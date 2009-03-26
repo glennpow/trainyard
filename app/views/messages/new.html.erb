@@ -5,5 +5,5 @@
   
   <%= f.hidden_field(:to_user_id) %>
   
-  <%= f.submit t(:create) %>
+  <%= f.submit_with_cancel(:submit => t(:create)) %>
 <% end %>

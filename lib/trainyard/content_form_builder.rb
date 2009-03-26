@@ -3,29 +3,35 @@ module Trainyard
     attr_accessor :object_class, :object_array
     
     def initialize(object_name, object, template, options, proc)
-      object ||= template.instance_variable_get("@#{object_name}") unless object_name =~ /[\[\]]/
-      super
+      object ||= template.instance_variable_get("@#{object_name}") unless object_name =~ /\[\]$/
+      super(object_name, object, template, options, proc)
       @object_class = @object ? @object.class : options[:object_class]
       @object_array = @object ? @object.is_a?(Array) : (options[:object_array] || false)
     end
-
-  
+    
+      
     private
-
+    
     def nested_attributes_association?(association_name)
       @object_class.instance_methods.include?("#{association_name}_attributes=")
     end
-  
+      
     def fields_for_with_nested_attributes(association_name, args, block)
       options = args.extract_options!
       args << options
       
       if @object
+        association = @object.send(association_name)
+        unless association
+          reflection = @object_class.reflect_on_association(association_name)
+          association = reflection.klass.new
+          args.unshift(association)
+        end
         super(association_name, args, block)
       else
         unless options[:object_array]
           name = "#{object_name}[#{association_name}_attributes]"
-          @template.fields_for(name, *args, &block)
+          @template.fields_for(name, args, block)
         end
       end
     end
@@ -112,7 +118,6 @@ module Trainyard
         name = record_or_name_or_array.to_s
 
         object = (args.first unless args.first.is_a?(Hash)) || (self.object ? self.object.send(record_or_name_or_array) : nil)
-        #klass = self.object.class.reflect_on_association(name.to_sym).klass
         if object
           klass = object.class
           is_array = object.is_a?(Array)
@@ -156,7 +161,6 @@ module Trainyard
     
       @template.concat("<div class='form-section #{div_class}'>")
       if heading
-        @template.concat("<hr />")
         @template.concat(@template.render_heading(heading, :actions => [ is_array ?
           create_link(klass, render_options.deep_dup, :name => name, :names => names, :label => @template.icon_label(:add, @template.t(:add))) : nil ]))
       end
@@ -186,10 +190,10 @@ module Trainyard
     
       content = @template.capture do
         # FIXME - When update Rails you can use this line...
-        #@template.fields_for("#{object_name}[#{names}_attributes][]", *args) do |f|
-        @template.fields_for("#{object_name}[#{names}_attributes][#{new_child_id}]", *args) do |f|
-          render_options[:locals][:f] = f
-          @template.concat @template.render(render_options.deep_dup)
+        @template.fields_for(names, *args) do |f|
+        # @template.fields_for("#{object_name}[#{names}_attributes][#{new_child_id}]", *args) do |f|
+         render_options[:locals][:f] = f
+         @template.concat @template.render(render_options.deep_dup)
         end
       end
     
@@ -252,10 +256,20 @@ module Trainyard
       text_field(name, options.merge({ :class => 'color', :value => @object.send(name) }))
     end
 
-    def submit(value, options = {})
+    def submit_with_wrapper(value, options = {})
       class_name = options[:class_name] || 'form-submit'
       @template.content_tag :div, :class => "form-element #{class_name}" do
-        @template.content_tag :p, super(value, options)
+        @template.content_tag :p, submit_without_wrapper(value, options)
+      end
+    end
+    alias_method_chain :submit, :wrapper
+
+    def submit_with_cancel(options = {})
+      class_name = options[:class_name] || 'form-submit'
+      submit_name = options[:submit] || I18n.t(:submit)
+      cancel_name = options[:cancel] || I18n.t(:cancel)
+      @template.content_tag :div, :class => "form-element #{class_name}" do
+        @template.content_tag :p, "#{self.submit_without_wrapper(submit_name, options)} #{@template.link_to_back(cancel_name)}"
       end
     end
   end

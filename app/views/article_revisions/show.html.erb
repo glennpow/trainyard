@@ -1,6 +1,4 @@
-<% title t(:revision, :scope => [ :content ]) %>
-
-<%= render_heading(t(:revisions_for_object, :scope => [ :content ], :count => 1, :object => link_to_resource(@article_revision.article))) %>
+<% title t(:revisions_for_object, :scope => [ :content ], :count => 1, :object => link_to_resource(@article_revision.article)) %>
 
 <%= render_field(content_tag(:span, @article_revision.created_at.to_s(:long), :class => 'timestamp')) %>
 

@@ -3,9 +3,18 @@ module LayoutHelper
     args.join(' ')
   end
   
+  def named_anchor(name, content)
+    "<a name='#{name}'></a>#{content}"
+  end
+  
   def link_to_back(name = nil)
     name ||= t(:back)
     link_to name, :back, :class => 'back'
+  end
+  
+  def button_to_back(name = nil)
+    name ||= t(:back)
+    button_to name, :back, :class => 'back'
   end
 
   def render_flash
@@ -113,20 +122,31 @@ module LayoutHelper
 
   def render_formatted(text, options = {})
     options[:class] = merge_classes(options[:class], 'formatted')
-    content_tag(:div, auto_format(text), options)
+    content = auto_format(text)
+    content = truncate(content, :length => options[:truncate]) if options[:truncate]
+    content_tag(:div, content, options)
+  end
+  
+  def render_text_area(text, options = {})
+    options[:class] = merge_classes(options[:class], 'show-text-area')
+    render_formatted(text, options)
   end
   
   def render_actions(actions, options = {})
     render_bar_list(actions_for(actions), :class => merge_classes(options[:class], 'actions'))
   end
   
-  def render_page_actions(options = {})
-    render_bar_list(actions_for(page_actions), :class => merge_classes(options[:class], 'page-actions'))
-  end
-  
   def render_submit(value, options = {})
     content_tag :div, :class => merge_classes(options[:class], 'form-element') do
       content_tag :p, submit_tag(value, options)
+    end
+  end
+  
+  def render_submit_with_cancel(options = {})
+    submit_name = options[:submit] || t(:submit)
+    cancel_name = options[:cancel] || t(:cancel)
+    content_tag :div, :class => merge_classes(options[:class], 'form-element') do
+      content_tag :p, "#{submit_tag(submit_name, options)} #{link_to_back(cancel_name)}"
     end
   end
     
