@@ -2,7 +2,7 @@ module Trainyard
   module SiteSystem
     def current_site
       return @current_site if defined?(@current_site)
-      @current_site = Configuration.sites.detect { |site| site[:domain] == request.domain } || Configuration.sites.first
+      @current_site = Configuration.current_site(request)
       logger.debug "Application domain: #{request.domain} (#{@current_site[:name]})"
       @current_site
     end

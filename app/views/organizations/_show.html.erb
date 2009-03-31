@@ -1,7 +1,6 @@
 <%= render_field(image_tag(organization.image.url)) %>
 
-<%= render_heading(h(organization.name),
-  :actions => [ is_moderator_of?(organization) ? icon_link_to(:edit, t(:edit), edit_organization_path(organization)) : nil ]) %>
+<%= render_heading(h(organization.name)) %>
 
 <%= render_field(t(:rating, :scope => [ :content ]), render_rating(organization)) %>
 

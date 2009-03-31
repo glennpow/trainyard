@@ -14,10 +14,14 @@ class Permission < ActiveRecord::Base
         return false unless resource.group
         return true if user.has_administrator_role?(resource.group)
       end
-      return true if action == Action.edit && resource.respond_to?(:user) && resource.user == user
+      default_permission = true
+      if resource.respond_to?(:user)
+        return true if action == Action.edit && resource.user == user
+        default_permission = false
+      end
 
       Permission.transaction do
-        return true if Permission.count(:conditions => [
+        return default_permission if Permission.count(:conditions => [
           "#{Permission.table_name}.action = ? AND #{Permission.table_name}.resource_id = ? AND #{Permission.table_name}.resource_type = ?",
           action, resource.id, resource.class.to_s ]) == 0
 

@@ -1,6 +1,4 @@
 <%= topic_breadcrumbs(topic) %>
-  
-<%= render_heading(h(topic.name)) %>
 
 <% if topic.guru_points > 0 %>
   <%= render_field(t(:guru_points_available, :scope => [ :content ]), topic.guru_points_available) %>
