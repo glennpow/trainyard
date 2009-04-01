@@ -2,103 +2,53 @@
 
 <script type="text/javascript">
   function previewUrl() {
-    return "<%= preview_themes_path(:theme_id => @theme.id || current_theme.id) %>" +
-      "&theme[body_color]=" + escape(document.getElementById("theme_body_color").value) +
-      "&theme[body_background]=" + escape(document.getElementById("theme_body_background").value) +
-      "&theme[base_color]=" + escape(document.getElementById("theme_base_color").value) +
-      "&theme[base_background]=" + escape(document.getElementById("theme_base_background").value) +
-      "&theme[base_font_color]=" + escape(document.getElementById("theme_base_font_color").value) +
-      "&theme[base_link_color]=" + escape(document.getElementById("theme_base_link_color").value) +
-      "&theme[base_link_hover_color]=" + escape(document.getElementById("theme_base_link_hover_color").value) +
-      "&theme[primary_color]=" + escape(document.getElementById("theme_primary_color").value) +
-      "&theme[primary_background]=" + escape(document.getElementById("theme_primary_background").value) +
-      "&theme[primary_font_color]=" + escape(document.getElementById("theme_primary_font_color").value) +
-      "&theme[primary_link_color]=" + escape(document.getElementById("theme_primary_link_color").value) +
-      "&theme[primary_link_hover_color]=" + escape(document.getElementById("theme_primary_link_hover_color").value) +
-      "&theme[secondary_color]=" + escape(document.getElementById("theme_secondary_color").value) +
-      "&theme[secondary_background]=" + escape(document.getElementById("theme_secondary_background").value) +
-      "&theme[secondary_font_color]=" + escape(document.getElementById("theme_secondary_font_color").value) +
-      "&theme[secondary_link_color]=" + escape(document.getElementById("theme_secondary_link_color").value) +
-      "&theme[secondary_link_hover_color]=" + escape(document.getElementById("theme_secondary_link_hover_color").value) +
-      "&theme[highlight_color]=" + escape(document.getElementById("theme_highlight_color").value) +
-      "&theme[highlight_background]=" + escape(document.getElementById("theme_highlight_background").value) +
-      "&theme[highlight_font_color]=" + escape(document.getElementById("theme_highlight_font_color").value) +
-      "&theme[highlight_link_color]=" + escape(document.getElementById("theme_highlight_link_color").value) +
-      "&theme[highlight_link_hover_color]=" + escape(document.getElementById("theme_highlight_link_hover_color").value);
+    return "<%= preview_themes_path(:theme_id => theme.id || current_theme.id) %>" + <%= theme_url_params(theme) %>;
   }
 
   function updatePreview() {
     document.getElementById('theme-preview').src = previewUrl();
   }
+  
+  var current_theme_element_id = <%= theme.theme_elements.first.id %>;
+  
+  function showThemeElement(id) {
+    var theme_element = $("theme_element_" + current_theme_element_id);
+    if (theme_element)
+      theme_element.hide();
+    current_theme_element_id = id;
+    theme_element = $("theme_element_" + current_theme_element_id);
+    if (theme_element)
+      theme_element.show();
+  }
+  
+  document.observe("dom:loaded", function() {
+    $("theme_element_" + current_theme_element_id).show();
+  });
 </script>
 
 <%= f.text_field :name, :label => { :name => t(:theme_name, :scope => [ :themes ]) }, :required => true %>
 
 <hr />
 
-<%= f.color_field :body_color, :onchange => "updatePreview()" %>
-
-<%= f.text_field :body_background %>
-
-<hr />
-
 <table class="full-width">
   <tr>
-    <td>
-      <%= f.color_field :base_color, :onchange => "updatePreview()" %>
-
-      <%= f.text_field :base_background %>
-
-      <%= f.color_field :base_font_color, :onchange => "updatePreview()" %>
-
-      <%= f.color_field :base_link_color, :onchange => "updatePreview()" %>
-
-      <%= f.color_field :base_link_hover_color, :onchange => "updatePreview()" %>
+    <td class="align-top">
+      <div class="form-field">
+        <div class="label">
+          <%= tp(:theme_element, :scope => [ :themes ]) %>
+        </div>
+      </div>
+        
+      <%= render :partial => 'themes/theme_element_select', :locals => { :theme => theme } %>
     </td>
     <td>
-      <%= f.color_field :primary_color, :onchange => "updatePreview()" %>
-
-      <%= f.text_field :primary_background %>
-
-      <%= f.color_field :primary_font_color, :onchange => "updatePreview()" %>
-
-      <%= f.color_field :primary_link_color, :onchange => "updatePreview()" %>
-
-      <%= f.color_field :primary_link_hover_color, :onchange => "updatePreview()" %>
+      <% f.form_for :theme_elements, :render => { :partial => 'themes/edit_theme_element', :layout => false } %>
     </td>
   </tr>
 </table>
 
-<hr />
-
-<table class="full-width">
-  <tr>
-    <td>
-      <%= f.color_field :secondary_color, :onchange => "updatePreview()" %>
-
-      <%= f.text_field :secondary_background %>
-
-      <%= f.color_field :secondary_font_color, :onchange => "updatePreview()" %>
-
-      <%= f.color_field :secondary_link_color, :onchange => "updatePreview()" %>
-
-      <%= f.color_field :secondary_link_hover_color, :onchange => "updatePreview()" %>
-    </td>
-    <td>
-      <%= f.color_field :highlight_color, :onchange => "updatePreview()" %>
-
-      <%= f.text_field :highlight_background %>
-
-      <%= f.color_field :highlight_font_color, :onchange => "updatePreview()" %>
-
-      <%= f.color_field :highlight_link_color, :onchange => "updatePreview()" %>
-
-      <%= f.color_field :highlight_link_hover_color, :onchange => "updatePreview()" %>
-    </td>
-  </tr>
-</table>
 <hr />
 
 <%= render_heading(t(:preview)) %>
 
-<p align="center"><iframe id="theme-preview" src="<%= preview_themes_path(:theme_id => @theme.id || current_theme.id) %>" width="860" height="350" scrolling="no"></iframe></p>
+<p align="center"><iframe id="theme-preview" src="<%= preview_themes_path(:theme_id => theme.id || current_theme.id) %>" width="860" height="350" scrolling="no"></iframe></p>

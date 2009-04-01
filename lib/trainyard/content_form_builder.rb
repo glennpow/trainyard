@@ -3,7 +3,7 @@ module Trainyard
     attr_accessor :object_class, :object_array
     
     def initialize(object_name, object, template, options, proc)
-      object ||= template.instance_variable_get("@#{object_name}") unless object_name =~ /\[\]$/
+      object ||= template.instance_variable_get("@#{object_name}") unless object_name =~ /\[.*\]/
       super(object_name, object, template, options, proc)
       @object_class = @object ? @object.class : options[:object_class]
       @object_array = @object ? @object.is_a?(Array) : (options[:object_array] || false)
@@ -29,7 +29,7 @@ module Trainyard
         end
         super(association_name, args, block)
       else
-        unless options[:object_array]
+        unless @object_array #options[:object_array]
           name = "#{object_name}[#{association_name}_attributes]"
           @template.fields_for(name, args, block)
         end
@@ -152,26 +152,28 @@ module Trainyard
     
       options[:object_class] = klass
       options[:object_array] = is_array
+      has_create_link = is_array && options[:create_link]
       
       render_options = options.delete(:render) || {}
       render_options[:partial] ||= "#{names}/edit"
       render_options[:locals] ||= {}
       render_options[:locals][name.to_sym] = object
-      render_options[:layout] = 'layout/item' if is_array
+      render_options[:layout] = 'layout/item' if is_array && !defined?(render_options[:layout])
     
       @template.concat("<div class='form-section #{div_class}'>")
       if heading
-        @template.concat(@template.render_heading(heading, :actions => [ is_array ?
+        @template.concat(@template.render_heading(heading, :actions => [ has_create_link ?
           create_link(klass, render_options.deep_dup, :name => name, :names => names, :label => @template.icon_label(:add, @template.t(:add))) : nil ]))
       end
       if is_array
         @template.concat("<div id='#{names}'>")
         fields_for(record_or_name_or_array, *args) do |f|
           render_options[:locals][:f] = f
+          render_options[:locals][name.to_sym] = f.object
           @template.concat(@template.render(render_options.deep_dup))
         end
         @template.concat("</div>")
-        @template.concat(create_link(klass, render_options.deep_dup, :name => name, :names => names)) unless heading
+        @template.concat(create_link(klass, render_options.deep_dup, :name => name, :names => names)) unless heading || !has_create_link
       else
         fields_for(record_or_name_or_array, *args) do |f|
           render_options[:locals][:f] = f
@@ -182,7 +184,7 @@ module Trainyard
     end
    
     def create_link(record_class, render_options, options = {})
-      name = options[:name] || ActionController::RecordIdentifier.singular_class_name(record)
+      name = options[:name] || ActionController::RecordIdentifier.singular_class_name(record_class)
       names = options[:names] || name.pluralize
       update = options[:update] || names
       label = options[:label] || I18n.t(:add_object, :object => name.capitalize)
@@ -192,7 +194,8 @@ module Trainyard
         # FIXME - When update Rails you can use this line...
         @template.fields_for(names, *args) do |f|
         # @template.fields_for("#{object_name}[#{names}_attributes][#{new_child_id}]", *args) do |f|
-         render_options[:locals][:f] = f
+          render_options[:locals][:f] = f
+          render_options[:locals][name.to_sym] = f.object
          @template.concat @template.render(render_options.deep_dup)
         end
       end

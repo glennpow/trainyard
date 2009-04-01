@@ -1,0 +1,19 @@
+<% if defined?(theme) %>
+  <div class="theme-element-select">
+    <ul class="theme-element-select-list">
+      <% theme.root_theme_elements.each do |theme_element| %>
+        <%= render :partial => 'themes/theme_element_select', :locals => { :theme_element => theme_element } %>
+      <% end %>
+    </ul>
+  </div>
+<% elsif defined?(theme_element) %>
+  <li class="theme-element-select-item"><a href="#" onclick="showThemeElement(<%= theme_element.id %>); return false;"><%= h(theme_element.display_name) %></a>
+    <% if theme_element.child_theme_elements.any? %>
+      <ul class="theme-element-select-list">
+        <% theme_element.child_theme_elements.each do |child_theme_element| %>
+          <%= render :partial => 'themes/theme_element_select', :locals => { :theme_element => child_theme_element } %>
+        <% end %>
+      </ul>
+    <% end %>
+  </li>
+<% end %>

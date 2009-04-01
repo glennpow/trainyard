@@ -1,24 +1,23 @@
 class Theme < ActiveRecord::Base
+  extend ActiveSupport::Memoizable
+  
+  has_many :theme_elements, :dependent => :destroy
+  accepts_nested_attributes_for :theme_elements, :allow_destroy => true
+  has_many :root_theme_elements, :class_name => 'ThemeElement', :conditions => { :parent_theme_element_id => nil }
+  has_many :themeable_themes, :dependent => :destroy
+  
   validates_presence_of :name
-  validates_uniqueness_of :name
   
-  def body_color_background
-    @body_color_background ||= "#{self.body_color} #{self.body_background}"
+  validates_uniqueness_of :name, :scope => [ :group_id ]
+  
+  searches_on :name
+  
+  def find_theme_element_by_name(name)
+    self.theme_elements.detect { |theme_element| theme_element.name == name.to_s } || ThemeElement.new
   end
-  
-  def base_color_background
-    @base_color_background ||= "#{self.base_color} #{self.base_background}"
-  end
-  
-  def primary_color_background
-    @primary_color_background ||= "#{self.primary_color} #{self.primary_background}"
-  end
-  
-  def secondary_color_background
-    @secondary_color_background ||= "#{self.secondary_color} #{self.secondary_background}"
-  end
-  
-  def highlight_color_background
-    @highlight_color_background ||= "#{self.highlight_color} #{self.highlight_background}"
+  memoize :find_theme_element_by_name
+
+  def [](name)
+    find_theme_element_by_name(name)
   end
 end

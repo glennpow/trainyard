@@ -1,0 +1,36 @@
+<div id="theme_element_<%= theme_element.id %>" style="display: none">
+  <%= render_heading(h(theme_element.display_name)) %>
+  
+  <%= f.hidden_field :name %>
+
+  <%= f.hidden_field :parent_theme_element_id %>
+
+  <%= f.hidden_field :theme_id %>
+
+  <table class="full-width columns">
+    <tr>
+      <td>
+        <%= f.yes_no_select :inherit %>
+
+        <%= f.color_field :background_color, :onchange => "updatePreview()" %>
+
+        <%= f.text_field :background_url, :onchange => "updatePreview()" %>
+
+        <%= f.text_field :background_x, :onchange => "updatePreview()" %>
+
+        <%= f.text_field :background_y, :onchange => "updatePreview()" %>
+      </td>
+      <td>
+        <%= enumeration_select(f, :background_repeat, :onchange => "updatePreview()") %>
+
+        <%= enumeration_select(f, :background_attachment, :onchange => "updatePreview()") %>
+
+        <%= f.color_field :font_color, :onchange => "updatePreview()" %>
+
+        <%= f.color_field :link_color, :onchange => "updatePreview()" %>
+
+        <%= f.color_field :link_hover_color, :onchange => "updatePreview()" %>
+      </td>
+    </tr>
+  </table>
+</div>

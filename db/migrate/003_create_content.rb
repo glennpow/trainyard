@@ -145,40 +145,38 @@ class CreateContent < ActiveRecord::Migration
     add_index :reviews, :user_id
     
     create_table :themes do |t|
+      t.references :group
       t.string :name, :null => false
-      t.string :body_color
-      t.string :body_background
-      t.string :base_color
-      t.string :base_background
-      t.string :base_font_color
-      t.string :base_link_color
-      t.string :base_link_hover_color
-      t.string :primary_color
-      t.string :primary_background
-      t.string :primary_font_color
-      t.string :primary_link_color
-      t.string :primary_link_hover_color
-      t.string :secondary_color
-      t.string :secondary_background
-      t.string :secondary_font_color
-      t.string :secondary_link_color
-      t.string :secondary_link_hover_color
-      t.string :highlight_color
-      t.string :highlight_background
-      t.string :highlight_font_color
-      t.string :highlight_link_color
-      t.string :highlight_link_hover_color
       t.timestamps
     end
     
+    add_index :themes, :group_id
     add_index :themes, :name
+    
+    create_table :theme_elements do |t|
+      t.references :theme, :null => false
+      t.references :parent_theme_element
+      t.string :name, :null => false
+      t.boolean :inherit, :default => false
+      t.string :background_color, :default => '#fff'
+      t.string :background_url, :default => nil
+      t.string :background_x, :default => 'left'
+      t.string :background_y, :default => 'top'
+      t.string :background_repeat, :default => 'repeat'
+      t.string :background_attachment, :default => 'scroll'
+      t.string :font_color, :default => '#000'
+      t.string :link_color, :default => '#003'
+      t.string :link_hover_color, :default => '#00f'
+    end
+
+    add_index :theme_elements, :theme_id
 
     create_table :themeables_themes do |t|
       t.references :themeable, :polymorphic => true
       t.references :theme, :null => false
     end
     
-    add_index :themeables_themes, [ :themeable_id, :themeable_type ], :unique => true
+    add_index :themeables_themes, [ :themeable_type, :themeable_id ], :unique => true
 
     create_table :topics do |t|
       t.references :forum, :null => false

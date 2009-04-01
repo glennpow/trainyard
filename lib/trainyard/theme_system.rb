@@ -13,6 +13,7 @@ module Trainyard
         application_themeable = ThemeablesTheme.first(:conditions => { :themeable_type => nil, :themeable_id => nil })
         @current_theme = (application_themeable ? application_themeable.theme : nil) || Theme.first
       end
+      @current_theme.attributes=(params[:theme]) if params[:theme]
       logger.debug("Application theme: #{@current_theme.name}") if @current_theme
       @current_theme
     end

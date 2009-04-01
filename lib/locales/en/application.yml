@@ -363,6 +363,13 @@ en:
     active: Active
     apply: Apply
     apply_to_object: "{{link}} this theme to {{object}}"
+    fixed: Fixed
+    no_repeat: No Repeat
     preview: Below is a preview of this theme
+    repeat: Repeat
+    repeat_x: Repeat X
+    repeat_y: Repeat Y
+    scroll: Scroll
     theme: Theme
+    theme_element: Theme Element
     theme_name: Theme Name

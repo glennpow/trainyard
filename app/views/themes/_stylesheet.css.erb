@@ -1,63 +1,63 @@
 body {
-  background: <%= theme.body_color_background %>;
-  color: <%= theme.base_font_color %>;
+  background: <%= theme[:body].background %>;
+  color: <%= theme[:base].font_color %>;
 }
 
 pre {
-  background: <%= theme.body_color_background %>;
+  background: <%= theme[:body].background %>;
 }
 
 .header, .footer {
-  background: <%= theme.primary_color_background %>;
-  color: <%= theme.primary_font_color %>;
+  background: <%= theme[:primary].background %>;
+  color: <%= theme[:primary].font_color %>;
 }
 
 .header ul li, .footer ul li {
-  border-left-color: <%= theme.primary_link_color %>;
+  border-left-color: <%= theme[:primary].link_color %>;
 }
 
 .header a, .footer a {
-  color: <%= theme.primary_link_color %>;
+  color: <%= theme[:primary].link_color %>;
 }
 
 .header a:hover, .footer a:hover {
-  color: <%= theme.primary_link_hover_color %>;
+  color: <%= theme[:primary].link_hover_color %>;
 }
 
 .main {
-  background: <%= theme.base_color_background %>;
-  border-color: <%= theme.primary_color %>;
+  background: <%= theme[:base].background %>;
+  border-color: <%= theme[:primary].background_color %>;
 }
 
 .content, .header-content, .footer-content, .intro-content {
-  background: <%= theme.base_color_background %>;
-  color: <%= theme.base_font_color %>;
+  background: <%= theme[:base].background %>;
+  color: <%= theme[:base].font_color %>;
 }
 
 a, .header-content a, .footer-content a, .intro-content a {
-  color: <%= theme.base_link_color %>;
+  color: <%= theme[:base].link_color %>;
 }
 
 a:hover, .header-content a:hover, .footer-content a:hover, .intro-content a:hover {
-  color: <%= theme.base_link_hover_color %>;
+  color: <%= theme[:base].link_hover_color %>;
 }
 
 .navigation {
-  background: <%= theme.secondary_color_background %>;
-  color: <%= theme.secondary_font_color %>;
+  background: <%= theme[:secondary].background %>;
+  color: <%= theme[:secondary].font_color %>;
 }
 
 .navigation ul li {
-  border-left-color: <%= theme.secondary_link_color %>;
+  border-left-color: <%= theme[:secondary].link_color %>;
 }
 
 .navigation a {
-  color: <%= theme.secondary_link_color %>;
+  color: <%= theme[:secondary].link_color %>;
   text-decoration: none;
 }
 
 .navigation a:hover {
-  color: <%= theme.secondary_link_hover_color %>;
+  color: <%= theme[:secondary].link_hover_color %>;
 }
 
 .show-field .label {
@@ -68,7 +68,7 @@ a:hover, .header-content a:hover, .footer-content a:hover, .intro-content a:hove
 }
 
 .show-field-values {
-  border: 1px dotted <%= theme.secondary_color %>;
+  border: 1px dotted <%= theme[:secondary].background_color %>;
   display: table;
   width: auto;
   margin: 0px auto 5px auto;
@@ -88,11 +88,11 @@ a:hover, .header-content a:hover, .footer-content a:hover, .intro-content a:hove
 }
 
 .show-text-area {
-  border: 1px dotted <%= theme.secondary_color %>;
+  border: 1px dotted <%= theme[:secondary].background_color %>;
 }
 
 .heading {
-  border-bottom: 2px solid <%= theme.secondary_color %>;
+  border-bottom: 2px solid <%= theme[:secondary].background_color %>;
 }
 
 .heading .actions, .show-field .actions {
@@ -128,7 +128,7 @@ a:hover, .header-content a:hover, .footer-content a:hover, .intro-content a:hove
 }
 
 .page-actions {
-  border-bottom: 1px dotted <%= theme.secondary_color %>;
+  border-bottom: 1px dotted <%= theme[:secondary].background_color %>;
   margin-bottom: 10px;
 }
 
@@ -139,72 +139,72 @@ a:hover, .header-content a:hover, .footer-content a:hover, .intro-content a:hove
 }
 
 .indexer .paginate {
-  background: <%= theme.secondary_color_background %>;
-  color: <%= theme.secondary_font_color %>;
-  border: 1px solid <%= theme.primary_color %>;
+  background: <%= theme[:secondary].background %>;
+  color: <%= theme[:secondary].font_color %>;
+  border: 1px solid <%= theme[:primary].background_color %>;
 }
   
 table.indexer-table {
   border-collapse: collapse;
-  background: <%= theme.primary_color_background %>;
-  border-bottom: 1px solid <%= theme.primary_color %>;
+  background: <%= theme[:primary].background %>;
+  border-bottom: 1px solid <%= theme[:primary].background_color %>;
 }
 
 th.indexer-th, tfoot.indexer-tfoot td {
-  color: <%= theme.primary_font_color %>;
+  color: <%= theme[:primary].font_color %>;
   font-weight: normal;
 }
 
 tfoot.indexer-tfoot td {
-  border-top: 1px solid <%= theme.secondary_color %>;
+  border-top: 1px solid <%= theme[:secondary].background_color %>;
 }
 
 th.indexer-th a, tfoot.indexer-tfoot td a {
-  color: <%= theme.primary_link_color %>;
+  color: <%= theme[:primary].link_color %>;
 }
 
 th.indexer-th a:hover, tfoot.indexer-tfoot td a:hover {
-  color: <%= theme.primary_link_hover_color %>;
+  color: <%= theme[:primary].link_hover_color %>;
 }
 
 td.indexer-td {
-  border-left: 1px dotted <%= theme.secondary_color %>;
-  border-right: 1px dotted <%= theme.secondary_color %>;
+  border-left: 1px dotted <%= theme[:secondary].background_color %>;
+  border-right: 1px dotted <%= theme[:secondary].background_color %>;
 }
 
 tr.indexer-trh {
-  color: <%= theme.primary_font_color %>;
+  color: <%= theme[:primary].font_color %>;
 }
 
 tr.indexer-trh a {
-  color: <%= theme.primary_link_color %>;
+  color: <%= theme[:primary].link_color %>;
 }
 
 tr.indexer-trh a:hover {
-  color: <%= theme.primary_link_hover_color %>;
+  color: <%= theme[:primary].link_hover_color %>;
 }
 
 tr.indexer-tr.odd {
-  background: <%= theme.base_color_background %>;
-  border-bottom: 1px dotted <%= theme.secondary_color %>;
+  background: <%= theme[:base].background %>;
+  border-bottom: 1px dotted <%= theme[:secondary].background_color %>;
 }
 
 tr.indexer-tr.even {
-  background: <%= theme.base_color_background %>;
-  border-bottom: 1px dotted <%= theme.secondary_color %>;
+  background: <%= theme[:base].background %>;
+  border-bottom: 1px dotted <%= theme[:secondary].background_color %>;
 }
 
 tr.indexer-tr.clickable:hover {
-  background: <%= theme.highlight_color_background %>;
-  color: <%= theme.highlight_font_color %>;
+  background: <%= theme[:highlight].background %>;
+  color: <%= theme[:highlight].font_color %>;
 }
 
 tr.indexer-tr.clickable:hover a {
-  color: <%= theme.highlight_link_color %>;
+  color: <%= theme[:highlight].link_color %>;
 }
 
 tr.indexer-tr.clickable:hover a:hover {
-  color: <%= theme.highlight_link_hover_color %>;
+  color: <%= theme[:highlight].link_hover_color %>;
 }
 
 td.indexer-td.indexer-check-box-td {
@@ -218,13 +218,29 @@ td.indexer-td.results-row-td .blurb {
 
 .sort-handle {
   cursor: move;
-  border: 1px dotted <%= theme.base_font_color %>;
+  border: 1px dotted <%= theme[:base].font_color %>;
   padding: 5px;
   white-space: nowrap;
 }
 
+.theme-element-select {
+  border: 1px inset <%= theme[:secondary].background_color %>;
+  padding: 5px;
+  margin: 5px 40px 20px 10px;
+}
+
+ul.theme-element-select-list {
+}
+
+ul.theme-element-select-list li.theme-element-select-item {
+  list-style-type: none;
+  background: transparent url('/images/icons/sublist.png') no-repeat left 5px;
+  padding: 2px 2px 2px 20px;
+}
+
+
 td.searcher-td {
-  border-bottom: 1px dotted <%= theme.secondary_color %>;
+  border-bottom: 1px dotted <%= theme[:secondary].background_color %>;
 }
 
 td.searcher-td.searcher-left-td {
@@ -253,7 +269,7 @@ table.comparer-table {
 }
 
 td.comparer-td {
-  border-left: 1px dotted <%= theme.secondary_color %>;
+  border-left: 1px dotted <%= theme[:secondary].background_color %>;
 }
 
 td.comparer-td.first {
@@ -261,11 +277,11 @@ td.comparer-td.first {
 }
 
 tr.comparer-tr.odd {
-  background: <%= theme.base_color_background %>;
+  background: <%= theme[:base].background %>;
 }
 
 tr.comparer-tr.even {
-  background: <%= theme.secondary_color_background %>;
+  background: <%= theme[:secondary].background %>;
 }
 
 .comparer .manufacturer-name {
@@ -274,7 +290,7 @@ tr.comparer-tr.even {
 
 .comparer .product-name {
   font-size: larger;
-  color: <%= theme.primary_color %>;
+  color: <%= theme[:primary].background_color %>;
 }
 
 .comparer .product-description {
@@ -334,7 +350,7 @@ tr.comparer-tr.even {
 }
 
 .article {
-  background: <%= theme.base_color_background %>;
+  background: <%= theme[:base].background %>;
   margin: 10px 0px;
 }
 
@@ -363,30 +379,30 @@ ul.tabbernav li {
 }
 
 ul.tabbernav li a {
-  background: <%= theme.secondary_color_background %>;
+  background: <%= theme[:secondary].background %>;
   padding: 3px 0.5em;
   margin-left: 3px;
-  border: 1px solid <%= theme.primary_color %>;
+  border: 1px solid <%= theme[:primary].background_color %>;
   border-bottom: none;
   text-decoration: none;
 }
 
 ul.tabbernav li a:link {
-  color: <%= theme.secondary_link_color %>;
+  color: <%= theme[:secondary].link_color %>;
 }
 
 ul.tabbernav li a:visited {
-  color: <%= theme.secondary_link_color %>;
+  color: <%= theme[:secondary].link_color %>;
 }
 
 ul.tabbernav li a:hover {
-  color: <%= theme.secondary_link_hover_color %>;
+  color: <%= theme[:secondary].link_hover_color %>;
 }
 
 ul.tabbernav li.tabberactive a {
-  color: <%= theme.primary_color %>;
-  background: <%= theme.base_color_background %>;
-  border-bottom: 1px solid <%= theme.base_color %>;
+  color: <%= theme[:primary].background_color %>;
+  background: <%= theme[:base].background %>;
+  border-bottom: 1px solid <%= theme[:base].background_color %>;
 }
 
 ul.tabbernav li.tabberactive a:hover {
@@ -394,7 +410,7 @@ ul.tabbernav li.tabberactive a:hover {
 
 .tabberlive .tabbertab {
   padding: 5px;
-  border: 1px solid <%= theme.primary_color %>;
+  border: 1px solid <%= theme[:primary].background_color %>;
   border-top: 0;
 }
 
@@ -403,15 +419,15 @@ a.hint-mark {
 }
 
 a.hint-mark:before {
-  border: 2px dotted <%= theme.primary_link_color %>;
-  color: <%= theme.primary_link_color %>;
+  border: 2px dotted <%= theme[:primary].link_color %>;
+  color: <%= theme[:primary].link_color %>;
   content: "?";
   padding: 0px 4px 0px 4px;
 }
 
 a.hint-mark:hover:before {
-  border: 2px dotted <%= theme.base_link_hover_color %>;
-  color: <%= theme.base_link_hover_color %>;
+  border: 2px dotted <%= theme[:base].link_hover_color %>;
+  color: <%= theme[:base].link_hover_color %>;
   content: "?";
   padding: 0px 4px 0px 4px;
 }
@@ -437,9 +453,9 @@ a.hint-mark:hover:before {
 }
 
 .feature-type-summary .feature-name.highlighted {
-  background: <%= theme.base_color_background %>;
-  color: <%= theme.base_font_color %>;
-  border: 1px dotted <%= theme.secondary_color %>;
+  background: <%= theme[:base].background %>;
+  color: <%= theme[:base].font_color %>;
+  border: 1px dotted <%= theme[:secondary].background_color %>;
 }
 
 .feature-type-summary .feature-description {
@@ -447,75 +463,75 @@ a.hint-mark:hover:before {
 }
 
 .feature-type-summary .feature-description.highlighted {
-  background: <%= theme.base_color_background %>;
-  color: <%= theme.base_font_color %>;
-  border: 1px dotted <%= theme.secondary_color %>;
+  background: <%= theme[:base].background %>;
+  color: <%= theme[:base].font_color %>;
+  border: 1px dotted <%= theme[:secondary].background_color %>;
 }
 
 .messages-mailboxes {
-  background: <%= theme.secondary_color_background %>;
-  color: <%= theme.secondary_font_color %>;
-  border: 1px solid <%= theme.primary_color %>;
+  background: <%= theme[:secondary].background %>;
+  color: <%= theme[:secondary].font_color %>;
+  border: 1px solid <%= theme[:primary].background_color %>;
   padding-left: 20px;
 }
 
 .messages-mailboxes a {
-  color: <%= theme.secondary_link_color %>;
+  color: <%= theme[:secondary].link_color %>;
 }
 
 .messages-mailboxes a:hover {
-  color: <%= theme.secondary_link_hover_color %>;
+  color: <%= theme[:secondary].link_hover_color %>;
 }
 
 .breadcrumbs {
-  background: <%= theme.secondary_color_background %>;
-  color: <%= theme.secondary_font_color %>;
+  background: <%= theme[:secondary].background %>;
+  color: <%= theme[:secondary].font_color %>;
 }
 
 .breadcrumbs a {
-  color: <%= theme.secondary_link_color %>;
+  color: <%= theme[:secondary].link_color %>;
 }
 
 .breadcrumbs a:hover {
-  color: <%= theme.secondary_link_hover_color %>;
+  color: <%= theme[:secondary].link_hover_color %>;
 }
 
 .post-header {
-  background: <%= theme.primary_color_background %>;
-  color: <%= theme.primary_font_color %>;
+  background: <%= theme[:primary].background %>;
+  color: <%= theme[:primary].font_color %>;
   height: 20px;
 }
 
 .listed {
-  background: <%= theme.secondary_color %>;
-  color: <%= theme.secondary_font_color %>;
+  background: <%= theme[:secondary].background_color %>;
+  color: <%= theme[:secondary].font_color %>;
 }
 
 .listed a {
-  color: <%= theme.secondary_link_color %>;
+  color: <%= theme[:secondary].link_color %>;
 }
 
 .listed a:hover {
-  color: <%= theme.secondary_link_hover_color %>;
+  color: <%= theme[:secondary].link_hover_color %>;
 }
 
 .listed-image {
-  border: 1px solid <%= theme.primary_color %>;
+  border: 1px solid <%= theme[:primary].background_color %>;
 }
 
 .text-area-preview {
-  border: 1px dotted <%= theme.secondary_color %>;
+  border: 1px dotted <%= theme[:secondary].background_color %>;
   padding: 5px;
   margin: 5px;
 }
 
 .blog-contents {
-	background: <%= theme.secondary_color_background %>;
-  border: 1px solid <%= theme.primary_color %>;
+	background: <%= theme[:secondary].background %>;
+  border: 1px solid <%= theme[:primary].background_color %>;
 }
 
 .medias {
-	background: <%= theme.secondary_color_background %>;
+	background: <%= theme[:secondary].background %>;
 	border: 2px solid #000;
 }
 
@@ -528,5 +544,5 @@ a.hint-mark:hover:before {
 }
 
 .map {
-  border: 1px solid <%= theme.primary_color %>;
+  border: 1px solid <%= theme[:primary].background_color %>;
 }
