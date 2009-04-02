@@ -52,7 +52,7 @@ en:
   results: Results
   save: Save
   search: Search
-  search_results_for_query: Search results for '{{query}}'
+  search_results_for_query: "Search results for: {{query}}"
   select_all: Select All
   settings: Settings
   show: Show
@@ -85,6 +85,7 @@ en:
     inviter: Inviter
     join: Sign Up!
     joined_on: Joined On
+    last_login: Last login
     logged_in: Logged in successfully
     logged_in_as_user: Logged in as {{user}}
     logged_out: Logged out successfully
