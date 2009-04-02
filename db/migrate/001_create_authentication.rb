@@ -58,7 +58,9 @@ class CreateAuthentication < ActiveRecord::Migration
       t.string :password_salt, :null => false
       t.string :persistence_token
       t.string :perishable_token
+      t.integer :login_count, :default => 0
       t.datetime :current_login_at
+      t.datetime :last_login_at
       t.boolean :confirmed, :default => false
       t.boolean :active, :default => true
       t.references :locale

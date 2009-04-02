@@ -2,7 +2,7 @@
   <% title t(:reviews_of_object, :scope => [ :content ], :count => @indexer.collection.total_entries, :object => link_to_resource(@resource)) %>
 <% else %>
   <% title tp(:review, :scope => [ :content ]) %>
-<% else %>
+<% end %>
 
 <%= render_indexer(@indexer) %>
 
