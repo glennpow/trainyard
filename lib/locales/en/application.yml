@@ -90,6 +90,7 @@ en:
     logged_in_as_user: Logged in as {{user}}
     logged_out: Logged out successfully
     login: Login
+    login_count: Login Count
     logout: Logout
     member: Member
     moderator: Moderator
