@@ -29,7 +29,7 @@
       link_to(t(:disable), user, :confirm => t(:are_you_sure), :method => :delete) :
       link_to(t(:enable), enable_user_path(user), :method => :put) ] : nil) %>
 
-  <%= render_field(t(:last_login, :scope => [ :authentication ]), user.current_login_at.to_date) %>
+  <%= render_field(t(:last_login, :scope => [ :authentication ]), user.current_login_at.nil? ? t(:unknown) : user.current_login_at.to_date) %>
 <% end %>
 
 <%= render_field(tp(:group, :scope => [ :authentication ]),
