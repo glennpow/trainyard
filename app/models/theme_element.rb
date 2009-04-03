@@ -1,7 +1,8 @@
 class ThemeElement < ActiveRecord::Base
   belongs_to :theme
   belongs_to :parent_theme_element, :class_name => 'ThemeElement'
-  has_many :child_theme_elements, :class_name => 'ThemeElement', :foreign_key => :parent_theme_element_id, :dependent => :destroy
+  has_many :child_theme_elements, :class_name => 'ThemeElement', :foreign_key => :parent_theme_element_id, :order => 'position ASC', :dependent => :destroy
+  acts_as_list
   has_enumeration :background_repeat
   
   validates_presence_of :theme, :name

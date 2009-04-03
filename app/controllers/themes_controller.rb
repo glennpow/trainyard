@@ -44,6 +44,9 @@ class ThemesController < ApplicationController
   end
   
   def preview
+    respond_to do |format|
+      format.html { render :template => 'themes/preview' }
+    end
   end
   
   def stylesheet

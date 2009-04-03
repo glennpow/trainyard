@@ -6,14 +6,14 @@
 
 <% if has_administrator_role? %>
   <% unless current_theme.id == @theme.id %>
-    <% page_actions << icon_link_to(:apply, t(:apply, :scope => [ :themes ]), apply_theme_path(@theme), :method => :post) %>
+    <% page_action icon_link_to(:apply, t(:apply, :scope => [ :themes ]), apply_theme_path(@theme), :method => :post) %>
   <% end %>
 <% elsif is_editor_of?(@themeable) %>
   <% unless @themeable.theme_id == @theme.id %>
-    <% page_actions << icon_link_to(:apply, t(:apply, :scope => [ :themes ]), apply_theme_path(@theme, :themeable_type => @themeable.class.to_s, :themeable_id => @themeable.id), :method => :post) %>
+    <% page_action icon_link_to(:apply, t(:apply, :scope => [ :themes ]), apply_theme_path(@theme, :themeable_type => @themeable.class.to_s, :themeable_id => @themeable.id), :method => :post) %>
   <% end %>
 <% end %>
 
 <% if is_editor_of?(@theme) %>
-  <% page_actions << icon_link_to(:edit, t(:edit), edit_theme_path(@theme)) %>
+  <% page_action icon_link_to(:edit, t(:edit), edit_theme_path(@theme)) %>
 <% end %>

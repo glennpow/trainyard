@@ -238,6 +238,10 @@ ul.theme-element-select-list li.theme-element-select-item {
   padding: 2px 2px 2px 20px;
 }
 
+.theme-preview-overlay {
+  background: transparent;
+	<%= alpha_css(0.5) %>
+}
 
 td.searcher-td {
   border-bottom: 1px dotted <%= theme[:secondary].background_color %>;
@@ -466,6 +470,10 @@ a.hint-mark:hover:before {
   background: <%= theme[:base].background %>;
   color: <%= theme[:base].font_color %>;
   border: 1px dotted <%= theme[:secondary].background_color %>;
+}
+
+cite {
+  font-size: smaller;
 }
 
 .messages-mailboxes {

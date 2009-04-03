@@ -3,5 +3,5 @@
 <%= render_indexer(@indexer) %>
 
 <% if has_administrator_role? %>
-  <% page_actions << icon_link_to(:add_large, t(:create_object, :object => t(:theme, :scope => [ :themes ])), new_theme_path) %>
+  <% page_action icon_link_to(:add_large, t(:create_object, :object => t(:theme, :scope => [ :themes ])), new_theme_path) %>
 <% end %>

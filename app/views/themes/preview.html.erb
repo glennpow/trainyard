@@ -1,3 +1,5 @@
 <% strip_links do %>
-  <%= render :partial => 'users/show', :locals => { :user => current_user } %>
+  <%= render :partial => Configuration.theme_preview_partial %>
 <% end %>
+
+<div class="full-page theme-preview-overlay"></div>

@@ -6,5 +6,5 @@
 
 <%= render :partial => 'show', :locals => { :media => @media } %>
 
-<% page_actions << icon_link_to(:edit, t(:edit), edit_object_path) if is_editor_of?(@media) %>
-<% page_actions << link_to_resource(@media.resource) %>
+<% page_action icon_link_to(:edit, t(:edit), edit_object_path) if is_editor_of?(@media) %>
+<% page_action link_to_resource(@media.resource) %>

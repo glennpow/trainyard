@@ -2,4 +2,4 @@
 
 <%= render_indexer(@articles_indexer) %>
 
-<% page_actions << icon_link_to(:edit, t(:edit), edit_object_path) if is_editor_of?(@blog) %>
+<% page_action icon_link_to(:edit, t(:edit), edit_object_path) if is_editor_of?(@blog) %>

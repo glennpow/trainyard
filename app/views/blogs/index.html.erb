@@ -5,7 +5,7 @@
 <% end %>
 
 <% if is_editor_of?(@group) %>
-  <% page_actions << icon_link_to(:add_large, t(:add_object, :object => t(:blog, :scope => [ :content ])), new_object_path) %>
+  <% page_action icon_link_to(:add_large, t(:add_object, :object => t(:blog, :scope => [ :content ])), new_object_path) %>
 <% end %>
 
 <%= render_indexer(@indexer) %>

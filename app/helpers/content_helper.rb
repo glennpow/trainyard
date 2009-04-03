@@ -15,6 +15,10 @@ module ContentHelper
     page_title.replace(title || '')
   end
   
+  def page_action(action)
+    page_actions << action unless page_actions.include?(action)
+  end
+  
   def random_id(length = 8)
     chars = ("a".."z").to_a + ("A".."Z").to_a + [ "_" ]
     id = chars[rand(chars.size - 1)]
@@ -40,10 +44,14 @@ module ContentHelper
     textilize(auto_link(text))
   end
 
-  def strip_links(&block)
-    content = capture(&block)
-    content.gsub!(/href=['"][^'"]+['"]/, "href='#'")
-    block_called_from_erb?(block) ? concat(content) : content
+  def strip_links(content_or_options_with_block = nil, &block)
+    if block_given?
+      content = block_called_from_erb?(block) ? capture(&block) : yield
+    else
+      content = content_or_options_with_block
+    end
+    content.gsub!(/href=['"][^'"]+?['"]/, "href='#'")
+    (block_given? && block_called_from_erb?(block)) ? concat(content) : content
   end
   
   def yes_no(value)

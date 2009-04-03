@@ -2,4 +2,4 @@
 
 <%= render :partial => 'show', :locals => { :group => @group } %>
 
-<% page_actions << link_to(t(:invite_to_group, :scope => [ :authentication, :invites, :new ], :group => @group.name), new_group_invite_path(@group)) if is_moderator_of?(@group) %>
+<% page_action link_to(t(:invite_to_group, :scope => [ :authentication, :invites, :new ], :group => @group.name), new_group_invite_path(@group)) if is_moderator_of?(@group) %>

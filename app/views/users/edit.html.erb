@@ -6,5 +6,5 @@
   <%= f.submit_with_cancel(:submit => t(:save)) %>
 <% end -%>
 
-<% page_actions << link_to(t(:show_object, :object => t(:profile, :scope => [ :authentication ])), user_path(@user)) %>
-<% page_actions << link_to(t(:change_password, :scope => [ :authentication ]), change_password_path) %>
+<% page_action link_to(t(:show_object, :object => t(:profile, :scope => [ :authentication ])), user_path(@user)) %>
+<% page_action link_to(t(:change_password, :scope => [ :authentication ]), change_password_path) %>

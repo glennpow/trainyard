@@ -17,6 +17,7 @@ common: &common
     mailer_alerts: true
     public_contact: false
   local_article_pages: false
+  theme_preview_partial: themes/preview
  
 development:
   <<: *common

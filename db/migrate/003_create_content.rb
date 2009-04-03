@@ -157,6 +157,7 @@ class CreateContent < ActiveRecord::Migration
       t.references :theme, :null => false
       t.references :parent_theme_element
       t.string :name, :null => false
+      t.integer :position
       t.boolean :inherit, :default => false
       t.string :background_color, :default => '#fff'
       t.string :background_url, :default => nil

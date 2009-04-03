@@ -22,9 +22,17 @@ class Post < ActiveRecord::Base
   end
   
   def quote_from(post)
-    (self.body ||= "") << "\n\n\n" +
+    (self.body = "") << "\n\n\n> > " +
       I18n.t(:quoted_from_post, :scope => [ :content ], :post => "#{post.user.name} (#{post.created_at.to_s(:long)})") + "\n\n" +
       post.body.gsub(/^/, "> ")
+  end
+  
+  def self.unquote(content)
+    content.gsub(/^> .*$/) { |s| "??#{s}??" }
+  end
+  
+  def unquoted_body
+    Post.unquote(self.body)
   end
   
   def may_edit_guru_points?(user)

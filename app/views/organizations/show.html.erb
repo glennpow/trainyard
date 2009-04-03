@@ -3,5 +3,5 @@
 <%= render :partial => 'show', :locals => { :organization => @organization } %>
 
 <% if is_moderator_of?(@organization) %>
-  <% page_actions << icon_link_to(:edit, t(:edit_object, :object => t(:organization, :scope => [ :authorization ])), edit_organization_path(@organization)) %>
+  <% page_action icon_link_to(:edit, t(:edit_object, :object => t(:organization, :scope => [ :authorization ])), edit_organization_path(@organization)) %>
 <% end %>

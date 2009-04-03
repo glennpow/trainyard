@@ -1,7 +1,5 @@
 class ForumsController < ApplicationController
   make_resource_controller do
-    member_actions :move_down, :move_up
-    
     before :show do
       @topics_indexer = create_indexer(Topic) do |options|
         options[:conditions] = { :forum_id => @forum.id }
@@ -41,13 +39,6 @@ class ForumsController < ApplicationController
     render :nothing => true
   end
   
-  def search
-    respond_to do |format|
-      format.html # search.html.erb
-      format.xml  { head :ok }
-    end
-  end
- 
   
   private
   

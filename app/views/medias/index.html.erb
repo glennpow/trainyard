@@ -3,5 +3,5 @@
 <%= render_indexer(@indexer) %>
 
 <% if is_editor_of?(@resource) %>
-  <% page_actions << icon_link_to(:add_large, t(:add_object, :object => t(:media, :scope => [ :content ])), new_object_path) %>
+  <% page_action icon_link_to(:add_large, t(:add_object, :object => t(:media, :scope => [ :content ])), new_object_path) %>
 <% end %>

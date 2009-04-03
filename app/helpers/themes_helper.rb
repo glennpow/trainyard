@@ -15,6 +15,11 @@ module ThemesHelper
     javascript('jscolor/jscolor', :plugin => 'trainyard')
   end
   
+  def alpha_css(alpha)
+    percent = alpha * 100
+    "opacity: #{alpha}; -ms-filter: \"progid:DXImageTransform.Microsoft.Alpha(Opacity=#{percent})\"; filter: alpha(opacity=#{percent});"
+  end
+  
   def theme_url_params(theme)
     index = -1
     theme.theme_elements.map do |theme_element|

@@ -1,0 +1,13 @@
+<% title t(:preview, :scope => [ :content ]) %>
+
+<%
+  @indexer = @controller.create_indexer(Organization) do |options|
+    options[:default_sort] = :name
+    options[:headers] = [
+      { :name => t(:name), :sort => :name },
+      tp(:moderator, :scope => [ :authentication ]),
+    ]
+  end
+%>
+
+<%= render_indexer(@indexer) %>
