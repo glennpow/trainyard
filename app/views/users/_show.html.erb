@@ -34,10 +34,12 @@
   <%= render_field(t(:login_count, :scope => [ :authentication ]), user.login_count || 0) %>
 <% end %>
 
-<%= render_field(tp(:group, :scope => [ :authentication ]),
-  user.memberships.map { |membership| membership.group.nil? ?
-    "#{site_name} (#{membership.role.name})" :
-    "#{link_to_resource(membership.group)} (#{membership.role.name})" }) %>
+<% if user.memberships.any? %>
+  <%= render_field(tp(:group, :scope => [ :authentication ]),
+    user.memberships.map { |membership| membership.group.nil? ?
+      "#{site_name} (#{membership.role.name})" :
+      "#{link_to_resource(membership.group)} (#{membership.role.name})" }) %>
+<% end %>
 
 <% unless user.persona.blank? || !user.public_contact? %>
   <%= render_heading(t(:personal_details, :scope => [ :contacts ])) %>

@@ -1,39 +1,9 @@
 module Trainyard
   class ContentFormBuilder < ActionView::Helpers::FormBuilder
-    attr_accessor :object_class, :object_array
     
     def initialize(object_name, object, template, options, proc)
       object ||= template.instance_variable_get("@#{object_name}") unless object_name =~ /\[.*\]/
       super(object_name, object, template, options, proc)
-      @object_class = @object ? @object.class : options[:object_class]
-      @object_array = @object ? @object.is_a?(Array) : (options[:object_array] || false)
-    end
-    
-      
-    private
-    
-    def nested_attributes_association?(association_name)
-      @object_class.instance_methods.include?("#{association_name}_attributes=")
-    end
-      
-    def fields_for_with_nested_attributes(association_name, args, block)
-      options = args.extract_options!
-      args << options
-      
-      if @object
-        association = @object.send(association_name)
-        unless association
-          reflection = @object_class.reflect_on_association(association_name)
-          association = reflection.klass.new
-          args.unshift(association)
-        end
-        super(association_name, args, block)
-      else
-        unless @object_array #options[:object_array]
-          name = "#{object_name}[#{association_name}_attributes]"
-          @template.fields_for(name, args, block)
-        end
-      end
     end
     
     
@@ -122,9 +92,14 @@ module Trainyard
           klass = object.class
           is_array = object.is_a?(Array)
         else
-          reflection = @object_class.reflect_on_association(name.to_sym)
+          # reflection = @object_class.reflect_on_association(name.to_sym)
+          reflection = self.object.class.reflect_on_association(name.to_sym)
           klass = reflection.klass
-          object = [] if is_array = (reflection.macro == :has_many)
+          if is_array = (reflection.macro == :has_many)
+            object = []
+          elsif self.object
+            object = self.object.send("build_#{record_or_name_or_array}")
+          end
         end
         if is_array
           names = name
@@ -158,7 +133,7 @@ module Trainyard
       render_options[:partial] ||= "#{names}/edit"
       render_options[:locals] ||= {}
       render_options[:locals][name.to_sym] = object
-      render_options[:layout] = 'layout/item' if is_array && !defined?(render_options[:layout])
+      render_options[:layout] ||= 'layout/item' if is_array && render_options[:layout] != false
     
       @template.concat("<div class='form-section #{div_class}'>")
       if heading
@@ -190,26 +165,26 @@ module Trainyard
       label = options[:label] || I18n.t(:add_object, :object => name.capitalize)
       args = options[:args] || []
     
+      object = self.object.send(names).build
       content = @template.capture do
-        # FIXME - When update Rails you can use this line...
-        @template.fields_for(names, *args) do |f|
-        # @template.fields_for("#{object_name}[#{names}_attributes][#{new_child_id}]", *args) do |f|
+        fields_for(names, object, :child_index => 'NEW_RECORD', *args) do |f|
           render_options[:locals][:f] = f
           render_options[:locals][name.to_sym] = f.object
-         @template.concat @template.render(render_options.deep_dup)
+          @template.render(render_options.deep_dup)
         end
       end
+      self.object.send(names).delete(object)
     
       @template.link_to_function label do |page|
-        page.insert_html :bottom, update.to_sym, content
+        page << "$('#{update}').insert({ bottom: '#{escape_javascript(content)}'.replace(/NEW_RECORD/g, new Date().getTime()) });"
       end
     end
     
     def contact_form(options = {})
       form_for(:address, :heading => @template.t(:address, :scope => [ :contacts ])) unless options[:address] == false
-      form_for(:emails, :heading => @template.tp(:email, :scope => [ :contacts ])) unless options[:emails] == false
-      form_for(:phones, :heading => @template.tp(:phone, :scope => [ :contacts ])) unless options[:phones] == false
-      form_for(:urls, :heading => @template.tp(:url, :scope => [ :contacts ])) unless options[:urls] == false
+      form_for(:emails, :heading => @template.tp(:email, :scope => [ :contacts ]), :create_link => true) unless options[:emails] == false
+      form_for(:phones, :heading => @template.tp(:phone, :scope => [ :contacts ]), :create_link => true) unless options[:phones] == false
+      form_for(:urls, :heading => @template.tp(:url, :scope => [ :contacts ]), :create_link => true) unless options[:urls] == false
     end
  
     def yes_no_select(name, options = {}, html_options = {})

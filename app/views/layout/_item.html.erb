@@ -1,14 +1,16 @@
-<% _id = "item_#{random_id}" %>
-<div id="<%= _id %>">
+<div class="item">
   <table class="item-table">
     <tr>
       <td>
         <%= yield %>
       </td>
       <td>
-        <% # FIXME - Use this line when update Rails... %>
-        <% #= f.check_box(:_delete, :layout => false) %> <% #=t :remove %>
-        <%= icon_link_to_function(:delete, t(:remove), "if (confirm('#{t(:are_you_sure)}')) Element.remove('#{_id}');") %>
+        <% if f.object.nil? || f.object.new_record? %>
+          <%= icon_link_to_function(:delete, t(:remove), "if (confirm('#{t(:are_you_sure)}')) $(this).up('.item').remove();") %>
+        <% else %>
+          <%= f.hidden_field :_delete %>
+          <%= icon_link_to_function(:delete, t(:remove), "if (confirm('#{t(:are_you_sure)}')) { var el = $(this); el.up('.item').hide(); if (hidden_input = el.previous('input[type=hidden]')) hidden_input.value = '1' }") %>
+        <% end %>
       </td>
     </tr>
   </table>
