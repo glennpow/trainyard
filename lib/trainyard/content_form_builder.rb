@@ -31,11 +31,20 @@ module Trainyard
     def labeled_field(field, options = {}, &block)
       is_erb = @template.send(:block_called_from_erb?, block)
       label_options = options[:label] || {}
+      case label_options
+      when Hash
+        label_class = label_options.delete(:class) || ''
+        label = label(field, label_options.delete(:name), label_options)
+      else
+        label_class = ''
+        label = label(field, label_options)
+      end
+      
       locals = {
         :input_class => options[:input_class] || '',
         :input => is_erb ? @template.capture(&block) : yield,
-        :label_class => label_options.delete(:class) || '',
-        :label => label(field, label_options.delete(:name), label_options),
+        :label_class => label_class,
+        :label => label,
         :hint_class => options[:hint_class],
         :hint => options[:hint],
         :required => options[:required] || false,

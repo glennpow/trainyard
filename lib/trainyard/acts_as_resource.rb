@@ -71,6 +71,10 @@ module Trainyard
         define_method :moderators do
           @moderators ||= self.group.moderators
         end
+        
+        define_method :members do
+          @members ||= self.group.members
+        end
 
         permissions_options = options[:permissions] || {}
         

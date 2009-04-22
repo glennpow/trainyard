@@ -87,11 +87,13 @@ class User < ActiveRecord::Base
   memoize :is_moderator_of?
   
   def is_member_of?(resource, with_child_groups = false)
+    puts("is_member_of?(#{resource.inspect}, #{with_child_groups})")
     return true if has_administrator_role?
     return false if resource.nil?
     return resource.respond_to?(:group) && resource.group && resource.group.has_member?(self, with_child_groups)
   end
-  memoize :is_member_of?
+  # FIXME - This causes calls to fail when with_child_groups = true...
+  #memoize :is_member_of?
     
   def permitted?(action, resource)
     Permission.permitted?(self, action, resource)

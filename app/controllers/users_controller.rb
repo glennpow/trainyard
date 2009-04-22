@@ -5,11 +5,8 @@ class UsersController < ApplicationController
     member_actions :destroy, :enable
 
     before :new do
-      @user_groups = if Configuration.default_user_group_name
-        [ Group.find_by_name(Configuration.default_user_group_name, :select => 'id, name') ]
-      else
-        []
-      end
+      group_names = Configuration.default_user_group_name || Configuration.default_user_group_names
+      @user_groups = group_names ? Group.all(:select => 'id, name', :conditions => { :name => group_names }) : []
     end
     
     after :create do

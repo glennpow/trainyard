@@ -18,7 +18,7 @@ class Mailer < ActionMailer::Base
     if emails.any?
       recipients   emails
       from         "#{Configuration.current_site[:name]} <#{Configuration.current_site[:email]}>"
-      subject      "#{Configuration.current_site[:name]} <#{Configuration}#{options[:subject].nil? ? '' : ' - ' + options[:subject]}"
+      subject      "#{Configuration.current_site[:name]}#{options[:subject].nil? ? '' : ' - ' + options[:subject]}"
       sent_on      Time.now
       content_type "text/html"
       body         :body => options[:body] || ''
