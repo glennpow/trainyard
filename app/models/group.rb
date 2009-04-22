@@ -45,16 +45,12 @@ class Group < ActiveRecord::Base
   end
   
   def has_member?(user, with_child_groups = false)
-    puts("group.has_member?(#{user.name}, #{with_child_groups})")
     return true if self.users.include?(user)
-    puts(" ... not directly")
     if with_child_groups
-    puts(" ... checking children")
       self.child_groups.each do |child_group|
         return true if child_group.has_member?(user, with_child_groups)
       end
     end
-    puts("not member")
     return false
   end
 end

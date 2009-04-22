@@ -1,6 +1,7 @@
 class Theme < ActiveRecord::Base
   extend ActiveSupport::Memoizable
   
+  acts_as_resource
   has_many :theme_elements, :dependent => :destroy, :order => 'name ASC'
   accepts_nested_attributes_for :theme_elements, :allow_destroy => true
   has_many :root_theme_elements, :class_name => 'ThemeElement', :conditions => { :parent_theme_element_id => nil }, :order => 'position ASC'

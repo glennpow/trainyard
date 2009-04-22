@@ -4,7 +4,7 @@
     theme,
     [
       link_to_resource(theme),
-      (@themeable.theme.id == theme.id) ? icon(:check) : ""
+      (@themeable.theme == theme) ? icon(:check) : ""
     ],
     :actions => (is_editor_of?(@themeable) && (@themeable.theme != theme)) ?
       icon_link_to(:apply, t(:apply, :scope => [ :themes ]), apply_theme_path(theme, :themeable_type => @themeable.class.to_s, :themeable_id => @themeable.id), :method => :post) : nil
@@ -15,7 +15,7 @@
     theme,
     [
       link_to_resource(theme),
-      (current_theme.id == theme.id) ? icon(:check) : ""
+      (current_theme == theme) ? icon(:check) : ""
     ],
     :actions => has_administrator_role? ? [
       icon_link_to(:apply, t(:apply, :scope => [ :themes ]), apply_theme_path(theme), :method => :post),

@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     end
     
     response_for :create do |format|
-      format.html { redirect_to login_path }
+      format.html { redirect_to Configuration.signup_success_path || login_path }
     end
     
     before :edit do

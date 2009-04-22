@@ -2,7 +2,7 @@
 
 <%= render_heading(t(:preview, :scope => [ :themes ])) %>
 
-<p align="center"><iframe src="<%= preview_themes_path(:theme_id => @theme.id) %>" width="800" height="600" style="margin-left: auto; margin-right: auto"></iframe></p>
+<p align="center"><iframe src="<%= preview_themes_path(:theme_id => @theme.id) %>" width="800" height="600" scrolling="no" style="margin-left: auto; margin-right: auto"></iframe></p>
 
 <% if has_administrator_role? %>
   <% unless current_theme.id == @theme.id %>

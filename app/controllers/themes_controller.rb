@@ -2,7 +2,7 @@ class ThemesController < ApplicationController
   make_resource_controller do
     belongs_to :themeable
     
-    member_actions :stylesheet
+    member_actions :stylesheet, :apply
     
     before :new do
       (@theme.attribute_names - [ 'name' ]).each { |attr| @theme.send("#{attr}=", current_theme.send(attr)) }
@@ -61,6 +61,7 @@ class ThemesController < ApplicationController
   private
   
   def check_editor_or_administrator
+    @theme = Theme.find(params[:id]) if params[:id]
     @themeable = params[:themeable_type].to_class.find(params[:themeable_id]) if params[:themeable_id] && params[:themeable_type]
     check_condition(has_administrator_role? || (@theme && @themeable && @themeable.respond_to?(:theme=) && is_editor_of?(@themeable)))
   end
