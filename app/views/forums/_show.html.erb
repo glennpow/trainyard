@@ -1,7 +1,3 @@
-<%= forum_breadcrumbs(forum) %>
-
-<%= render_heading("#{t(:forum, :scope => [ :content ])}: #{h(forum.name)}") %>
-
 <% unless forum.description.blank? %>
   <%= render_text_area(forum.description) %>
 <% end %>

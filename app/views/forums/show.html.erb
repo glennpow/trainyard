@@ -1,4 +1,4 @@
-<% title t(:forum, :scope => [ :content ]) %>
+<% title "#{t(:forum, :scope => [ :content ])}: #{h(@forum.name)}" %>
 
 <%= render :partial => 'show', :locals => { :forum => @forum } %>
 

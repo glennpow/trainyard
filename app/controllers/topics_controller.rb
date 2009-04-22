@@ -3,6 +3,9 @@ class TopicsController < ApplicationController
     belongs_to :forum
     
     before :show do
+      add_breadcrumb h(@topic.forum.name), @topic.forum
+      add_breadcrumb h(@topic.name)
+
       @posts_indexer = create_indexer(Post) do |options|
         options[:conditions] = { :topic_id => @topic.id }
         options[:order] = 'posts.created_at ASC'
@@ -14,6 +17,8 @@ class TopicsController < ApplicationController
     end
     
     before :new do
+      add_breadcrumb h(@forum.name), @forum
+
       @post = Post.new
     end
     
@@ -26,6 +31,10 @@ class TopicsController < ApplicationController
       @post.user = current_user
       @topic.posts << @post
     end
+    
+    before :edit do
+      add_breadcrumb h(@topic.forum.name), @topic.forum
+    end
   end
   
   def resourceful_name
@@ -35,8 +44,12 @@ class TopicsController < ApplicationController
   before_filter :login_required, :only => [ :new, :create ]
   before_filter :check_forum, :only => [ :new, :create ]
   before_filter :check_administrator_role, :only => [ :edit, :update, :destroy ]
-  
+    
+  add_breadcrumb I18n.t(:forum, :scope => [ :content ]).pluralize, :forums_path
+
   def index
+    add_breadcrumb h(@forum.name), @forum
+
     respond_with_indexer do |options|
       options[:order] = "#{Topic.table_name}.sticky DESC, #{Topic.table_name}.replied_at DESC"
       options[:include] = :user

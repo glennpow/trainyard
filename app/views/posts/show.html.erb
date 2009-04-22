@@ -1,6 +1,4 @@
-<% title link_to(h(@post.topic_name), topic_path(@post.topic)) %>
-
-<%= post_breadcrumbs(@post) %>
+<% title h(@post.topic_name) %>
 
 <%= render_field(t(:author, :scope => [ :content ]), link_to_user(@post.user)) %>
 

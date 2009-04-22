@@ -1,6 +1,8 @@
 class ForumsController < ApplicationController
   make_resource_controller do
     before :show do
+      add_breadcrumb h(@forum.name)
+
       @topics_indexer = create_indexer(Topic) do |options|
         options[:conditions] = { :forum_id => @forum.id }
         options[:order] = 'topics.sticky DESC, topics.replied_at DESC'
@@ -23,6 +25,8 @@ class ForumsController < ApplicationController
 
   before_filter :check_administrator_role, :only => [ :new, :create ]
   before_filter :check_moderator_of_forum, :only => [ :edit, :update, :destroy ]
+  
+  add_breadcrumb I18n.t(:forum, :scope => [ :content ]).pluralize, :forums_path
   
   def index
     respond_with_indexer do |options|

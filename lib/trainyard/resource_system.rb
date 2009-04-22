@@ -13,6 +13,13 @@ module Trainyard
           actions *action_list
           collection_actions :index unless action_list.include?(:index)
     
+          response_for :show_fails do |format|
+            not_found = Proc.new { render :file => "#{RAILS_ROOT}/public/404.html", :status => 404 }
+            format.html &not_found
+            format.js &not_found
+            format.xml &not_found
+          end
+
           after :create do
             flash[:notice] = t(:object_created, :object => resourceful_name)
           end

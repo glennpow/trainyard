@@ -53,6 +53,11 @@ module ContentHelper
     content.gsub!(/href=['"][^'"]+?['"]/, "href='#'")
     (block_given? && block_called_from_erb?(block)) ? concat(content) : content
   end
+
+  def render_breadcrumbs(options = {})
+    options[:class] = merge_classes(options[:class], 'breadcrumbs')
+    render_bar_list(breadcrumbs.map { |name, url| link_to_unless_current(name, url) }, :class => options[:class]) unless breadcrumbs.blank?
+  end
   
   def yes_no(value)
     t(value ? :yes : :no)
