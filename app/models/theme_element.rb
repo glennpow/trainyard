@@ -19,7 +19,7 @@ class ThemeElement < ActiveRecord::Base
   end
   
   def background_url_css
-    @background_url_css ||= self.background_url.blank? ? 'none' : self.background_url
+    @background_url_css ||= self.background_url.blank? ? 'none' : "url('#{self.background_url}')"
   end
   
   def background_repeat_css
