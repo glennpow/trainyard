@@ -25,7 +25,7 @@ class MediasController < ApplicationController
   private
   
   def check_editor_of_resource
-    check_administrator_role || check_editor_of(@resource)
+    check_editor_of(@resource, true)
   end
   
   def check_editor_of_media

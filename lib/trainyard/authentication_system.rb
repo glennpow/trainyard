@@ -84,16 +84,16 @@ module Trainyard
       logged_in? && current_user.is_editor_of?(resource)
     end
     
-    def check_editor_of(resource)
-      check_condition(is_editor_of?(resource))
+    def check_editor_of(resource, check_admin = false)
+      check_condition((check_admin && has_administrator_role?) || is_editor_of?(resource))
     end
   
     def is_viewer_of?(resource)
       logged_in? && current_user.is_viewer_of?(resource)
     end
     
-    def check_viewer_of(resource)
-      check_condition(is_viewer_of?(resource))
+    def check_viewer_of(resource, check_admin = false)
+      check_condition((check_admin && has_administrator_role?) || is_viewer_of?(resource))
     end
 
     def current_organization

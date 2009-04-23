@@ -19,6 +19,8 @@ class User < ActiveRecord::Base
   has_many :watchings, :dependent => :destroy
 
   validates_attachment_size :image, Configuration.default_image_size_options
+  validates_confirmation_of :email, :if => :email_changed?
+  validates_presence_of :email_confirmation, :if => :email_changed?
 
   searches_on :login, :name
  

@@ -20,10 +20,10 @@
   </tr>
   <tr>
     <td>
-      <%= f.text_field :email, :required => true %>
+      <%= f.text_field :email, :required => true, :hint => t(:email_hint, :scope => [ :authentication, :users, :new ]) %>
     </td>
     <td>
-      <%= f.file_field :image %>
+      <%= f.text_field :email_confirmation, :required => true %>
     </td>
   </tr>
   <tr>
@@ -32,6 +32,13 @@
     </td>
     <td>
       <%= f.password_field :password_confirmation, :required => true %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        <%= f.file_field :image %>
+    </td>
+    <td>
     </td>
   </tr>
   <tr>

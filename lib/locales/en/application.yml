@@ -12,6 +12,7 @@ en:
   create: Create
   create_object: Create {{object}}
   decline: Decline
+  default: Default
   delete: Delete
   description: Description
   disable: Disable
@@ -105,13 +106,11 @@ en:
     registered: Registered
     remember_me: Remember me
     reset_password: Reset Password
+    role: Role
     session: Session
     user: User
     user_not_found: User not found
     users_in_object: Users in {{object}}
-    role: Role
-    parent_group: Parent Group
-    child_group: Child Group
     actions:
       add_article: Add Article
       add_organization: Add Organization
@@ -202,6 +201,7 @@ en:
         failure: There was a problem enabling this account
         success: Account enabled
       new: 
+        email_hint: You must enter a valid email in order to activate your account.
         email_subject: Please activate your new account
         email_body: |
           Your account has been created.

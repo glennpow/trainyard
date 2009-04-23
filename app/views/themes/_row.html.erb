@@ -3,7 +3,7 @@
     indexer,
     theme,
     [
-      link_to_resource(theme),
+      "#{link_to_resource(theme)}#{default_theme == theme ? " (#{t(:default)})" : ''}",
       (@themeable.theme == theme) ? icon(:check) : ""
     ],
     :actions => (is_editor_of?(@themeable) && (@themeable.theme != theme)) ?
@@ -14,7 +14,7 @@
     indexer,
     theme,
     [
-      link_to_resource(theme),
+      "#{link_to_resource(theme)}#{default_theme == theme ? " (#{t(:default)})" : ''}",
       (current_theme == theme) ? icon(:check) : ""
     ],
     :actions => has_administrator_role? ? [

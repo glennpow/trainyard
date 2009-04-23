@@ -61,7 +61,7 @@ class ArticlesController < ApplicationController
   private
   
   def check_viewer_of_resource
-   check_administrator_role || check_viewer_of(@resource)
+    check_viewer_of(@resource, true)
   end
   
   def check_add_article_for_resource

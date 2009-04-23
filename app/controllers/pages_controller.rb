@@ -28,7 +28,7 @@ class PagesController < ApplicationController
   private
   
   def check_editor_of_group
-    check_administrator_role || check_editor_of(@group)
+    check_editor_of(@group, true)
   end
   
   def check_editor_of_page
