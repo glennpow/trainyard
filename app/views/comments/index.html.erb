@@ -6,6 +6,6 @@
 
 <%= render_indexer(@indexer) %>
 
-<% if may_review?(@resource) %>
+<% if may_comment?(@resource) %>
   <% page_action icon_link_to(:add_large, t(:create_object, :object => t(:comment, :scope => [ :content ])), new_object_path) %>
 <% end %>

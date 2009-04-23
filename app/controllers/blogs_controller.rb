@@ -41,27 +41,8 @@ class BlogsController < ApplicationController
     @article = params[:article_id] ? Article.find(params[:article_id]) : @blog.articles.first
     
     if @article
-      if is_commentable?(@article)
-        @comments_indexer = create_indexer(Comment) do |options|
-          options[:order] = 'created_at ASC'
-          options[:no_table] = true
-          options[:per_page] = 10
-
-          options[:conditions] = [ "resource_type = ? AND resource_id = ?", 'Article', @article.id ]
-          options[:paginate] = { :params => { :controller => 'comments', :action => 'list', :article_id => @article.id } }
-        end
-      end
-
-      if is_reviewable?(@article)
-        @reviews_indexer = create_indexer(Review) do |options|
-          options[:order] = 'created_at ASC'
-          options[:no_table] = true
-          options[:per_page] = 5
-
-          options[:conditions] = [ "resource_type = ? AND resource_id = ?", 'Article', @article.id ]
-          options[:paginate] = { :params => { :controller => 'reviews', :action => 'list', :article_id => @article.id } }
-        end
-      end
+      load_comments(@article)
+      load_reviews(@article)
     end
   end
   

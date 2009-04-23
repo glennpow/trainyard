@@ -1,4 +1,6 @@
 class Comment < ActiveRecord::Base
+  acts_as_humane :unless => :user
+  
   belongs_to :resource, :polymorphic => true
   belongs_to :user
   

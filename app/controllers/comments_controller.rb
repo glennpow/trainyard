@@ -5,6 +5,10 @@ class CommentsController < ApplicationController
     before :new do
       @comment.user = current_user if logged_in?
     end
+  
+    before :create do
+      verify_human(@comment)
+    end
 
     response_for :create do |format|
       format.html { redirect_to polymorphic_path([ @comment.resource, Comment.new ]) }
@@ -21,7 +25,7 @@ class CommentsController < ApplicationController
 
   before_filter :check_resource_is_commentable, :only => [ :index, :new, :create ]
   before_filter :check_editor_of_comment, :only => [ :edit, :update, :destroy ]
-    
+  
   def index
     respond_with_indexer do |options|
       options[:order] = 'created_at ASC'

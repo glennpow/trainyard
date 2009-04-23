@@ -255,8 +255,15 @@ module Trainyard
       class_name = options[:class_name] || 'form-submit'
       submit_name = options[:submit] || I18n.t(:submit)
       cancel_name = options[:cancel] || I18n.t(:cancel)
-      @template.content_tag :div, :class => "form-element #{class_name}" do
-        @template.content_tag :p, "#{self.submit_without_wrapper(submit_name, options)} #{@template.link_to_back(cancel_name)}"
+      @template.capture do
+        if defined?(Ambethia::ReCaptcha)
+          if self.object.respond_to?(:should_verify_human) && self.object.try(:should_verify_human)
+            @template.concat @template.content_tag(:div, @template.recaptcha_tags, :class => 'form-recaptcha')
+          end
+        end
+        @template.concat(@template.content_tag(:div, :class => "form-element #{class_name}") do
+          @template.content_tag :p, "#{self.submit_without_wrapper(submit_name, options)} #{@template.link_to_back(cancel_name)}"
+        end)
       end
     end
   end

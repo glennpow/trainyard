@@ -50,6 +50,10 @@ module Trainyard
         end
       end
     end
+    
+    def verify_human(resource)
+      resource.verified_human = verify_recaptcha(resource)
+    end
   
     def self.included(base)
       base.send :helper_method, :page_title, :page_actions, :current_blog, :is_commentable?, :is_reviewable? if base.respond_to? :helper_method

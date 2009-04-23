@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/trainyard/rails_extensions'
 require File.dirname(__FILE__) + '/trainyard/configuration'
 require File.dirname(__FILE__) + '/trainyard/acts_as_resource'
+require File.dirname(__FILE__) + '/trainyard/acts_as_humane'
 require File.dirname(__FILE__) + '/trainyard/acts_as_contactable'
 require File.dirname(__FILE__) + '/trainyard/acts_as_commentable'
 require File.dirname(__FILE__) + '/trainyard/acts_as_reviewable'
