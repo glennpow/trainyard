@@ -19,7 +19,7 @@
   <% end %>
 </p>
 
-<% if values %>
+<% unless values.blank? %>
   <div class="show-field-values">
     <ul class="show-field-list">
       <% values.each do |value| %>

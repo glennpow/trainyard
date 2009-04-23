@@ -214,14 +214,14 @@ module Trainyard
       order = options.delete(:order) || 'name ASC'
       if memberships_options = options.delete(:memberships)
         user = memberships_options[:user]
-        roles = (memberships_options[:roles] || [ Role[:user] ]).map(&:key)
+        roles = memberships_options[:roles] || [ Role[:user] ]
       end
       groups = if user
         Group.all(:include => :memberships, :conditions => { "#{Membership.table_name}.user_id" => user, "#{Membership.table_name}.role" => roles }, :order => order)
       else
         groups = Group.all(:order => order)
       end
-      collection_select(name, groups, :id, :name, options, html_options)
+      collection_select(name, groups, :id, :name, options, html_options) if groups.any?
     end
   
     def rating_select(name, options = {}, html_options = {})
