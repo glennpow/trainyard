@@ -50,25 +50,9 @@ module Trainyard
         end
       end
     end
-    
-    def load_page_article
-      page_name ||= "#{self.action_name}_#{self.controller_name}"
-      if case Configuration.local_article_pages
-        when true
-          true
-        when Array
-          Configuration.local_article_pages.include?(page_name)
-        else
-          false
-        end
-        page = Page.find_by_name(page_name, :select => "id")
-        @page_article = first_by_locale(Article.all(:conditions => { :resource_type => 'Page', :resource_id => page.id }))
-      end
-    end
   
     def self.included(base)
       base.send :helper_method, :page_title, :page_actions, :current_blog, :is_commentable?, :is_reviewable? if base.respond_to? :helper_method
-      base.send :before_filter, :load_page_article if base.respond_to? :before_filter
     end
   end
 end

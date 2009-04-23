@@ -26,14 +26,24 @@ module Trainyard
     def all_by_locale(records, options = {})
       locale = current_locale
       default_locale = Locale.find_by_code(Configuration.default_locale)
-      country_records = records.select do |record|
-        if record.respond_to?(:locale) && (record.locale.nil? || locale.nil? || record.locale.country == locale.country)
-          false if options.any? && options.detect { |key, value| !record.respond_to?(key) || record.send(key) != value }
-          (locale.nil? && default_locale.nil?) || record.locale && record.locale.language == (locale || default_locale).language
-        else
-          false
+      attributes = options.except(:include_default_country, :include_default_language)
+      matching_both = []
+      matching_country = []
+      matching_language = []
+      records.each do |record|
+        if record.respond_to?(:locale)
+          if record.locale.nil? || (locale.nil? && default_locale.nil?)
+            matching_both << record
+          elsif attributes.any? && attributes.detect { |key, value| !record.respond_to?(key) || record.send(key) != value }
+          else
+            matches_country = (locale && record.locale.country == locale.country) || (options[:include_default_country] && default_locale && record.locale.country == default_locale.country)
+            matching_country << record if matches_country
+            matches_language = (locale && record.locale.language == locale.language) || (options[:include_default_language] && default_locale && record.locale.language == default_locale.language)
+            matching_language << record if matches_language
+          end
         end
       end
+      return (matching_both + matching_country + matching_language).uniq
     end
     
     def first_by_locale(records, options = {})

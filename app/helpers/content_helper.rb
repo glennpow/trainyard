@@ -86,7 +86,7 @@ module ContentHelper
   def for_page_content(options = {}, &block)
     path = options[:route] ? "/#{controller_name}/#{action_name}" : request.path
     page = Page.find_by_permalink(path)
-    article = Article.first_by_resource(page) if page
+    article = first_by_locale(Article.all_by_resource(page), :include_default_language => true, :include_default_language => true) if page
     block.call(article) if article
   end
 
