@@ -1,6 +1,10 @@
 class ReviewsController < ApplicationController
   make_resource_controller do
     belongs_to :resource
+    
+    before :show do
+      add_breadcrumb h(@review.resource.name), @review.resource
+    end
       
     before :new do
       @review.user = current_user
@@ -29,6 +33,8 @@ class ReviewsController < ApplicationController
       options[:no_table] = true
 
       if @resource
+        add_breadcrumb h(@resource.name), @resource
+
         options[:conditions] = [ "resource_type = ? AND resource_id = ?", @resource.class.to_s, @resource.id ]
       end
     end
@@ -41,6 +47,8 @@ class ReviewsController < ApplicationController
       options[:per_page] = 5
 
       if @resource
+        add_breadcrumb h(@resource.name), @resource
+
         options[:conditions] = [ "resource_type = ? AND resource_id = ?", @resource.class.to_s, @resource.id ]
       end
     end

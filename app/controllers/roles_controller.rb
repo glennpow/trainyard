@@ -3,6 +3,8 @@ class RolesController < ApplicationController
   before_filter :check_role, :only => [ :update, :destroy ]
  
   def index
+    add_breadcrumb h(@user.name), @user
+
     @assigned_roles = @user.roles(@group)
     @available_roles = Role.all - @assigned_roles
   end

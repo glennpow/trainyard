@@ -1,6 +1,10 @@
 class CommentsController < ApplicationController
   make_resource_controller do
     belongs_to :resource
+    
+    before :show do
+      add_breadcrumb h(@comment.resource.name), @comment.resource
+    end
       
     before :new do
       @comment.user = current_user if logged_in?
@@ -32,6 +36,8 @@ class CommentsController < ApplicationController
       options[:no_table] = true
 
       if @resource
+        add_breadcrumb h(@resource.name), @resource
+
         options[:conditions] = [ "resource_type = ? AND resource_id = ?", @resource.class.to_s, @resource.id ]
       end
     end
@@ -44,6 +50,8 @@ class CommentsController < ApplicationController
       options[:per_page] = 10
 
       if @resource
+        add_breadcrumb h(@resource.name), @resource
+
         options[:conditions] = [ "resource_type = ? AND resource_id = ?", @resource.class.to_s, @resource.id ]
       end
     end

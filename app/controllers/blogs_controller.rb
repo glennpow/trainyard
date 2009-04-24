@@ -38,6 +38,9 @@ class BlogsController < ApplicationController
   end
   
   def article
+    add_breadcrumb h(@blog.name), @blog
+    add_breadcrumb h(@article.name)
+
     @article = params[:article_id] ? Article.find(params[:article_id]) : @blog.articles.first
     
     if @article
