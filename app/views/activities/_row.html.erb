@@ -1,0 +1,24 @@
+<% if @user %>
+  <%= render_row(
+    indexer,
+    activity,
+    [
+      activity.updated_at.to_s(:long),
+      link_to_resource(activity.resource),
+      h(activity.message),
+    ],
+    :url => activity.resource
+  ) %>
+<% else %>
+  <%= render_row(
+    indexer,
+    activity,
+    [
+      link_to_resource(activity.user),
+      activity.updated_at.to_s(:long),
+      link_to_resource(activity.resource),
+      h(activity.message),
+    ],
+    :url => activity.resource
+  ) %>
+<% end %>

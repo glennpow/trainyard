@@ -13,6 +13,7 @@ module TrainyardHelper
       unless options[:ajax] == false
         content << javascript_include_tag('lowpro', :plugin => 'trainyard')
         content << javascript_include_tag('behaviors', :plugin => 'trainyard')
+        content << javascript_include_tag('hint_window', :plugin => 'trainyard')
       end
     end
   end

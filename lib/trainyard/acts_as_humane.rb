@@ -9,7 +9,7 @@ module Trainyard
         options = args.extract_options!
         
         class_eval do
-          validates_acceptance_of :verified_human, options.reverse_merge(:accept => true)
+          validates_acceptance_of :verified_human, options.merge(:accept => true)
         end
           
         define_method :should_verify_human do

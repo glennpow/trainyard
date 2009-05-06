@@ -4,11 +4,23 @@ module ContentHelper
   end
 
   def javascript(*files)
-    content_for(:head) { javascript_include_tag(*files) }
+    options = files.extract_options!
+    files.each do |file|
+      unless (@javascript_files ||= []).include?(file)
+        @javascript_files << file
+        content_for(:head) { javascript_include_tag(file, options) }
+      end
+    end
   end
   
   def stylesheet(*files)
-    content_for(:head) { stylesheet_link_tag(*files) }
+    options = files.extract_options!
+    files.each do |file|
+      unless (@stylesheet_files ||= []).include?(file)
+        @stylesheet_files << file
+        content_for(:head) { stylesheet_link_tag(file, options) }
+      end
+    end
   end
   
   def title(title = nil)

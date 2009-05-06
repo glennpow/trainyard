@@ -61,6 +61,7 @@ en:
   site: Site
   status: Status
   submit: Submit
+  terms_and_conditions: Terms and Conditions
   time_zone: Time Zone
   type: Type
   unknown: Unknown
@@ -278,6 +279,7 @@ en:
       business: Business
       personal: Personal
   content:
+    activity: Activity
     article: Article
     articles_for_object:
       one: Article for {{object}}
@@ -361,6 +363,37 @@ en:
       flash: Adobe Flash Movie
       quicktime: Quicktime Movie
       windows: Windows Media Video
+  social:
+    friend: Friend
+    friendship: Friendship
+    friendship_accepted_for_user: You have become friends with {{user}}
+    friendship_request:
+      email_body: |
+        You have a received a friendship request from {{user}}!
+      
+        Sign into your account to accept or deny:
+        
+          {{url}}
+      email_subject: You have a received a friendship request from {{user}}!
+    friendship_requested_from_user: You received a friendship request from {{user}}
+    friendship_requested_of_user: You requested friendship from {{user}}
+    friendship_types:
+      accepted: Accepted
+      pending: Pending
+      requested: Requested
+    friendships:
+      accept:
+        success: You have successfully become friends with {{user}}
+        failure: You failed to become friends with {{user}}
+      remove:
+        success: You have successfully removed {{user}} from your friends
+        failure: You failed to remove {{user}} from your friends
+      request:
+        success: You have successfully sent a friendship request to {{user}}
+        failure: You failed to send a friendship request to {{user}}
+    remove_friendship: Remove from your friends
+    request_friendship: Request friendship
+    unacceptable_friendship_from_user: No friendship request was found from {{user}}
   themes:
     active: Active
     apply: Apply

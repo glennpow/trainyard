@@ -1,0 +1,9 @@
+<% title tp(:friendship, :scope => [ :social ]) %>
+
+<%= render_actions([
+  link_to_if(@friendship_type != FriendshipType[:accepted], t(:accepted, :scope => [ :social, :friendship_types ]), friendships_path(:friendship_type => :accepted)),
+  link_to_if(@friendship_type != FriendshipType[:requested], t(:requested, :scope => [ :social, :friendship_types ]), friendships_path(:friendship_type => :requested)),
+  link_to_if(@friendship_type != FriendshipType[:pending], t(:pending, :scope => [ :social, :friendship_types ]), friendships_path(:friendship_type => :pending)),
+], :class => 'filter-bar') %>
+
+<%= render_indexer(@indexer) %>

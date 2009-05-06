@@ -16,6 +16,15 @@ class User < ActiveRecord::Base
   has_many :messages, :foreign_key => :to_user_id, :order => 'created_at DESC'
   has_many :sent_messages, :class_name => 'Message', :foreign_key => :from_user_id, :order => 'created_at DESC'
   has_many :posts, :order => 'created_at DESC'
+  has_many :friendships, :include => :friend, :order => "#{User.table_name}.name ASC", :dependent => :destroy
+  has_many :friends, :through => :friendships
+  has_many :requested_friendships, :class_name => 'Friendship', :include => :friend, :order => "#{User.table_name}.name ASC", :conditions => { :friendship_type => FriendshipType[:requested] }
+  has_many :requested_friends, :through => :requested_friendships, :source => :friend
+  has_many :pending_friendships, :class_name => 'Friendship', :include => :friend, :order => "#{User.table_name}.name ASC", :conditions => { :friendship_type => FriendshipType[:pending] }
+  has_many :pending_friends, :through => :pending_friendships, :source => :friend
+  has_many :accepted_friendships, :class_name => 'Friendship', :include => :friend, :order => "#{User.table_name}.name ASC", :conditions => { :friendship_type => FriendshipType[:accepted] }
+  has_many :accepted_friends, :through => :accepted_friendships, :source => :friend
+  has_many :inverse_friendships, :class_name => 'Friendship', :foreign_key => :friend_id, :include => :user, :dependent => :destroy
   has_many :watchings, :dependent => :destroy
 
   validates_attachment_size :image, Configuration.default_image_size_options
@@ -121,6 +130,10 @@ class User < ActiveRecord::Base
     end.flatten
   end
   memoize :moderated
+  
+  def friendship_with(user)
+    Friendship.find_between(self, user)
+  end
   
   def watched(klass = nil)
     self.watchings.all(:conditions => klass ? { :resource_type => klass.to_s } : nil).map(&:resource)

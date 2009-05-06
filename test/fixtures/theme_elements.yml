@@ -1,0 +1,84 @@
+theme_gray_body:
+  theme: theme_gray
+  name: body
+  position: 1
+  background_color: '#eeeeee'
+  
+theme_gray_base:
+  theme: theme_gray
+  name: base
+  position: 2
+  background_color: '#ffffff'
+  font_color: '#000000'
+  link_color: '#000000'
+  link_hover_color: '#4c7781'
+  
+theme_gray_primary:
+  theme: theme_gray
+  name: primary
+  position: 3
+  background_color: '#2d3034'
+  font_color: '#ffffff'
+  link_color: '#c1c4c3'
+  link_hover_color: '#ffffff'
+
+theme_gray_secondary:
+  theme: theme_gray
+  name: secondary
+  position: 4
+  background_color: '#b0b0b0'
+  font_color: '#333333'
+  link_color: '#ffffff'
+  link_hover_color: '#555555'
+
+theme_gray_highlight:
+  theme: theme_gray
+  name: highlight
+  position: 5
+  background_color: '#ffff44'
+  font_color: '#000000'
+  link_color: '#333333'
+  link_hover_color: '#555555'
+
+
+theme_blue_body:
+  theme: theme_blue
+  name: body
+  position: 1
+  background_color: '#b6c1ce'
+
+theme_blue_base:
+  theme: theme_blue
+  name: base
+  position: 2
+  background_color: '#ffffff'
+  font_color: '#000000'
+  link_color: '#333355'
+  link_hover_color: '#4c7791'
+
+theme_blue_primary:
+  theme: theme_blue
+  name: primary
+  position: 3
+  background_color: '#2c53bf'
+  font_color: '#ffffff'
+  link_color: '#c1c4c3'
+  link_hover_color: '#ffffff'
+
+theme_blue_secondary:
+  theme: theme_blue
+  name: secondary
+  position: 4
+  background_color: '#cacce3'
+  font_color: '#333333'
+  link_color: '#0e1282'
+  link_hover_color: '#1768e3'
+
+theme_blue_highlight:
+  theme: theme_blue
+  name: highlight
+  position: 5
+  background_color: '#d9eafc'
+  font_color: '#333333'
+  link_color: '#0e1282'
+  link_hover_color: '#1768e3'

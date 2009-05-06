@@ -155,6 +155,6 @@ module LayoutHelper
       :user => user,
       :image_style => options[:image_style] || :thumb
     }
-    render :partial => 'layout/user_card', :locals => locals
+    render :partial => 'users/user_card', :locals => locals
   end
 end

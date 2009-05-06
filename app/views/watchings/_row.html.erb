@@ -7,5 +7,5 @@
   ],
   :url => nil,
   :actions => [
-    watching.user_id == current_user.id ? icon_link_to(:delete, t(:unwatch, :scope => [ :content ]), watching, :confirm => t(:are_you_sure), :method => :delete) : nil
+    is_editor_of?(watching) ? icon_link_to(:delete, t(:unwatch, :scope => [ :content ]), watching, :confirm => t(:are_you_sure), :method => :delete) : nil
   ]) %>

@@ -15,7 +15,7 @@ class WatchingsController < ApplicationController
     t(:watch, :scope => [ :content ])
   end
 
-  before_filter :login_required, :only => [ :create ]
+  before_filter :login_required, :only => [ :index, :create, :destroy ]
   before_filter :check_viewer_of_indexed, :only => [ :index ]
   before_filter :check_editor_of_watching, :only => [ :destroy ]
   
@@ -48,6 +48,6 @@ class WatchingsController < ApplicationController
   end
   
   def check_editor_of_watching
-    check_condition(@watching.user_id == current_user.id)
+    check_editor_of(@watching)
   end
 end

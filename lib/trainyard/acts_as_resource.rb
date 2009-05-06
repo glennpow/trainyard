@@ -69,11 +69,11 @@ module Trainyard
         end
   
         define_method :moderators do
-          @moderators ||= self.group.moderators
+          @moderators ||= self.group.try(:moderators) || User.administrators
         end
         
         define_method :members do
-          @members ||= self.group.members
+          @members ||= self.group.try(:members) || User.administrators
         end
 
         permissions_options = options[:permissions] || {}

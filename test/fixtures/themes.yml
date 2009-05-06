@@ -1,31 +1,5 @@
 theme_gray:
   name: Gray
-  body_color: '#eeeeee'
-  base_color: '#ffffff'
-  base_font_color: '#000000'
-  base_link_color: '#000000'
-  base_link_hover_color: '#4c7781'
-  primary_color: '#2d3034'
-  primary_font_color: '#ffffff'
-  primary_link_color: '#c1c4c3'
-  primary_link_hover_color: '#ffffff'
-  secondary_color: '#b0b0b0'
-  secondary_font_color: '#333333'
-  secondary_link_color: '#ffffff'
-  secondary_link_hover_color: '#555555'
 
 theme_blue:
   name: Blue
-  body_color: '#ddddff'
-  base_color: '#ffffff'
-  base_font_color: '#000000'
-  base_link_color: '#000000'
-  base_link_hover_color: '#4c7781'
-  primary_color: '#2d3055'
-  primary_font_color: '#ffffff'
-  primary_link_color: '#c1c4c3'
-  primary_link_hover_color: '#ffffff'
-  secondary_color: '#b0b0ff'
-  secondary_font_color: '#333333'
-  secondary_link_color: '#ffffff'
-  secondary_link_hover_color: '#555555'

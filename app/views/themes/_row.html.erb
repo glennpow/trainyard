@@ -19,7 +19,7 @@
     ],
     :actions => has_administrator_role? ? [
       icon_link_to(:apply, t(:apply, :scope => [ :themes ]), apply_theme_path(theme), :method => :post),
-      icon_link_to(:edit, t(:edit), edit_object_path(theme)),
+      icon_link_to(:edit, t(:edit), edit_theme_path(theme)),
       icon_link_to(:delete, t(:delete), theme, :confirm => t(:are_you_sure), :method => :delete)
     ] : nil) %>
 <% end %>

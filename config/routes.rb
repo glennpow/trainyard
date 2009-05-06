@@ -16,7 +16,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :organizations, :member => { :set_current => :get }, :has_many => [ :themes, :users ]
   map.resources :users, :member => { :enable => :put, :confirm => :get, :update_reset_password => :post },
                     :collection => { :activate => :get, :request_reset_password => :post },
-                    :has_many => [ :groups, :posts, :watchings ]
+                    :has_many => [ :friends, :groups, :posts, :watchings ]
   map.user_roles '/users/:user_id/roles', :controller => 'roles', :action => 'index'
   map.user_role '/users/:user_id/roles/:id', :controller => 'roles', :action => 'update', :conditions => { :method => :put }
   map.connect '/users/:user_id/roles/:id', :controller => 'roles', :action => 'destroy', :conditions => { :method => :delete }
@@ -26,11 +26,13 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :addresses, :collection => { :update_regions => :get, :locate => :get, :locate_results => :get }
 
+  map.resources :activities
   map.resources :articles, :member => { :erase => :put }, :has_many => [ :articles, :article_revisions, :comments, :medias, :reviews, :watchings ]
   map.blog_article '/blogs/:id/articles/:article_id', :controller => 'blogs', :action => 'article'
   map.resources :blogs, :member => { :contents => :get }, :has_many => [ :articles ]
   map.resources :comments
   map.resources :forums, :collection => { :sort => :post }, :has_many => [ :topics ]
+  map.resources :friendships, :member => { :accept => :put }
   map.resources :medias
   map.new_message_to_user '/messages/new/:to_user_id', :controller => 'messages', :action => 'new'
   map.resources :messages

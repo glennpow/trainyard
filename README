@@ -1,5 +1,5 @@
-Trainyard
-=========
+Trainyard v0.7
+==============
 
 Framework to build powerful community-driven rails applications.
 
@@ -12,11 +12,14 @@ This plugin requires these other plugins to be installed:
   * http_accept_language
   * paperclip
   * active_enumeration
-  * geographer
   * indexer
-  * accessible_record
   * searchable_record
   * will_paginate
+  
+Optional plugins are:
+  * recaptcha
+  * geographer
+  * geokit-rails (with geokit-gem)
 
 The standard initialization of an engine plugin is also required.
 In your application's routes.rb add this line:
@@ -26,6 +29,10 @@ In your application's routes.rb add this line:
 Run this from the command line (necessary only once after all engine plugins are installed):
 
   script/generate plugin_migration && rake db:migrate
+
+
+Note that this plugin is currently in pre-production version, so it is in development, and may need to be
+reinstalled when it reaches it's first production release.
 
 
 Copyright (c) 2009 Glenn Powell, released under the MIT license

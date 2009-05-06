@@ -1,3 +1,4 @@
+require File.dirname(__FILE__) + '/trainyard/ruby_extensions'
 require File.dirname(__FILE__) + '/trainyard/rails_extensions'
 require File.dirname(__FILE__) + '/trainyard/configuration'
 require File.dirname(__FILE__) + '/trainyard/acts_as_resource'

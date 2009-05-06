@@ -3,6 +3,6 @@
 <%= render_actions([
   link_to_if(@mailbox != :inbox, t(:inbox, :scope => [ :content ]), messages_path(:mailbox => :inbox)),
   link_to_if(@mailbox != :sent, t(:sent, :scope => [ :content ]), messages_path(:mailbox => :sent)),
-], :class => 'messages-mailboxes') %>
+], :class => 'filter-bar') %>
 
 <%= render_indexer(@indexer) %>

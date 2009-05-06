@@ -13,7 +13,7 @@ class TopicsController < ApplicationController
         options[:search] = { :url => { :controller => 'posts', :topic_id => @topic.id } }
       end
 
-      @topic.hit! unless logged_in? && @topic.user_id == current_user.id
+      @topic.hit! unless is_editor_of?(@topic)
     end
     
     before :new do

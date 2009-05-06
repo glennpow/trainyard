@@ -1,8 +1,13 @@
 <% div_for forum, :class => 'listed' do %>
   <table class="listed-table full-width">
+    <% if has_administrator_role? %>
+      <col class="forum-sorter" />
+    <% end %>
+    <col class="forum-descriptor" />
+    <col class="forum-stats" />
     <tr>
       <% if has_administrator_role? %>
-        <td rowspan="2" class="align-top align-left">
+        <td rowspan="2" class="align-top align-left forum-sorter">
           <span class="sort-handle"><%= icon_label(:grab, t(:reorder, :scope => [ :content ])) %></span>
         </td>
       <% end %>
@@ -10,7 +15,7 @@
         <p class="forum-name"><%= link_to_resource(forum) %></p>
         <p class="forum-description"><%= h(forum.description) %></p>
       </td>
-      <td class="align-top align-right">
+      <td class="align-top align-right forum-stats">
         <p class="forum-topics"><span class="strong"><%= tp(:topic, :scope => [ :content ]) %></span>: <%= forum.topics_count %></p>
         <p class="forum-posts"><span class="strong"><%= tp(:post, :scope => [ :content ]) %></span>: <%= forum.posts_count %></p>
       </td>
@@ -19,7 +24,7 @@
       <tr>
         <td>
           <%= render_actions([
-            icon_link_to(:edit, t(:edit), edit_object_path(forum)),
+            icon_link_to(:edit, t(:edit), edit_forum_path(forum)),
             icon_link_to(:delete, t(:delete), forum, :confirm => t(:are_you_sure), :method => :delete) ]) %>
         </td>
       </tr>

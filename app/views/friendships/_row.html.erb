@@ -1,0 +1,15 @@
+<%= render_row(
+  indexer,
+  friendship,
+  [
+    link_to_resource(friendship.friend),
+    e(friendship.friendship_type, t(:unknown)),
+    friendship.updated_at.to_s(:long),
+  ],
+  :url => user_path(friendship.friend),
+  :actions => [
+    friendship.friendship_type == FriendshipType[:requested] ? [
+      icon_link_to(:friend_add, t(:accept), accept_friendship_path(friendship), :method => :put),
+      icon_link_to(:friend_delete, t(:decline), friendship, :confirm => t(:are_you_sure), :method => :delete),
+    ] : icon_link_to(:friend_delete, t(:remove), friendship, :confirm => t(:are_you_sure), :method => :delete)
+  ]) %>

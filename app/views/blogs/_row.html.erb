@@ -6,6 +6,6 @@
     link_to_resource(blog.group),
   ],
   :actions => is_editor_of?(blog) ? [
-    icon_link_to(:edit, t(:edit), edit_object_path(blog)),
+    icon_link_to(:edit, t(:edit), edit_blog_path(blog)),
     icon_link_to(:delete, t(:delete), blog, :confirm => t(:are_you_sure), :method => :delete)
   ] : nil) %>

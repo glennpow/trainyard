@@ -63,6 +63,18 @@ module Trainyard
           label = (options[:label] || {})[:name] || field.to_s.humanize
           @template.concat(@template.render(:partial => 'layout/text_area_preview_area', :locals => { :text_area_id => "#{object_name}_#{field}", :label => label }))
         end
+        @template.output_buffer
+      end
+    end
+    
+    def rich_text_area(field, options = {})
+      if (@template.respond_to?(:fckeditor_textarea))
+        options.reverse_merge!(:toolbarSet => 'Simple', :width => '100%', :height => '300px')
+
+        @template.javascript('fckeditor/fckeditor')
+        @template.fckeditor_textarea(object_name.to_sym, field, options)
+      else
+        text_area(field, options)
       end
     end
   

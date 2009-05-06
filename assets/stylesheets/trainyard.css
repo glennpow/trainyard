@@ -296,13 +296,22 @@ table.rating {
   margin: 5px 0px;
 }
 
+.forum-sorter {
+  width: 100px;
+}
+
 .forum-descriptor {
+  width: 80%;
   text-align: left;
 }
 
 .forum-descriptor .forum-name {
   font-size: larger;
   font-weight: bold;
+}
+
+.forum-stats {
+  width: 70px;
 }
 
 .topic-descriptor {

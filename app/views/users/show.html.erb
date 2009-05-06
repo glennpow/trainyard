@@ -2,4 +2,11 @@
 
 <%= render :partial => 'show', :locals => { :user => @user } %>
 
-<% page_action link_to(t(:send_message, :scope => [ :content ]), new_message_to_user_path(@user)) if @user != current_user %>
+<% page_action icon_link_to(:mail, t(:send_message, :scope => [ :content ]), new_message_to_user_path(@user)) if @user != current_user %>
+<% if logged_in? && current_user != @user %>
+  <% if current_user.friends.include?(@user) %>
+    <% page_action icon_link_to(:friend_delete, t(:remove_friendship, :scope => [ :social ]), current_user.friendship_with(@user), :confirm => t(:are_you_sure), :method => :delete) %>
+  <% else %>
+    <% page_action icon_link_to(:friend_add, t(:request_friendship, :scope => [ :social ]), friendships_path(:user_id => @user), :method => :post) %>
+  <% end %>
+<% end %>

@@ -6,7 +6,7 @@ module Trainyard
     end
     
     def default_theme
-      Theme.first
+      Theme.first || Theme.new
     end
 
     def current_theme

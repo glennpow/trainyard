@@ -3,7 +3,7 @@
     <span class="label">
       <%= label %>
   <% end %>
-  <% if actions && actions.any? %>
+  <% if actions.try(:any?) %>
     <span class="actions">
       (<%= actions.join(" | ") %>)
     </span>
