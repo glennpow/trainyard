@@ -221,6 +221,14 @@ module Trainyard
       end
       select(name, choices, options, html_options)
     end
+    
+    def localized_text_field(name, options = {})
+      @template.localized_text_field(self, name, options.merge(:label => Proc.new { |locale| { :name => "#{name.to_s.humanize} (#{locale})" } }))
+    end
+    
+    def localized_text_area(name, options = {})
+      @template.localized_text_area(self, name, options.merge(:label => Proc.new { |locale| { :name => "#{name.to_s.humanize} (#{locale})" } }))
+    end
      
     def group_select(name, options = {}, html_options = {})
       order = options.delete(:order) || 'name ASC'
