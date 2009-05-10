@@ -8,4 +8,8 @@ class Language < ActiveRecord::Base
   def self.by_name
     self.all.sort(&:name)
   end
+
+  def self.available_languages
+    all.inject({}) { |languages, language| languages[language.code] = language.name; languages }
+  end
 end

@@ -2,6 +2,7 @@ module Trainyard
   module LocaleSystem
     def set_locale
       available_locales = Locale.available_codes
+      LocalizedRecord.available_locales = Language.available_languages if defined?(LocalizedRecord)
       locale = params[:locale] || session[:locale] || request.preferred_language_from(available_locales)
       locale = available_locales.include?(locale) ? locale : Configuration.default_locale
       session[:locale] = locale

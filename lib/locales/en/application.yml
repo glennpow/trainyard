@@ -301,8 +301,10 @@ en:
       other: "{{count}} Guru Points"
     guru_points_available: Guru Points Available
     inbox: Inbox
+    language: Language
     last_post: Last Post
     locale: Locale
+    localization_select_hint: There are fields here which allow values for multiple languages.  Use this selector to choose which language to modify.
     mailer_alerts: Email Alerts
     mailer_alerts_hint: Receive emails regarding site activity related to you
     message: Message

@@ -197,6 +197,7 @@ table.form-table td {
 }
 
 .form-field .label {
+  font-weight: bold;
 }
 
 .form-field .input {

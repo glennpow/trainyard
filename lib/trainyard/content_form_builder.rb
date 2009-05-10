@@ -30,7 +30,7 @@ module Trainyard
 
     def labeled_field(field, options = {}, &block)
       is_erb = @template.send(:block_called_from_erb?, block)
-      label_options = options[:label] || {}
+      label_options = (options[:label] || {}).dup
       case label_options
       when Hash
         label_class = label_options.delete(:class) || ''
@@ -61,7 +61,8 @@ module Trainyard
         end)
         if options[:preview]
           label = (options[:label] || {})[:name] || field.to_s.humanize
-          @template.concat(@template.render(:partial => 'layout/text_area_preview_area', :locals => { :text_area_id => "#{object_name}_#{field}", :label => label }))
+          text_area_id = "#{object_name}_#{field}".gsub(/[\[\]]/, '_').gsub(/__+/, '_')
+          @template.concat(@template.render(:partial => 'layout/text_area_preview_area', :locals => { :text_area_id => text_area_id, :label => label }))
         end
         @template.output_buffer
       end
@@ -221,13 +222,19 @@ module Trainyard
       end
       select(name, choices, options, html_options)
     end
+
+    def localization_select(options = {})
+      labeled_field(I18n.t(:language, :scope => [ :content ]).pluralize, options.merge(:hint => I18n.t(:localization_select_hint, :scope => [ :content ]))) do
+        @template.localization_select(self, options)
+      end
+    end
     
     def localized_text_field(name, options = {})
-      @template.localized_text_field(self, name, options.merge(:label => Proc.new { |locale| { :name => "#{name.to_s.humanize} (#{locale})" } }))
+      @template.localized_text_field(self, name, options.merge(:label => Proc.new { |locale, locale_name| { :name => "#{name.to_s.humanize} (#{locale_name})" } }))
     end
     
     def localized_text_area(name, options = {})
-      @template.localized_text_area(self, name, options.merge(:label => Proc.new { |locale| { :name => "#{name.to_s.humanize} (#{locale})" } }))
+      @template.localized_text_area(self, name, options.merge(:label => Proc.new { |locale, locale_name| { :name => "#{name.to_s.humanize} (#{locale_name})" } }))
     end
      
     def group_select(name, options = {}, html_options = {})
