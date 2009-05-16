@@ -133,6 +133,10 @@ module ContentHelper
     comment.user.nil? ? h(comment.user_name) : link_to_user(comment.user)
   end
 
+  def may_comment?(resource)
+    true
+  end
+
   def render_comments(resource)
     returning('') do |content|
       if is_commentable?(resource)
