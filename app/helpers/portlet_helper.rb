@@ -1,7 +1,7 @@
 module PortletHelper
   def portlet_header
     if current_portal
-      "<script type='text/javascript'>if (top == self) { self.location.href = '#{reset_portlet_path}' }</script>"
+      "<script type='text/javascript'>if (top == self) { self.location.href = '#{reset_portlet_path}' }</script>" unless default_portal?
     end
   end
 

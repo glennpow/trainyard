@@ -25,7 +25,7 @@ module Trainyard
         rescue
         end
       end
-      logger.debug("Application portal: #{@current_portal.inspect}")
+      logger.debug("Application portal: #{@current_portal.inspect}") unless @current_portal.nil?
       @current_portal
     end
   
@@ -41,9 +41,22 @@ module Trainyard
       load_current_portal
     end
 
+    def default_portal
+      default_portal? ? Configuration.default_portal_type.to_class.find(Configuration.default_portal_id) : nil
+    end
+
+    def default_portal?
+      Configuration.default_portal_type && Configuration.default_portal_id
+    end
+
+    def set_default_portal
+      self.current_portal=(default_portal) if self.current_portal.nil?
+    end
+
     def self.included(base)
-      base.send :helper_method, :is_portlet?, :current_portal if base.respond_to? :helper_method
-      base.send :persistent_session_variables, :portal_type, :portal_id if base.respond_to? :persistent_session_variables
+      base.send :helper_method, :is_portlet?, :current_portal, :default_portal, :default_portal? if base.respond_to?(:helper_method)
+      base.send :persistent_session_variables, :portal_type, :portal_id if base.respond_to?(:persistent_session_variables)
+      base.send :before_filter, :set_default_portal if base.respond_to?(:before_filter)
     end
   end
 end
