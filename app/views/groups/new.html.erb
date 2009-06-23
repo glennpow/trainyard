@@ -1,4 +1,4 @@
-<% title t(:create_object, :object => t(:group, :scope => [ :authentication ])) %>
+<% title t(:create_object, :object => t(:group)) %>
 
 <% form_for :group, :url => objects_path do |f| %>
   <%= render :partial => 'edit', :locals => { :f => f, :group => @group, :parent_groups => @parent_groups } %>

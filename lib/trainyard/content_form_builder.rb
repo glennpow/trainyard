@@ -30,7 +30,8 @@ module Trainyard
 
     def labeled_field(field, options = {}, &block)
       is_erb = @template.send(:block_called_from_erb?, block)
-      label_options = (options[:label] || {}).deep_dup
+      label_options = options[:label] || {}
+      label_options = label_options.deep_dup if label_options.is_a?(Hash)
       case label_options
       when Hash
         label_class = label_options.delete(:class) || ''

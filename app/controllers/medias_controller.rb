@@ -16,7 +16,7 @@ class MediasController < ApplicationController
       options[:default_sort] = :created_at
       options[:headers] = [
         { :name => t(:title, :scope => [ :content ]), :sort => :name },
-        t(:group, :scope => [ :authentication ]),
+        t(:group),
       ]
     end
   end

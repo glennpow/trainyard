@@ -33,6 +33,10 @@ class String
   def to_class
     self.camelize.constantize
   end
+  
+  def zero?
+    self.to_i.zero?
+  end
 end
 
 class Hash

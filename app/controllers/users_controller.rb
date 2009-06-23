@@ -48,7 +48,7 @@ class UsersController < ApplicationController
           { :name => t(:login, :scope => [ :authentication ]), :sort => :login },
           { :name => t(:name), :sort => :name, :order => 'users.name' },
           t(:primary_email, :scope => [ :authentication ]),
-          tp(:group, :scope => [ :authentication ]),
+          tp(:group),
           t(:status)
         ]
       else

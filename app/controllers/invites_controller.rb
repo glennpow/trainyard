@@ -25,7 +25,7 @@ class InvitesController < ApplicationController
     respond_with_indexer do |options|
       optinos[:default_sort] = :created_at
       options[:headers] = [
-        t(:group, :scope => [ :authentication ]),
+        t(:group),
         { :name => t(:email, :scope => [ :contacts ]), :sort => :email },
         { :name => t(:sent), :scope => [ :content ], :sort => :created_at }
       ]

@@ -29,7 +29,7 @@ class BlogsController < ApplicationController
       options[:default_sort] = :name
       options[:headers] = [
         { :name => t(:title, :scope => [ :content ]), :sort => :name },
-        t(:group, :scope => [ :authentication ]),
+        t(:group),
       ]
       options[:search] = true
 

@@ -2,7 +2,7 @@
 
 <%= render_field(t(:permalink, :scope => [ :content ]), link_to(page.permalink, '#')) %>
 
-<%= render_field(t(:group, :scope => [ :authentication ]), link_to_resource(page.group)) %>
+<%= render_field(t(:group), link_to_resource(page.group)) %>
 
 <%= render_heading(tp(:article, :scope => [ :content ]), :actions =>
   is_editor_of?(page) ? link_to(t(:view_all), page_articles_path(page)) : nil) %>

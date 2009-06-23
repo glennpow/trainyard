@@ -8,6 +8,7 @@ en:
   anonymous: Anonymous
   are_you_sure: Are you sure?
   back: Back
+  category: Category
   cancel: Cancel
   create: Create
   create_object: Create {{object}}
@@ -26,6 +27,7 @@ en:
   failure: There was an error processing your request.
   finish: Finish
   from: From
+  group: Group
   help: Help
   home: Home
   image: Image
@@ -82,7 +84,6 @@ en:
     confirm_password: Confirm Password
     display_name: Display Name
     forgot_password: Forgot Password
-    group: Group
     invite: Invite
     inviter: Inviter
     join: Sign Up!

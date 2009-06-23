@@ -12,7 +12,7 @@ class GroupsController < ApplicationController
   end
   
   def resourceful_name
-    t(:group, :scope => [ :authentication ])
+    t(:group)
   end
 
   before_filter :check_administrator_role, :only => [ :index, :new, :create, :edit, :update, :destroy ]

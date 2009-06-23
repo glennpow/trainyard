@@ -35,7 +35,7 @@
 <% end %>
 
 <% if user.memberships.any? %>
-  <%= render_field(tp(:group, :scope => [ :authentication ]),
+  <%= render_field(tp(:group),
     user.memberships.map { |membership| membership.group.nil? ?
       "#{site_name} (#{membership.role.name})" :
       "#{link_to_resource(membership.group)} (#{membership.role.name})" }) %>

@@ -1,7 +1,7 @@
-<% title tp(:group, :scope => [ :authentication ]) %>
+<% title tp(:group) %>
 
 <%= render_indexer(@indexer) %>
 
 <% if has_administrator_role? %>
-  <% page_action icon_link_to(:add_large, t(:create_object, :object => t(:group, :scope => [ :authentication ])), new_group_path) %>
+  <% page_action icon_link_to(:add_large, t(:create_object, :object => t(:group)), new_group_path) %>
 <% end %>
