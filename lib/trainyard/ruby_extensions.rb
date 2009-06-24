@@ -29,9 +29,37 @@ class Object
   end
 end
 
+class Fixnum
+  def true?
+    !self.zero?
+  end
+end
+
 class String
   def to_class
     self.camelize.constantize
+  end
+  
+  def true?
+    self == "1" || self == "true"
+  end
+end
+
+class TrueClass
+  def true?
+    true
+  end
+end
+
+class FalseClass
+  def true?
+    false
+  end
+end
+
+class NilClass
+  def true?
+    false
   end
 end
 

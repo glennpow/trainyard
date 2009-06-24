@@ -72,7 +72,7 @@ module ContentHelper
   end
   
   def yes_no(value)
-    t(value.to_i.zero? ? :no : :yes)
+    t(value.true? ? :yes : :no)
   end
 
   def link_to_resource(resource, options = {}, html_options = {})
