@@ -21,7 +21,7 @@ class MessagesController < ApplicationController
     t(:message, :scope => [ :content ])
   end
 
-  before_filter :login_required
+  before_filter :check_logged_in
   before_filter :check_to_user, :only => [ :new ]
   before_filter :check_recipient_of, :only => [ :destroy ]
   before_filter :check_recipient_or_sender_of, :only => [ :show ]

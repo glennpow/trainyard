@@ -1,5 +1,5 @@
 module Trainyard
-  module AuthenticationSystem
+  module AuthenticationControl
     def current_user_session
       return @current_user_session if defined?(@current_user_session)
       @current_user_session = UserSession.find
@@ -14,11 +14,11 @@ module Trainyard
       !!current_user
     end
 
-    def login_required
+    def check_logged_in
       access_denied unless current_user
     end
 
-    def not_logged_in_required
+    def check_not_logged_in
       if current_user
         store_location
         flash[:error] = t(:access_denied_logout, :scope => [ :authentication ])
@@ -180,4 +180,4 @@ module Trainyard
   end
 end
 
-ActionController::Base.send(:include, Trainyard::AuthenticationSystem) if defined?(ActionController::Base)
+ActionController::Base.send(:include, Trainyard::AuthenticationControl) if defined?(ActionController::Base)

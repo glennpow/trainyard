@@ -1,5 +1,5 @@
 module Trainyard
-  module SiteSystem
+  module SiteControl
     def self.included(base)
       base.send :helper_method, :current_site, :site_name, :site_email, :site_email_host, :is_localhost? if base.respond_to? :helper_method
       base.send :before_filter, :default_page_actions if base.respond_to? :before_filter
@@ -41,4 +41,4 @@ module Trainyard
   end
 end
 
-ActionController::Base.send(:include, Trainyard::SiteSystem) if defined?(ActionController::Base)
+ActionController::Base.send(:include, Trainyard::SiteControl) if defined?(ActionController::Base)

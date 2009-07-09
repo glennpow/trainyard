@@ -1,5 +1,5 @@
 module Trainyard
-  module ResourceSystem
+  module ResourceControl
     def self.included(base)
       base.extend(MacroMethods)
       base.send :helper_method, :resourceful_name if base.respond_to? :helper_method
@@ -80,4 +80,4 @@ module Trainyard
   end
 end
 
-ActionController::Base.send(:include, Trainyard::ResourceSystem) if defined?(ActionController::Base)
+ActionController::Base.send(:include, Trainyard::ResourceControl) if defined?(ActionController::Base)

@@ -1,5 +1,5 @@
 class UserSessionsController < ApplicationController
-  before_filter :not_logged_in_required, :only => [ :new, :create ]
+  before_filter :check_not_logged_in, :only => [ :new, :create ]
 
   def new
     @user_session = UserSession.new

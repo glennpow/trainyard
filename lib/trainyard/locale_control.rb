@@ -1,5 +1,5 @@
 module Trainyard
-  module LocaleSystem
+  module LocaleControl
     def set_locale
       available_locales = Locale.available_codes
       LocalizedRecord.available_locales = Language.available_languages if defined?(LocalizedRecord)
@@ -75,4 +75,4 @@ module Trainyard
   end
 end
 
-ActionController::Base.send(:include, Trainyard::LocaleSystem) if defined?(ActionController::Base)
+ActionController::Base.send(:include, Trainyard::LocaleControl) if defined?(ActionController::Base)

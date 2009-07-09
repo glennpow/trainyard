@@ -7,7 +7,7 @@ class ActivitiesController < ApplicationController
     t(:activity, :scope => [ :content ])
   end
 
-  before_filter :login_required
+  before_filter :check_logged_in
   before_filter :check_viewer_of_index, :only => [ :index ]
   before_filter :check_editor_of_activity, :only => [ :destroy ]
 

@@ -36,8 +36,8 @@ class UsersController < ApplicationController
   end
   
   before_filter :load_user_using_perishable_token, :only => [ :confirm, :reset_password, :update_reset_password ]
-  before_filter :not_logged_in_required, :only => [ :new, :create, :confirm, :forgot_password, :request_reset_password, :reset_password, :update_reset_password ]
-  before_filter :login_required, :only => [ :edit, :edit_password, :update, :update_password ]
+  before_filter :check_not_logged_in, :only => [ :new, :create, :confirm, :forgot_password, :request_reset_password, :reset_password, :update_reset_password ]
+  before_filter :check_logged_in, :only => [ :edit, :edit_password, :update, :update_password ]
   before_filter :check_administrator_role, :only => [ :destroy, :enable ]
   
   def index

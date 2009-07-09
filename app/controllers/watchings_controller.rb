@@ -15,7 +15,7 @@ class WatchingsController < ApplicationController
     t(:watch, :scope => [ :content ])
   end
 
-  before_filter :login_required, :only => [ :index, :create, :destroy ]
+  before_filter :check_logged_in, :only => [ :index, :create, :destroy ]
   before_filter :check_viewer_of_indexed, :only => [ :index ]
   before_filter :check_editor_of_watching, :only => [ :destroy ]
   

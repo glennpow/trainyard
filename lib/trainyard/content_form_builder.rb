@@ -115,7 +115,6 @@ module Trainyard
           klass = object.class
           is_array = object.is_a?(Array)
         else
-          # reflection = @object_class.reflect_on_association(name.to_sym)
           reflection = self.object.class.reflect_on_association(name.to_sym)
           klass = reflection.klass
           if is_array = (reflection.macro == :has_many)
@@ -148,14 +147,15 @@ module Trainyard
       
       heading = options.delete(:heading)
     
-      options[:object_class] = klass
-      options[:object_array] = is_array
+      options[:object_class] ||= klass
+      options[:object_array] ||= is_array
       has_create_link = is_array && options[:create_link]
+      model_name = options[:object_class].to_s.underscore
       
       render_options = options.delete(:render) || {}
-      render_options[:partial] ||= "#{names}/edit"
+      render_options[:partial] ||= "#{model_name.pluralize}/edit"
       render_options[:locals] ||= {}
-      render_options[:locals][name.to_sym] = object
+      render_options[:locals][model_name.to_sym] = object
       render_options[:layout] ||= 'layout/item' if is_array && render_options[:layout] != false
     
       @template.concat("<div class='form-section #{div_class}'>")
@@ -204,10 +204,33 @@ module Trainyard
     end
     
     def contact_form(options = {})
-      form_for(:address, :heading => @template.t(:address, :scope => [ :contacts ])) unless options[:address] == false
-      form_for(:emails, :heading => @template.tp(:email, :scope => [ :contacts ]), :create_link => true) unless options[:emails] == false
-      form_for(:phones, :heading => @template.tp(:phone, :scope => [ :contacts ]), :create_link => true) unless options[:phones] == false
-      form_for(:urls, :heading => @template.tp(:url, :scope => [ :contacts ]), :create_link => true) unless options[:urls] == false
+      address_options = options.has_key?(:address) ? options[:address] : {}
+      unless !address_options
+        address_name = (address_options.is_a?(Hash) ? address_options.delete(:name) : address_options) || :address
+        address_heading = (address_options.is_a?(Hash) ? address_options.delete(:heading) : nil) || @template.t(:address, :scope => [ :contacts ])
+        form_for(address_name, :object_class => Address, :heading => address_heading)
+      end
+        
+      emails_options = options.has_key?(:emails) ? options[:emails] : {}
+      unless !emails_options
+        emails_name = (emails_options.is_a?(Hash) ? emails_options.delete(:name) : emails_options) || :emails
+        emails_heading = (emails_options.is_a?(Hash) ? emails_options.delete(:heading) : nil) || @template.t(:email, :scope => [ :contacts ])
+        form_for(emails_name, :object_class => Email, :object_array => true, :heading => emails_heading, :create_link => true)
+      end
+        
+      phones_options = options.has_key?(:phones) ? options[:phones] : {}
+      unless !phones_options
+        phones_name = (phones_options.is_a?(Hash) ? phones_options.delete(:name) : phones_options) || :phones
+        phones_heading = (phones_options.is_a?(Hash) ? phones_options.delete(:heading) : nil) || @template.t(:phone, :scope => [ :contacts ])
+        form_for(phones_name, :object_class => Phone, :object_array => true, :heading => phones_heading, :create_link => true)
+      end
+        
+      urls_options = options.has_key?(:urls) ? options[:urls] : {}
+      unless !urls_options
+        urls_name = (urls_options.is_a?(Hash) ? urls_options.delete(:name) : urls_options) || :urls
+        urls_heading = (urls_options.is_a?(Hash) ? urls_options.delete(:heading) : nil) || @template.t(:url, :scope => [ :contacts ])
+        form_for(urls_name, :object_class => Url, :object_array => true, :heading => urls_heading, :create_link => true)
+      end
     end
  
     def yes_no_select(name, options = {}, html_options = {})

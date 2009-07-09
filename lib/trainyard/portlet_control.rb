@@ -1,5 +1,5 @@
 module Trainyard
-  module PortletSystem
+  module PortletControl
     def is_portlet?(klass = nil)
       !!current_portal(klass)
     end
@@ -61,4 +61,4 @@ module Trainyard
   end
 end
 
-ActionController::Base.send(:include, Trainyard::PortletSystem) if defined?(ActionController::Base)
+ActionController::Base.send(:include, Trainyard::PortletControl) if defined?(ActionController::Base)

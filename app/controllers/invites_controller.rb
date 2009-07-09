@@ -9,7 +9,7 @@ class InvitesController < ApplicationController
     t(:invite, :scope => [ :authentication ])
   end
 
-  before_filter :login_required, :only => [ :update_invitation ]
+  before_filter :check_logged_in, :only => [ :update_invitation ]
   before_filter :check_invite, :only => [ :invitation, :update_invitation ]
   before_filter :check_moderator_of_group, :except => [ :index, :new, :create, :delete ]
   

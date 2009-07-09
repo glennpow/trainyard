@@ -1,5 +1,5 @@
 class FriendshipsController < ApplicationController
-  before_filter :login_required
+  before_filter :check_logged_in
   before_filter :check_editor_of_friendship, :only => [ :accept, :destroy ]
   before_filter :check_user, :only => [ :create ]
   before_filter :check_viewer_of_index, :only => [ :index ]

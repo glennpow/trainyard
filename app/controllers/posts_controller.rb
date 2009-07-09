@@ -41,7 +41,7 @@ class PostsController < ApplicationController
     t(:post, :scope => [ :content ])
   end
 
-  before_filter :login_required, :only => [ :new, :create ]
+  before_filter :check_logged_in, :only => [ :new, :create ]
   before_filter :check_administrator_role, :only => [ :destroy ]
   before_filter :check_topic, :only => [ :new, :create ]
   before_filter :check_editor_of_post, :only => [ :edit, :update ]

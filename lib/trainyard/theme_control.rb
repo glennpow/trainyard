@@ -1,5 +1,5 @@
 module Trainyard
-  module ThemeSystem
+  module ThemeControl
     def controller_theme
       return @controller_theme if defined?(@controller_theme)
       @controller_theme = self.respond_to?(:current_portal) && self.current_portal && self.current_portal.respond_to?(:theme) ? self.current_portal.theme : nil
@@ -28,4 +28,4 @@ module Trainyard
   end
 end
 
-ActionController::Base.send(:include, Trainyard::ThemeSystem) if defined?(ActionController::Base)
+ActionController::Base.send(:include, Trainyard::ThemeControl) if defined?(ActionController::Base)

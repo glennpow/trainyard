@@ -1,5 +1,5 @@
 module Trainyard
-  module BreadcrumbSystem
+  module BreadcrumbControl
     def self.included(base)
       base.extend(ClassMethods)
       base.send :helper_method, :breadcrumbs, :add_breadcrumb if base.respond_to? :helper_method
@@ -24,4 +24,4 @@ module Trainyard
   end
 end
 
-ActionController::Base.send(:include, Trainyard::BreadcrumbSystem) if defined?(ActionController::Base)
+ActionController::Base.send(:include, Trainyard::BreadcrumbControl) if defined?(ActionController::Base)
