@@ -8,6 +8,7 @@ class Media < ActiveRecord::Base
     :default_style => :thumb,
     :default_url => "/images/default/media/missing_thumb.png"
   has_enumeration :content_type
+  has_many_tags
 
   validates_presence_of :resource, :name
   

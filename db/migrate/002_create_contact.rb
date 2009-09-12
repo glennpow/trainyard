@@ -39,7 +39,7 @@ class CreateContact < ActiveRecord::Migration
     add_index :emails, [ :resource_type, :resource_id ]
 
     create_table :personas do |t|
-      t.references :user, :null => false
+      t.references :resource, :polymorphic => true, :null => false
       t.string :first_name
       t.string :middle_name
       t.string :last_name
@@ -50,7 +50,7 @@ class CreateContact < ActiveRecord::Migration
       t.timestamps
     end
     
-    add_index :personas, :user_id
+    add_index :personas, [ :resource_type, :resource_id ]
     
     create_table :phones do |t|
       t.references :resource, :polymorphic => true, :null => false

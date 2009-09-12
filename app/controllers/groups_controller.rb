@@ -3,11 +3,11 @@ class GroupsController < ApplicationController
     belongs_to :user
     
     before :new do
-      @parent_groups = Group.find(:all)
+      @parents = Group.find(:all)
     end
     
     before :edit do
-      @parent_groups = Group.find(:all, :conditions => [ "id != ?", @group.id ]) - @group.child_groups
+      @parents = Group.find(:all, :conditions => [ "id != ?", @group.id ]) - @group.children
     end
   end
   

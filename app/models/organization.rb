@@ -12,6 +12,7 @@ class Organization < ActiveRecord::Base
   validates_presence_of :name, :group
   validates_uniqueness_of :name, :case_sensitive => false
   validates_attachment_size :image, Configuration.default_image_size_options
+  validates_attachment_content_type :image, :content_type => Configuration.default_image_content_types
   
   searches_on :name, :description
   

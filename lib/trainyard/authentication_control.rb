@@ -64,12 +64,12 @@ module Trainyard
       check_condition(is_moderator_of?(resource))
     end
 
-    def is_member_of?(resource, with_child_groups = false)
-      logged_in? && current_user.is_member_of?(resource, with_child_groups)
+    def is_member_of?(resource, with_children = false)
+      logged_in? && current_user.is_member_of?(resource, with_children)
     end
     
-    def check_member_of(resource, with_child_groups = false)
-      check_condition(is_member_of?(resource, with_child_groups))
+    def check_member_of(resource, with_children = false)
+      check_condition(is_member_of?(resource, with_children))
     end
     
     def has_permission?(action, resource)

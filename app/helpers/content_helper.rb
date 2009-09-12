@@ -219,4 +219,12 @@ module ContentHelper
       end
     end
   end
+
+  def render_tags(resource)
+    returning('') do |content|
+      if is_taggable?(resource)
+        content << render_field(named_anchor('tags', tp(:tag, :scope => [ :content ])), resource.tags.map { |tag| "<span class='tag'>#{tag}</span>" }.join(' '))
+      end
+    end
+  end
 end

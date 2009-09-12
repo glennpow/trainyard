@@ -2,9 +2,11 @@ class CreateAuthentication < ActiveRecord::Migration
   def self.up
     create_table :groups do |t|
       t.string :name, :null => false
-      t.references :parent_group
+      t.references :parent
       t.timestamps
     end
+    
+    add_index :groups, :parent_id
 
     create_table :invites do |t|
       t.references :group, :null => false

@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   acts_as_contactable if Configuration.contactable_users
   acts_as_organizer
 
-  has_one :persona, :dependent => :destroy
+  has_one :persona, :as => :resource, :dependent => :destroy
   accepts_nested_attributes_for :persona, :allow_destroy => true
   has_many :memberships, :order => 'group_id ASC', :dependent => :destroy
   has_many :groups, :through => :memberships, :order => 'name ASC'
@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
   has_many :watchings, :dependent => :destroy
 
   validates_attachment_size :image, Configuration.default_image_size_options
+  validates_attachment_content_type :image, :content_type => Configuration.default_image_content_types
   validates_confirmation_of :email, :if => :email_changed?
   validates_presence_of :email_confirmation, :if => :email_changed?
 
@@ -52,7 +53,7 @@ class User < ActiveRecord::Base
   end
     
   def create_session(session)
-    session[:locale] = self.locale.code
+    session[:locale] = self.locale.code if self.locale
   end
   
   def name
@@ -97,12 +98,12 @@ class User < ActiveRecord::Base
   end
   memoize :is_moderator_of?
   
-  def is_member_of?(resource, with_child_groups = false)
+  def is_member_of?(resource, with_children = false)
     return true if has_administrator_role?
     return false if resource.nil?
-    return resource.respond_to?(:group) && resource.group && resource.group.has_member?(self, with_child_groups)
+    return resource.respond_to?(:group) && resource.group && resource.group.has_member?(self, with_children)
   end
-  # FIXME - This causes calls to fail when with_child_groups = true...
+  # FIXME - This causes calls to fail when with_children = true...
   #memoize :is_member_of?
     
   def permitted?(action, resource)

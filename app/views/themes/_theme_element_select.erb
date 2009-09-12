@@ -8,10 +8,10 @@
   </div>
 <% elsif defined?(theme_element) %>
   <li class="theme-element-select-item"><a href="#" onclick="showThemeElement(<%= theme_element.id %>); return false;"><%= h(theme_element.display_name) %></a>
-    <% if theme_element.child_theme_elements.any? %>
+    <% if theme_element.children.any? %>
       <ul class="theme-element-select-list">
-        <% theme_element.child_theme_elements.each do |child_theme_element| %>
-          <%= render :partial => 'themes/theme_element_select', :locals => { :theme_element => child_theme_element } %>
+        <% theme_element.children.each do |child| %>
+          <%= render :partial => 'themes/theme_element_select', :locals => { :theme_element => child } %>
         <% end %>
       </ul>
     <% end %>

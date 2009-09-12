@@ -1,6 +1,7 @@
 class Forum < ActiveRecord::Base
   acts_as_resource
   acts_as_list
+  acts_as_tree
 
   has_many :topics, :include => :user, :order => 'sticky DESC, replied_at DESC', :dependent => :destroy do
     def first
@@ -12,7 +13,6 @@ class Forum < ActiveRecord::Base
       @last_post ||= find(:last, :include => :user)
     end
   end
-  belongs_to :parent_forum, :class_name => 'Forum'
 
   validates_presence_of :name
   

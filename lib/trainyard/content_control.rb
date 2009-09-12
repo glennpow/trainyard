@@ -46,12 +46,16 @@ module Trainyard
       end
     end
     
+    def is_taggable?(resource)
+      !resource.nil? && (!resource.respond_to?(:taggable?) || resource.taggable?)
+    end
+    
     def verify_human(resource)
       resource.verified_human = verify_recaptcha(resource)
     end
   
     def self.included(base)
-      base.send :helper_method, :page_title, :page_actions, :current_blog, :is_commentable?, :is_reviewable? if base.respond_to? :helper_method
+      base.send :helper_method, :page_title, :page_actions, :current_blog, :is_commentable?, :is_reviewable?, :is_taggable? if base.respond_to? :helper_method
     end
   end
 end

@@ -4,6 +4,8 @@
 
 <%= render_field(t(:date, :scope => [ :datetimes ]), h(@media.created_at)) %>
 
+<%= render_tags(@media) %>
+
 <%= render :partial => 'show', :locals => { :media => @media } %>
 
 <% page_action icon_link_to(:edit, t(:edit), edit_object_path) if is_editor_of?(@media) %>

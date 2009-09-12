@@ -22,7 +22,7 @@
   <tr>
     <td>
       <% if user.try(:image?) %>
-        <div class="form-element"><%= image_tag(user.image.url(:thumb)) %></div>
+        <%= form_element(image_tag(user.image.url(:thumb))) %>
       <% end %>
     </td>
     <td>

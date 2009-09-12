@@ -3,12 +3,12 @@
 
 <%= render_field(t(:moderator, :scope => [ :authentication ]), link_to_user(group.moderator)) %>
 
-<% if group.parent_group %>
-  <%= render_field(t(:parent_group, :scope => [ :authentication ]), link_to_resource(group.parent_group)) %>
+<% if group.parent %>
+  <%= render_field(t(:parent_group, :scope => [ :authentication ]), link_to_resource(group.parent)) %>
 <% end %>
 
-<% if group.child_groups.any? %>
-  <%= render_field(tp(:child_group, :scope => [ :authentication ]), group.child_groups.map(&:name)) %>
+<% if group.children.any? %>
+  <%= render_field(tp(:child_group, :scope => [ :authentication ]), group.children.map(&:name)) %>
 <% end %>
 
 <%= render_heading(tp(:member, :scope => [ :authentication ]), :actions => link_to(t(:view_all), group_users_path(group))) %>

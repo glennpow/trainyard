@@ -56,7 +56,7 @@ class CreateContent < ActiveRecord::Migration
     
     create_table :forums do |t|
       t.references :group
-      t.references :parent_forum
+      t.references :parent
       t.string :name, :null => false
       t.text :description
       t.integer :topics_count, :default => 0
@@ -66,7 +66,7 @@ class CreateContent < ActiveRecord::Migration
     end
     
     add_index :forums, :group_id
-    add_index :forums, :parent_forum_id
+    add_index :forums, :parent_id
 
     create_table :languages do |t|
       t.string :code, :null => false
@@ -144,6 +144,21 @@ class CreateContent < ActiveRecord::Migration
     add_index :reviews, [ :resource_type, :resource_id ]
     add_index :reviews, :user_id
     
+    create_table :tags do |t|
+      t.string :name
+    end
+    
+    add_index :tags, :name, :unique => true
+    
+    create_table :taggings do |t|
+      t.references :resource, :polymorphic => true
+      t.references :tag, :null => false
+      t.datetime :created_at
+    end
+    
+    add_index :taggings, [ :tag_id, :resource_type ]
+    add_index :taggings, [ :resource_type, :resource_id ]
+    
     create_table :themes do |t|
       t.references :group
       t.string :name, :null => false
@@ -155,7 +170,7 @@ class CreateContent < ActiveRecord::Migration
     
     create_table :theme_elements do |t|
       t.references :theme, :null => false
-      t.references :parent_theme_element
+      t.references :parent
       t.string :name, :null => false
       t.integer :position
       t.boolean :inherit, :default => false

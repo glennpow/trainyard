@@ -2,9 +2,9 @@ user_admin:
   login: admin
   name: Admin
   email: admin@rubyonrails.org
-  password_salt: <%= salt = User.unique_token %>
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt('admin' + salt) %>
-  persistence_token: <%= User.unique_token %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
   created_at: <%= 5.days.ago.to_s :db %>
   confirmed: true
   locale: locale_en_US
@@ -15,9 +15,9 @@ user_demo:
   login: demo
   name: John Doe
   email: no-reply@web.com
-  password_salt: <%= salt = User.unique_token %>
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt('demo' + salt) %>
-  persistence_token: <%= User.unique_token %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
   created_at: <%= 5.days.ago.to_s :db %>
   confirmed: true
   locale: locale_en_US

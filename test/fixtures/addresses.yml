@@ -1,5 +1,5 @@
 address_admin:
-  contact: contact_admin
+  resource: user_admin
   street_1: 1600 Pennsylvania Ave. NW
   city: Washington D.C.
   postal_code: 20500
@@ -7,7 +7,7 @@ address_admin:
   country: country_US
 
 address_demo:
-  contact: contact_demo
+  resource: user_demo
   street_1: 1600 Amphitheatre Parkway
   city: Mountain View
   postal_code: 94043

@@ -342,6 +342,7 @@ en:
     send_message: Send Message
     sent: Sent
     subject: Subject
+    tag: Tag
     title: Title
     to: To
     topic: Topic

@@ -1,11 +1,11 @@
 class Persona < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :resource, :polymorphic => true
   has_enumeration :prefix
   has_enumeration :suffix
   has_enumeration :gender
   
   # FIXME - This doesn't work currently for nested model saving
-  #validates_presence_of :user
+  #validates_presence_of :resource
 
   searches_on :first_name, :middle_name, :last_name
   

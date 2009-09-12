@@ -36,7 +36,7 @@ module Trainyard
                 attr_writer :parent_group
   
                 def parent_group
-                  @parent_group ||= self.group.parent_group
+                  @parent_group ||= self.group.parent
                 end
     
                 before_validation_on_create :create_dependent_group

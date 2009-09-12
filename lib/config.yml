@@ -11,6 +11,10 @@ common: &common
     :default_style: normal
   default_image_size_options:
     :less_than: 307200
+  default_image_content_types:
+    - "image/jpeg"
+    - "image/png"
+    - "image/gif"
   contactable_users: true
   users_locale: true
   default_user_config:
