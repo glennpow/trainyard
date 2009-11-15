@@ -42,11 +42,6 @@ class BlogsController < ApplicationController
     add_breadcrumb h(@article.name)
 
     @article = params[:article_id] ? Article.find(params[:article_id]) : @blog.articles.first
-    
-    if @article
-      load_comments(@article)
-      load_reviews(@article)
-    end
   end
   
   def contents

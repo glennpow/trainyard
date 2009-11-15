@@ -6,7 +6,7 @@
     link_to_resource(group.parent),
     group.children.any? ? group.children.length : '',
     link_to_user(group.moderator),
-    group.users.any? ? group.users.length : '',
+    group.memberships_count ? group.memberships_count : '',
   ],
   :actions => is_moderator_of?(group) ? [
     icon_link_to(:edit, t(:edit), edit_group_path(group)),

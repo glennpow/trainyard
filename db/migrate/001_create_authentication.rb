@@ -3,6 +3,7 @@ class CreateAuthentication < ActiveRecord::Migration
     create_table :groups do |t|
       t.string :name, :null => false
       t.references :parent
+      t.integer :memberships_count, :default => 0
       t.timestamps
     end
     

@@ -22,6 +22,8 @@ common: &common
     public_contact: false
   local_article_pages: false
   theme_preview_partial: themes/preview
+  text_style_hint_label: Textile
+  text_style_hint_link: http://textism.com/tools/textile/
  
 development:
   <<: *common

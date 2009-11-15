@@ -1,8 +1,0 @@
-contact_admin:
-  resource: user_admin (User)
-  first_name: Admin
-
-contact_demo:
-  resource: user_demo (User)
-  first_name: John
-  last_name: Doe

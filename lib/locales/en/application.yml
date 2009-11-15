@@ -78,7 +78,8 @@ en:
     access_denied_login: Please log in to access this feature.
     access_denied_logout: Please log out to access this feature.
     account: Account
-    administer_object: Administer {{object}}
+    administrate: Administrate
+    administrate_object: Administrate {{object}}
     change_password: Change Password
     child_group: Child Group
     confirm_password: Confirm Password
@@ -343,6 +344,8 @@ en:
     sent: Sent
     subject: Subject
     tag: Tag
+    text_style: Stylized Text
+    text_style_hint: You may use {{link}} to stylize your text
     title: Title
     to: To
     topic: Topic

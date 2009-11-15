@@ -55,8 +55,9 @@ module Trainyard
 
     def self.included(base)
       base.send :helper_method, :is_portlet?, :current_portal, :default_portal, :default_portal? if base.respond_to?(:helper_method)
-      base.send :persistent_session_variables, :portal_type, :portal_id if base.respond_to?(:persistent_session_variables)
       base.send :before_filter, :set_default_portal if base.respond_to?(:before_filter)
+      # FIXME - what is this?...
+      base.send :persistent_session_variables, :portal_type, :portal_id if base.respond_to?(:persistent_session_variables)
     end
   end
 end

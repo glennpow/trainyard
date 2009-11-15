@@ -37,6 +37,7 @@ ActionController::Routing::Routes.draw do |map|
   map.new_message_to_user '/messages/new/:to_user_id', :controller => 'messages', :action => 'new'
   map.resources :messages
   map.resources :organizations, :has_many => [ :articles, :comments, :reviews, :watchings ]
+  map.resources :pages
   map.resources :posts, :member => { :edit_guru_points => :get, :update_guru_points => :put }
   map.resources :reviews
   map.stylesheet_theme '/stylesheet_theme/:id.css', :controller => 'themes', :action => 'stylesheet'

@@ -1,3 +1,6 @@
-<%= form_element(button_to_remote("#{t(:preview, :scope => [ :content ])} - #{label}", :update => "#{text_area_id}_preview", :url => { :controller => 'trainyard', :action => 'text_area_preview' }, :with => "'text=' + encodeURIComponent($('#{text_area_id}').value)")) %>
+<%= form_element(button_to_remote("#{t(:preview, :scope => [ :content ])} - #{label}",
+  :before => "$('#{text_area_id}_preview').style.display = 'block'", :update => "#{text_area_id}_preview",
+  :url => { :controller => 'trainyard', :action => 'text_area_preview' },
+  :with => "'text=' + encodeURIComponent($('#{text_area_id}').value)")) %>
 
-<div id="<%= text_area_id %>_preview" class="text-area-preview"></div>
+<div id="<%= text_area_id %>_preview" class="text-area-preview" style="display: none"></div>

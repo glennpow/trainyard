@@ -1,11 +1,11 @@
 <%= f.text_field :name, :required => true %>
 
 <% if organization.try(:image?) %>
-  <%= render_field(image_tag(vendor.image.url)) %>
+  <%= render_field(image_tag(vendor.image.url(:thumb))) %>
 <% end %>
 
 <%= f.file_field :image %>
 
-<%= f.text_area :description, :preview => true, :hint => link_to_textile_hint %>
+<%= f.text_area :description, :preview => true, :hint => link_to_text_style_hint %>
 
 <% f.contact_form %>

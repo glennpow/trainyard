@@ -85,14 +85,30 @@ module ContentHelper
     end
   end
 
-  def link_to_textile_hint
-    t(:text_style_hint, :scope => [ :site_content ],
-      :link => link_to("Textile", "http://hobix.com/textile/quick.html", :target => "_blank"))
+  def link_to_text_style_hint
+    t(:text_style_hint, :scope => [ :content ],
+      :link => link_to(Configuration.text_style_hint_label, Configuration.text_style_hint_link, :target => "_blank"))
   end
   
   def render_article(article, options = {})
     article_class = [ options[:class], 'article' ].join(' ')
     render :partial => 'articles/show', :locals => { :article => article, :article_class => article_class }
+  end
+  
+  def render_articles(resource, options = {})
+    if resource.articles.any? || is_editor_of?(resource)
+      returning('') do |content|
+        resource_name = ActionController::RecordIdentifier.singular_class_name(resource)
+        unless options[:noheading]
+          content << render_heading(named_anchor('articles', tp(:article, :scope => [ :content ])), :actions => [
+            is_editor_of?(resource) ? link_to(t(:view_all), send(:"#{resource_name}_articles_path", resource)) : nil,
+          ])
+        end
+        for_each_by_locale(resource.articles) do |article|
+          content << render_article(article, options)
+        end
+      end
+    end
   end
   
   def for_page_content(options = {}, &block)
@@ -137,15 +153,24 @@ module ContentHelper
     true
   end
 
-  def render_comments(resource)
+  def render_comments(resource, options = {})
     returning('') do |content|
       if is_commentable?(resource)
+        comments_indexer = create_indexer(Comment) do |options|
+          options[:order] = 'created_at ASC'
+          options[:no_table] = true
+          options[:per_page] = 10
+
+          options[:conditions] = [ "resource_type = ? AND resource_id = ?", resource.class.to_s, resource.id ]
+          options[:paginate] = { :params => { :controller => 'comments', :action => 'list', :resource_id => resource.id } }
+        end
         resource_name = ActionController::RecordIdentifier.singular_class_name(resource)
         content << render_heading(named_anchor('comments', tp(:comment, :scope => [ :content ])), :actions => [
-          link_to(t(:view_all), send(:"#{resource_name}_comments_path", resource)),
+          comments_indexer.collection.total_entries > comments_indexer.collection.count ?
+            link_to(t(:view_all), send(:"#{resource_name}_comments_path", resource)) : nil,
           link_to(t(:post_comment, :scope => [ :content ]), send(:"new_#{resource_name}_comment_path", resource))
         ])
-        content << render_indexer(@comments_indexer) if @comments_indexer
+        content << render_indexer(comments_indexer, options)
       end
     end
   end
@@ -191,15 +216,23 @@ module ContentHelper
     end
   end
   
-  def render_reviews(resource)
+  def render_reviews(resource, options = {})
     returning('') do |content|
       if is_reviewable?(resource)
+        reviews_indexer = create_indexer(Review) do |options|
+          options[:order] = 'created_at ASC'
+          options[:no_table] = true
+          options[:per_page] = 5
+
+          options[:conditions] = [ "resource_type = ? AND resource_id = ?", resource.class.to_s, resource.id ]
+          options[:paginate] = { :params => { :controller => 'reviews', :action => 'list', :resource_id => resource.id } }
+        end
         resource_name = ActionController::RecordIdentifier.singular_class_name(resource)
         content << render_heading(named_anchor('reviews', tp(:review, :scope => [ :content ])), :actions => [
-          link_to(t(:view_all), send(:"#{resource_name}_reviews_path", resource)),
+          reviews_indexer.collection.total_entries > reviews_indexer.collection.count ? link_to(t(:view_all), send(:"#{resource_name}_reviews_path", resource)) : nil,
           may_review?(resource) ? link_to(t(:post_review, :scope => [ :content ]), send(:"new_#{resource_name}_review_path", resource)) : nil
         ])
-        content << render_indexer(@reviews_indexer) if @reviews_indexer
+        content << render_indexer(reviews_indexer, options)
       end
     end
   end

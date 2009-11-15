@@ -81,8 +81,8 @@ module LayoutHelper
   end
   
   def button_link_to(name, options = {}, html_options = {})
-    button_class = html_options.delete(:class)
-    content_tag(:input, nil, html_options.merge({ :type => 'button', :value => name, :onclick => "location.href='#{url_for(options)}'" }))
+    html_options[:class] = merge_classes(html_options[:class], 'button-link')
+    link_to(name, options, html_options)
   end
   
   def render_separator(options = {})

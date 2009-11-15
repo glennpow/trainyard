@@ -1,5 +1,5 @@
 module Trainyard
-  module ContentSystem
+  module ContentControl
     def page_title
       @page_title ||= ''
     end
@@ -16,34 +16,8 @@ module Trainyard
       !resource.nil? && (!resource.respond_to?(:commentable?) || resource.commentable?)
     end
     
-    def load_comments(resource)
-      if is_commentable?(resource)
-        @comments_indexer = create_indexer(Comment) do |options|
-          options[:order] = 'created_at ASC'
-          options[:no_table] = true
-          options[:per_page] = 10
-
-          options[:conditions] = [ "resource_type = ? AND resource_id = ?", resource.class.to_s, resource.id ]
-          options[:paginate] = { :params => { :controller => 'comments', :action => 'list', :resource_id => resource.id } }
-        end
-      end
-    end
-    
     def is_reviewable?(resource)
       !resource.nil? && (!resource.respond_to?(:reviewable?) || resource.reviewable?)
-    end
-    
-    def load_reviews(resource)
-      if is_reviewable?(resource)
-        @reviews_indexer = create_indexer(Review) do |options|
-          options[:order] = 'created_at ASC'
-          options[:no_table] = true
-          options[:per_page] = 5
-
-          options[:conditions] = [ "resource_type = ? AND resource_id = ?", resource.class.to_s, resource.id ]
-          options[:paginate] = { :params => { :controller => 'reviews', :action => 'list', :resource_id => resource.id } }
-        end
-      end
     end
     
     def is_taggable?(resource)
@@ -60,4 +34,4 @@ module Trainyard
   end
 end
 
-ActionController::Base.send(:include, Trainyard::ContentSystem) if defined?(ActionController::Base)
+ActionController::Base.send(:include, Trainyard::ContentControl) if defined?(ActionController::Base)

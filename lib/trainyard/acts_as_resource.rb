@@ -8,6 +8,11 @@ module Trainyard
       def acts_as_resource(*args)
         options = args.extract_options!
         
+        if options[:through]
+          options[:group] = { :through => options[:through] }
+          options[:name] = { :through => options[:through] }
+        end
+        
         group_options = options[:group] || {}
       
         case group_options
@@ -74,6 +79,23 @@ module Trainyard
         
         define_method :members do
           @members ||= self.group.try(:members) || User.administrators
+        end
+        
+        name_options = options[:name] || {}
+      
+        case name_options
+        when Proc
+          define_method :name do
+            name_options.call(self)
+          end
+        else
+          name_options = {} unless name_options.is_a?(Hash)
+          
+          if name_options[:through]
+            define_method :name do
+              self.send(name_options[:through]).name
+            end
+          end
         end
 
         permissions_options = options[:permissions] || {}

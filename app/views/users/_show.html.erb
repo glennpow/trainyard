@@ -18,7 +18,7 @@
 </table>
 
 <% if has_administrator_role? %>
-  <%= render_heading(t(:administer_object, :scope => [ :authentication ], :object => h(user.name))) %>
+  <%= render_heading(t(:administrate_object, :scope => [ :authentication ], :object => h(user.name))) %>
 
   <%= render_field(t(:login, :scope => [ :authentication ]), h(user.login)) %>
 

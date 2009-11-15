@@ -6,7 +6,9 @@ module Trainyard
     end
     
     def default_theme
-      Theme.first || Theme.new
+      return @default_theme if defined?(@default_theme)
+      application_themeable = ThemeablesTheme.first(:conditions => { :themeable_type => nil, :themeable_id => nil })
+      @default_theme = (application_themeable ? application_themeable.theme : nil) || Theme.first || Theme.new
     end
 
     def current_theme
@@ -14,8 +16,7 @@ module Trainyard
       @current_theme = Theme.find(params[:theme_id]) if params[:theme_id]
       @current_theme ||= self.controller_theme
       unless @current_theme
-        application_themeable = ThemeablesTheme.first(:conditions => { :themeable_type => nil, :themeable_id => nil })
-        @current_theme = (application_themeable ? application_themeable.theme : nil) || default_theme
+        @current_theme = default_theme
       end
       @current_theme.attributes=(params[:theme]) if params[:theme]
       logger.debug("Application theme: #{@current_theme.name}") if @current_theme
