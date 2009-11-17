@@ -166,7 +166,7 @@ module ContentHelper
         end
         resource_name = ActionController::RecordIdentifier.singular_class_name(resource)
         content << render_heading(named_anchor('comments', tp(:comment, :scope => [ :content ])), :actions => [
-          comments_indexer.collection.total_entries > comments_indexer.collection.count ?
+          comments_indexer.collection.total_entries > comments_indexer.collection.length ?
             link_to(t(:view_all), send(:"#{resource_name}_comments_path", resource)) : nil,
           link_to(t(:post_comment, :scope => [ :content ]), send(:"new_#{resource_name}_comment_path", resource))
         ])
@@ -229,7 +229,7 @@ module ContentHelper
         end
         resource_name = ActionController::RecordIdentifier.singular_class_name(resource)
         content << render_heading(named_anchor('reviews', tp(:review, :scope => [ :content ])), :actions => [
-          reviews_indexer.collection.total_entries > reviews_indexer.collection.count ? link_to(t(:view_all), send(:"#{resource_name}_reviews_path", resource)) : nil,
+          reviews_indexer.collection.total_entries > reviews_indexer.collection.length ? link_to(t(:view_all), send(:"#{resource_name}_reviews_path", resource)) : nil,
           may_review?(resource) ? link_to(t(:post_review, :scope => [ :content ]), send(:"new_#{resource_name}_review_path", resource)) : nil
         ])
         content << render_indexer(reviews_indexer, options)
